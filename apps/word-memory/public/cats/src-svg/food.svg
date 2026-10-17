@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+
+  <ellipse cx="256" cy="418" rx="148" ry="23" fill="rgba(58,58,68,0.11)"/>
+
+  <!-- 碗体 -->
+  <path d="M 112 272 Q 112 416 256 416 Q 400 416 400 272 Z" fill="#6EC6F2" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 142 292 Q 144 394 256 398 Q 368 394 370 292 Z" fill="#9BD9F7" stroke="none"/>
+  <!-- 碗口 -->
+  <ellipse cx="256" cy="272" rx="146" ry="45" fill="#3E9FD8" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="256" cy="272" rx="122" ry="33" fill="#5A6572" stroke="none"/>
+  <path d="M 170 254 Q 210 240 254 240" fill="none" stroke="#FFFFFF" stroke-width="9" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- 猫粮颗粒 -->
+  <circle cx="216" cy="266" r="21" fill="#C98A4B" stroke="#3A3A44" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="262" cy="254" r="19" fill="#B87A3C" stroke="#3A3A44" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="300" cy="272" r="20" fill="#C98A4B" stroke="#3A3A44" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="240" cy="286" r="18" fill="#B87A3C" stroke="#3A3A44" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="278" cy="292" r="16" fill="#C98A4B" stroke="#3A3A44" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- 骨头小饼干 -->
+  <g transform="translate(196 296) rotate(-18)">
+    <rect x="-15" y="-10" width="30" height="20" rx="10" fill="#F5E3C8" stroke="#3A3A44" stroke-width="6.5" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+
+  <!-- 小鱼干 -->
+  <g transform="translate(382 244) rotate(12)">
+    <path d="M -66 0 Q -32 -38 20 -17 Q 58 -2 72 0 Q 58 2 20 17 Q -32 38 -66 0 Z"
+      fill="#FFB454" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M -66 0 L -102 -28 L -98 0 L -102 28 Z" fill="#F0913A" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M -12 -20 Q 4 -32 20 -17" fill="none" stroke="#3A3A44" stroke-width="6.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M -12 20 Q 4 32 20 17" fill="none" stroke="#3A3A44" stroke-width="6.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="44" cy="-6" r="6.5" fill="#3A3A44"/>
+    <circle cx="42" cy="-8" r="2.4" fill="#FFFFFF"/>
+    <path d="M 62 -10 Q 70 -6 62 -2" fill="none" stroke="#3A3A44" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+  </g>
+
+  <!-- 碗上爪印 -->
+  <g transform="translate(256 366)" opacity="0.3">
+    <ellipse cx="0" cy="6" rx="19" ry="15" fill="#FFFFFF"/>
+    <circle cx="-19" cy="-13" r="7.5" fill="#FFFFFF"/>
+    <circle cx="-6" cy="-19" r="7.5" fill="#FFFFFF"/>
+    <circle cx="9" cy="-19" r="7.5" fill="#FFFFFF"/>
+    <circle cx="22" cy="-11" r="7.5" fill="#FFFFFF"/>
+  </g>
+  
+</svg>

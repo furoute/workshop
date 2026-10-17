@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+
+  <ellipse cx="256" cy="440" rx="118" ry="19" fill="rgba(58,58,68,0.11)"/>
+  <path d="M 350 408 Q 428 414 432 388 Q 434 370 416 366" fill="none" stroke="#3A3A44" stroke-width="43" stroke-linecap="round"/>
+          <path d="M 350 408 Q 428 414 432 388 Q 434 370 416 366" fill="none" stroke="#FFFFFF" stroke-width="24" stroke-linecap="round"/>
+
+  <!-- 坐姿身体 -->
+  <path d="M 256 262 Q 362 268 372 356 Q 378 424 256 430 Q 134 424 140 356 Q 150 268 256 262 Z"
+    fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- 身体黑斑（奶牛花，画在头之下方可见区） -->
+  <path d="M 316 292 Q 374 306 370 356 Q 366 398 328 404 Q 302 400 300 372 Q 322 360 314 322 Q 308 300 316 292 Z" fill="#3A3A44" stroke="none"/>
+  <!-- 前爪 -->
+  <ellipse cx="206" cy="408" rx="36" ry="25" fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="306" cy="408" rx="36" ry="25" fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <line x1="206" y1="396" x2="206" y2="418" stroke="rgba(58,58,68,0.40)" stroke-width="4" stroke-linecap="round"/>
+  <line x1="306" y1="396" x2="306" y2="418" stroke="rgba(58,58,68,0.40)" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- 耳朵（轮廓外） -->
+  
+    <path d="M 146.94 162.28 Q 157.39000000000001 81.78 195.01000000000002 91.09
+             Q 226.36 121.68 230.54000000000002 168.28 Z"
+      fill="#3A3A44" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M 365.06 162.28 Q 354.61 81.78 316.99 91.09
+             Q 285.64 121.68 281.46 168.28 Z"
+      fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M 348.34 158.28 Q 343.324 109.71000000000001 321.17 116.36
+             Q 302.36 136.31 299.016 162.28 Z"
+      fill="#FFB6C4" stroke="none"/>
+
+  <!-- 头 -->
+  <ellipse cx="256" cy="236" rx="118" ry="102" fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- 头顶黑斑（偏右侧的不规则奶牛斑，避免像眉毛） -->
+  <path d="M 268 126 Q 306 124 322 146 Q 314 162 286 160 Q 262 158 256 142 Q 258 128 268 126 Z" fill="#3A3A44" stroke="none"/>
+
+  <!-- 大眼睛 -->
+  
+    <ellipse cx="208" cy="258" rx="31" ry="37" fill="#2E2E38"/>
+    <ellipse cx="198.08" cy="243.2" rx="11.16" ry="11.1" fill="#FFFFFF"/>
+    <ellipse cx="219.16" cy="273.54" rx="5.2700000000000005" ry="5.180000000000001" fill="#FFFFFF" opacity="0.8"/>
+  
+    <ellipse cx="306" cy="258" rx="31" ry="37" fill="#2E2E38"/>
+    <ellipse cx="296.08" cy="243.2" rx="11.16" ry="11.1" fill="#FFFFFF"/>
+    <ellipse cx="317.16" cy="273.54" rx="5.2700000000000005" ry="5.180000000000001" fill="#FFFFFF" opacity="0.8"/>
+  <ellipse cx="162" cy="302" rx="23" ry="14" fill="#FFC2CE" opacity="0.8"/>
+  <ellipse cx="350" cy="302" rx="23" ry="14" fill="#FFC2CE" opacity="0.8"/>
+  
+    <path d="M 241.88 304.76 Q 257 295.04 272.12 304.76 Q 257 318.8 241.88 304.76 Z"
+      fill="#FF8FA8" stroke="#3A3A44" stroke-width="6.48" stroke-linejoin="round"/>
+    <path d="M 257 318.26 L 257 325.28" fill="none" stroke="#3A3A44" stroke-width="4.86" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M 240.8 321.5 Q 248.9 336.08 257 325.28"
+      fill="none" stroke="#3A3A44" stroke-width="4.86" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M 273.2 321.5 Q 265.1 336.08 257 325.28"
+      fill="none" stroke="#3A3A44" stroke-width="4.86" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 142 291 Q 118 286 98 267.1"
+      fill="none" stroke="#3A3A44" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/><path d="M 142 301 Q 118 298 98 294.1"
+      fill="none" stroke="#3A3A44" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/><path d="M 142 311 Q 118 310 98 321.1"
+      fill="none" stroke="#3A3A44" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/>
+  <path d="M 370 291 Q 394 286 414 267.1"
+      fill="none" stroke="#3A3A44" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/><path d="M 370 301 Q 394 298 414 294.1"
+      fill="none" stroke="#3A3A44" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/><path d="M 370 311 Q 394 310 414 321.1"
+      fill="none" stroke="#3A3A44" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/>
+
+  <!-- 头顶小花（可爱点缀） -->
+  <g transform="translate(378 178)">
+    <circle cx="0" cy="-15" r="13" fill="#FF8FA8" stroke="#3A3A44" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="-17" cy="2" r="13" fill="#FF8FA8" stroke="#3A3A44" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="17" cy="2" r="13" fill="#FF8FA8" stroke="#3A3A44" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="0" cy="10" r="13" fill="#FF8FA8" stroke="#3A3A44" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="0" cy="0" r="8" fill="#FFCE3D" stroke="none"/>
+  </g>
+  
+</svg>

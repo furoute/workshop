@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+
+  <ellipse cx="256" cy="446" rx="126" ry="19" fill="rgba(58,58,68,0.11)"/>
+  <path d="M 366 424 Q 436 430 440 404 Q 442 386 424 382" fill="none" stroke="#3A3A44" stroke-width="43" stroke-linecap="round"/>
+          <path d="M 366 424 Q 436 430 440 404 Q 442 386 424 382" fill="none" stroke="#FFFFFF" stroke-width="24" stroke-linecap="round"/>
+
+  <!-- 端正坐姿身体 -->
+  <path d="M 256 262 Q 378 268 386 366 Q 390 430 256 436 Q 122 430 126 366 Q 134 268 256 262 Z"
+    fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- 身体黑斑（成年猫更成熟的大斑） -->
+  <path d="M 326 300 Q 384 316 380 366 Q 376 408 336 414 Q 310 410 308 380 Q 330 368 322 330 Q 316 308 326 300 Z" fill="#3A3A44" stroke="none"/>
+  <path d="M 178 322 Q 158 350 166 384 Q 180 360 198 346 Z" fill="#3A3A44" stroke="none"/>
+  <!-- 胸前白毛 -->
+  <path d="M 228 340 Q 256 326 284 340 Q 270 384 256 390 Q 242 384 228 340 Z"
+    fill="#FFFFFF" stroke="rgba(58,58,68,0.30)" stroke-width="3"/>
+
+  <!-- 前爪 -->
+  <ellipse cx="202" cy="416" rx="38" ry="25" fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="310" cy="416" rx="38" ry="25" fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <line x1="202" y1="404" x2="202" y2="426" stroke="rgba(58,58,68,0.40)" stroke-width="4" stroke-linecap="round"/>
+  <line x1="310" y1="404" x2="310" y2="426" stroke="rgba(58,58,68,0.40)" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- 耳朵（轮廓外） -->
+  
+    <path d="M 144.64 165.42000000000002 Q 155.2 84.22000000000001 193.216 93.62800000000001
+             Q 224.896 124.54000000000002 229.12 171.42000000000002 Z"
+      fill="#3A3A44" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M 367.36 165.42000000000002 Q 356.8 84.22000000000001 318.784 93.62800000000001
+             Q 287.104 124.54000000000002 282.88 171.42000000000002 Z"
+      fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M 350.464 161.42000000000002 Q 345.3952 112.44400000000002 323.008 119.16400000000002
+             Q 304 139.324 300.62080000000003 165.42000000000002 Z"
+      fill="#FFB6C4" stroke="none"/>
+
+  <!-- 头 -->
+  <ellipse cx="256" cy="240" rx="120" ry="103" fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 250 126 Q 288 122 304 144 Q 296 158 268 156 Q 246 154 240 140 Q 242 128 250 126 Z" fill="#3A3A44" stroke="none"/>
+
+  
+    <ellipse cx="206" cy="258" rx="30" ry="36" fill="#2E2E38"/>
+    <ellipse cx="196.4" cy="243.6" rx="10.799999999999999" ry="10.799999999999999" fill="#FFFFFF"/>
+    <ellipse cx="216.8" cy="273.12" rx="5.1000000000000005" ry="5.040000000000001" fill="#FFFFFF" opacity="0.8"/>
+  
+    <ellipse cx="306" cy="258" rx="30" ry="36" fill="#2E2E38"/>
+    <ellipse cx="296.4" cy="243.6" rx="10.799999999999999" ry="10.799999999999999" fill="#FFFFFF"/>
+    <ellipse cx="316.8" cy="273.12" rx="5.1000000000000005" ry="5.040000000000001" fill="#FFFFFF" opacity="0.8"/>
+  <ellipse cx="162" cy="300" rx="23" ry="14" fill="#FFC2CE" opacity="0.8"/>
+  <ellipse cx="350" cy="300" rx="23" ry="14" fill="#FFC2CE" opacity="0.8"/>
+  
+    <path d="M 242.16 302.82 Q 257 293.28 271.84 302.82 Q 257 316.6 242.16 302.82 Z"
+      fill="#FF8FA8" stroke="#3A3A44" stroke-width="6.36" stroke-linejoin="round"/>
+    <path d="M 257 316.07 L 257 322.96" fill="none" stroke="#3A3A44" stroke-width="4.7700000000000005" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M 241.1 319.25 Q 249.05 333.56 257 322.96"
+      fill="none" stroke="#3A3A44" stroke-width="4.7700000000000005" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M 272.9 319.25 Q 264.95 333.56 257 322.96"
+      fill="none" stroke="#3A3A44" stroke-width="4.7700000000000005" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 142 289 Q 118 284 98 265.1"
+      fill="none" stroke="#3A3A44" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/><path d="M 142 299 Q 118 296 98 292.1"
+      fill="none" stroke="#3A3A44" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/><path d="M 142 309 Q 118 308 98 319.1"
+      fill="none" stroke="#3A3A44" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/>
+  <path d="M 370 289 Q 394 284 414 265.1"
+      fill="none" stroke="#3A3A44" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/><path d="M 370 299 Q 394 296 414 292.1"
+      fill="none" stroke="#3A3A44" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/><path d="M 370 309 Q 394 308 414 319.1"
+      fill="none" stroke="#3A3A44" stroke-width="4.5" stroke-linecap="round" opacity="0.8"/>
+
+  <!-- 细项圈 + 铃铛（位于下巴之下的脖子处） -->
+  <path d="M 186 372 Q 256 402 326 372" fill="none" stroke="#FF6B8A" stroke-width="16" stroke-linecap="round"/>
+  <path d="M 186 372 Q 256 402 326 372" fill="none" stroke="#3A3A44" stroke-width="3.5" stroke-linecap="round" opacity="0.16"/>
+  <circle cx="256" cy="398" r="15" fill="#FFCE3D" stroke="#3A3A44" stroke-width="7" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="250" cy="393" r="4.5" fill="#FFFFFF" opacity="0.9"/>
+  <path d="M 249 404 L 263 404" stroke="#3A3A44" stroke-width="3" stroke-linecap="round" opacity="0.7"/>
+  
+</svg>

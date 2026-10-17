@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+
+  <ellipse cx="256" cy="424" rx="146" ry="23" fill="rgba(58,58,68,0.11)"/>
+
+  <!-- 浴盆 -->
+  <path d="M 96 266 Q 92 416 256 418 Q 420 416 416 266 Z" fill="#8FD9F0" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 130 286 Q 130 392 256 396 Q 382 392 382 286 Z" fill="#B7E7F8" stroke="none"/>
+  <ellipse cx="256" cy="266" rx="164" ry="50" fill="#6FC7E6" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="256" cy="270" rx="142" ry="38" fill="#EAF9FF" stroke="none"/>
+
+  <!-- 盆内泡泡（先画，位于爪子之下层） -->
+  
+    <circle cx="206" cy="268" r="36" fill="#CFEFFB" opacity="0.93" stroke="#3A3A44" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+    <ellipse cx="194.48" cy="255.04" rx="10.799999999999999" ry="7.92"
+      fill="#FFFFFF" opacity="0.9" transform="rotate(-28 194.48 255.04)"/>
+  
+    <circle cx="268" cy="258" r="42" fill="#CFEFFB" opacity="0.93" stroke="#3A3A44" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+    <ellipse cx="254.56" cy="242.88" rx="12.6" ry="9.24"
+      fill="#FFFFFF" opacity="0.9" transform="rotate(-28 254.56 242.88)"/>
+  
+    <circle cx="316" cy="280" r="28" fill="#CFEFFB" opacity="0.93" stroke="#3A3A44" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+    <ellipse cx="307.04" cy="269.92" rx="8.4" ry="6.16"
+      fill="#FFFFFF" opacity="0.9" transform="rotate(-28 307.04 269.92)"/>
+  
+    <circle cx="240" cy="294" r="29" fill="#CFEFFB" opacity="0.93" stroke="#3A3A44" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+    <ellipse cx="230.72" cy="283.56" rx="8.7" ry="6.38"
+      fill="#FFFFFF" opacity="0.9" transform="rotate(-28 230.72 283.56)"/>
+  
+    <circle cx="292" cy="298" r="25" fill="#CFEFFB" opacity="0.93" stroke="#3A3A44" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+    <ellipse cx="284" cy="289" rx="7.5" ry="5.5"
+      fill="#FFFFFF" opacity="0.9" transform="rotate(-28 284 289)"/>
+  
+    <circle cx="176" cy="298" r="26" fill="#CFEFFB" opacity="0.93" stroke="#3A3A44" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+    <ellipse cx="167.68" cy="288.64" rx="7.8" ry="5.72"
+      fill="#FFFFFF" opacity="0.9" transform="rotate(-28 167.68 288.64)"/>
+
+  <!-- 盆沿猫爪（画在泡泡之上，完整可见；肉垫一大三小） -->
+  <g transform="rotate(-15 150 232)">
+    <ellipse cx="150" cy="232" rx="44" ry="33" fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+    <ellipse cx="150" cy="244" rx="20" ry="15" fill="#FFC2CE"/>
+    <ellipse cx="126" cy="214" rx="9" ry="8" fill="#FFC2CE"/>
+    <ellipse cx="146" cy="207" rx="9" ry="8" fill="#FFC2CE"/>
+    <ellipse cx="166" cy="209" rx="9" ry="8" fill="#FFC2CE"/>
+    <ellipse cx="182" cy="220" rx="8.5" ry="7.5" fill="#FFC2CE"/>
+  </g>
+  <g transform="rotate(15 362 238)">
+    <ellipse cx="362" cy="238" rx="43" ry="32" fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+    <ellipse cx="362" cy="250" rx="19" ry="14" fill="#FFC2CE"/>
+    <ellipse cx="339" cy="221" rx="8.5" ry="7.5" fill="#FFC2CE"/>
+    <ellipse cx="358" cy="214" rx="9" ry="8" fill="#FFC2CE"/>
+    <ellipse cx="378" cy="216" rx="9" ry="8" fill="#FFC2CE"/>
+    <ellipse cx="393" cy="227" rx="8.5" ry="7.5" fill="#FFC2CE"/>
+  </g>
+
+  <!-- 上升泡泡 -->
+  
+    <circle cx="112" cy="168" r="27" fill="#CFEFFB" opacity="0.8835" stroke="#3A3A44" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+    <ellipse cx="103.36" cy="158.28" rx="8.1" ry="5.94"
+      fill="#FFFFFF" opacity="0.855" transform="rotate(-28 103.36 158.28)"/>
+  
+    <circle cx="392" cy="156" r="35" fill="#CFEFFB" opacity="0.8835" stroke="#3A3A44" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+    <ellipse cx="380.8" cy="143.4" rx="10.5" ry="7.7"
+      fill="#FFFFFF" opacity="0.855" transform="rotate(-28 380.8 143.4)"/>
+  
+    <circle cx="234" cy="118" r="38" fill="#CFEFFB" opacity="0.8835" stroke="#3A3A44" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+    <ellipse cx="221.84" cy="104.32" rx="11.4" ry="8.36"
+      fill="#FFFFFF" opacity="0.855" transform="rotate(-28 221.84 104.32)"/>
+  
+    <circle cx="322" cy="78" r="25" fill="#CFEFFB" opacity="0.8370000000000001" stroke="#3A3A44" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+    <ellipse cx="314" cy="69" rx="7.5" ry="5.5"
+      fill="#FFFFFF" opacity="0.81" transform="rotate(-28 314 69)"/>
+  
+    <circle cx="162" cy="68" r="21" fill="#CFEFFB" opacity="0.7626" stroke="#3A3A44" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+    <ellipse cx="155.28" cy="60.44" rx="6.3" ry="4.62"
+      fill="#FFFFFF" opacity="0.738" transform="rotate(-28 155.28 60.44)"/>
+  
+    <circle cx="424" cy="238" r="19" fill="#CFEFFB" opacity="0.7626" stroke="#3A3A44" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+    <ellipse cx="417.92" cy="231.16" rx="5.7" ry="4.18"
+      fill="#FFFFFF" opacity="0.738" transform="rotate(-28 417.92 231.16)"/>
+  
+</svg>

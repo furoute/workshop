@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+
+  <ellipse cx="256" cy="428" rx="122" ry="19" fill="rgba(58,58,68,0.11)"/>
+  <!-- 尾巴：贴着地面从身后绕出 -->
+  <path d="M 348 398 Q 428 404 432 380 Q 434 362 416 358" fill="none" stroke="#3A3A44" stroke-width="41" stroke-linecap="round"/>
+          <path d="M 348 398 Q 428 404 432 380 Q 434 362 416 358" fill="none" stroke="#FFFFFF" stroke-width="22" stroke-linecap="round"/>
+
+  <!-- 耳朵（先画，位于团子轮廓内） -->
+  
+    <path d="M 138.792 256.28 Q 149.572 173.68 188.38 183.284
+             Q 220.72 214.84 225.032 262.28 Z"
+      fill="#3A3A44" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M 373.20799999999997 256.28 Q 362.42799999999994 173.68 323.61999999999995 183.284
+             Q 291.28 214.84 286.96799999999996 262.28 Z"
+      fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M 355.96 252.28 Q 350.7856 202.49200000000002 327.93199999999996 209.352
+             Q 308.52799999999996 229.93200000000002 305.0784 256.28 Z"
+      fill="#FFB6C4" stroke="none"/>
+
+  <!-- 团子身体：单一外轮廓，头与身体融为一体 -->
+  <ellipse cx="256" cy="330" rx="126" ry="102" fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <!-- 臀背黑斑（奶牛花色，位于团子右侧） -->
+  <path d="M 312 258 Q 372 272 376 330 Q 378 384 336 392 Q 306 388 304 358 Q 330 344 320 300 Q 314 268 312 258 Z" fill="#3A3A44" stroke="none"/>
+
+  <!-- 头顶黑斑（偏右，不规则奶牛斑） -->
+  <path d="M 272 232 Q 306 230 320 252 Q 312 268 284 266 Q 262 264 256 248 Q 258 234 272 232 Z" fill="#3A3A44" stroke="none"/>
+
+  <!-- 闭眼（睡） -->
+  <path d="M 198 328 Q 216 350 236 328" fill="none" stroke="#3A3A44" stroke-width="8.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 276 328 Q 294 350 314 328" fill="none" stroke="#3A3A44" stroke-width="8.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="186" cy="356" rx="20" ry="12" fill="#FFC2CE" opacity="0.8"/>
+  <ellipse cx="326" cy="356" rx="20" ry="12" fill="#FFC2CE" opacity="0.8"/>
+  <!-- 鼻嘴 -->
+  <path d="M 244 356 Q 256 346 268 356 Q 256 370 244 356 Z" fill="#FF8FA8" stroke="#3A3A44" stroke-width="5.5" stroke-linejoin="round"/>
+  <path d="M 256 369 Q 256 379 245 381 M 256 379 Q 267 381 267 372" fill="none" stroke="#3A3A44" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+  <path d="M 176 345.72 Q 153.92 341.12 135.51999999999998 323.73199999999997"
+      fill="none" stroke="#3A3A44" stroke-width="4.140000000000001" stroke-linecap="round" opacity="0.8"/><path d="M 176 354.92 Q 153.92 352.16 135.51999999999998 348.572"
+      fill="none" stroke="#3A3A44" stroke-width="4.140000000000001" stroke-linecap="round" opacity="0.8"/><path d="M 176 364.12 Q 153.92 363.2 135.51999999999998 373.412"
+      fill="none" stroke="#3A3A44" stroke-width="4.140000000000001" stroke-linecap="round" opacity="0.8"/>
+  <path d="M 336 345.72 Q 358.08 341.12 376.48 323.73199999999997"
+      fill="none" stroke="#3A3A44" stroke-width="4.140000000000001" stroke-linecap="round" opacity="0.8"/><path d="M 336 354.92 Q 358.08 352.16 376.48 348.572"
+      fill="none" stroke="#3A3A44" stroke-width="4.140000000000001" stroke-linecap="round" opacity="0.8"/><path d="M 336 364.12 Q 358.08 363.2 376.48 373.412"
+      fill="none" stroke="#3A3A44" stroke-width="4.140000000000001" stroke-linecap="round" opacity="0.8"/>
+
+  <!-- 蜷在身前的小爪（并拢，圆润） -->
+  <ellipse cx="234" cy="402" rx="45" ry="26" fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <ellipse cx="296" cy="404" rx="42" ry="25" fill="#FFFFFF" stroke="#3A3A44" stroke-width="10" stroke-linejoin="round" stroke-linecap="round"/>
+  <line x1="232" y1="391" x2="232" y2="412" stroke="rgba(58,58,68,0.40)" stroke-width="4" stroke-linecap="round"/>
+  <line x1="296" y1="393" x2="296" y2="414" stroke="rgba(58,58,68,0.40)" stroke-width="4" stroke-linecap="round"/>
+  <!-- 睡觉 Z 泡泡 -->
+  <circle cx="372" cy="204" r="12" fill="#FFFFFF" stroke="#3A3A44" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="398" cy="172" r="8" fill="#FFFFFF" stroke="#3A3A44" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+  <circle cx="416" cy="148" r="5" fill="#FFFFFF" stroke="#3A3A44" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+  
+</svg>

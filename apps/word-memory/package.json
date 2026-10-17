@@ -1,0 +1,38 @@
+{
+  "name": "wordpet",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "单词猫 — 小学英语背单词 PWA（人教PEP 3-6年级）",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview --host",
+    "start": "tsc --noEmit && vite build && vite preview --host --port 5273",
+    "check": "tsc --noEmit",
+    "verify": "node tools/verify.mjs",
+    "verify:ios": "node tools/verify-ios.mjs",
+    "verify:switch": "node tools/verify-switch.mjs",
+    "add:new": "node tools/import-new-edition.mjs",
+    "extract:new": "node tools/extract-new-edition.mjs",
+    "diagnose": "node tools/diagnose.mjs",
+    "vocab": "node tools/check-vocab.mjs",
+    "icons": "node tools/gen-icons.mjs",
+    "verify:letters": "node tools/verify-letters.mjs",
+    "verify:spell": "node tools/verify-spell.mjs",
+    "verify:stages": "node tools/verify-four-stages.mjs",
+    "add:examples": "node tools/add-examples.mjs",
+    "serve": "node tools/serve.mjs",
+    "test:net": "node tools/test-net.mjs",
+    "test:phonetic": "node tools/test-phonetic-split.mjs",
+    "stats:phonetic": "node tools/stats-phonetic.mjs",
+    "verify:blend": "node tools/verify-blend.mjs",
+    "verify:nick": "node tools/verify-nickname.mjs"
+  },
+  "devDependencies": {
+    "@resvg/resvg-js": "^2.6.2",
+    "qrcode-terminal": "^0.12.0",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10"
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "单词猫 — 小学英语背单词",
+  "short_name": "单词猫",
+  "description": "人教PEP 3-6年级同步背单词，云养猫 + 自然拼读，边玩边学。",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#eefbf3",
+  "theme_color": "#22c55e",
+  "categories": ["education", "kids"],
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "apple_touch_icon": "icons/apple-touch-icon.png"
+}
