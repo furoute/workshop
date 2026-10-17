@@ -76,29 +76,35 @@ tags: [multi-agent, orchestration, review, workflow, handoff, cli]
 
 ### CLI 直调的命令格式（内容留空，按需填）
 
-```bash
-# Hermes（本机调度方）
-hermes run -p "<任务内容>"                  # 一次性执行
-hermes -c "继续上次会话"                     # 续上上下文
+> ⚠️ **以下命令均以本机 `--help` 实测为准；换环境请先跑 `--help` 确认**。
+> 不同版本的参数会变，照抄前务必核对。
 
-# Codex CLI（执行方：写代码）
+```bash
+# Hermes（本机调度方）—— 已实测
+hermes -z "<提示词>"                  # 一次性执行（长文本建议走文件 + stdin 重定向）
+hermes --continue                     # 续上一次会话
+hermes --resume <session-id>          # 续指定会话
+
+# Codex CLI（执行方：写代码）—— ⚠️ 以本机 codex --help 为准
 codex exec --sandbox workspace-write \
   --add-dir <可写目录1> --add-dir <可写目录2> \
   "<任务内容>"
 
-# DSH（DeepSeek Harness，执行/文档方）
+# DSH（DeepSeek Harness，执行/文档方）—— ⚠️ 以本机 dsh --help 为准
 dsh --profile headless - <<'EOF'
 <任务内容>
 EOF
 
-# OpenClaw（支援/复核方）
-openclaw agent "<任务内容>"
+# OpenClaw（支援/复核方）—— 已实测有 agent 子命令
+openclaw agent --message "<任务内容>" --timeout <秒>
+#   其他参数（--agent / --channel / --deliver 等）见 openclaw agent --help
 ```
 
 > ⚠️ **通用要点**：
 > - **长文本走文件或 stdin**，不要塞进命令行参数（中文/特殊字符会被 shell 弄坏）；
 > - **一轮制**：一次提问 → 一次回答 → 结束，不要来回追问；
-> - 同机多个 agent 并存时，**别共用工作目录**（会互相覆盖、抢写权限）。
+> - 同机多个 agent 并存时，**别共用工作目录**（会互相覆盖、抢写权限）；
+> - **换版本先看 `--help`** —— 参数是最容易过时的东西。
 
 ---
 
