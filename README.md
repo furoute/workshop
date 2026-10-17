@@ -22,6 +22,7 @@
 
 | 名称 | 用途 | 适用场景 | 目录 |
 |---|---|---|---|
+| **多智能体协作** | 多个 AI agent 分工干一件事 —— 角色（调度/执行/复审/仲裁）、三种通道（广播/单线/CLI）、五步 workflow、留痕纪律 | 需要多个 agent 协作、或想让一个 AI 复审另一个 AI 的产出 | [`skills/multi-agent-collaboration/`](skills/multi-agent-collaboration/) |
 | **GEO 生成式引擎优化** | 让你的项目/产品**被 AI 在回答里点到名**（含 GEO vs SEO 对比、四层基线测试、仓库内外物料、发文渠道矩阵、商业 B 端视角） | 任何"要被人/AI 找到"的项目 | [`skills/project-discoverability-geo/`](skills/project-discoverability-geo/) |
 | **截图 → 项目简报** | 收到"刷到的项目"截图，自动定位 GitHub 项目、回源核验数据、输出中文简报 | 看到短视频/推文推的项目，想快速搞清楚 | [`skills/screenshot-to-project-brief/`](skills/screenshot-to-project-brief/) |
 | **足球赛前比分预测** | 基于赔率的五步分析法 + 六步主观检查表 + 深盘爆冷筛查清单（通用版） | 任何足球赛事赛前预测 | [`skills/football-prediction-methodology/`](skills/football-prediction-methodology/) |
