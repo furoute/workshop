@@ -54,10 +54,13 @@ tags: [multi-agent, orchestration, review, workflow, handoff, cli]
 | **Review（复审方）** | **以"陌生者视角"验一遍**：照文档能不能做、命令能不能跑、有无遗漏 | 不自己动手改，只出意见 |
 | **Arbitrate（仲裁方）** | 当两方观点冲突时，**用实测/证据裁定** | 不以"感觉"判对错 |
 
-> **关键角色边界**（最容易搞错）：
-> - ✅ **Dispatch 与 Arbitrate 可以是同一个 agent**（调度方天然适合做中立裁判）；
-> - ❌ **Dispatch 与 Execute 不能是同一个**（派活的人不该自己干，否则没人复核）；
-> - ❌ **Review 与 Execute 不能是同一个**（等于自己审自己，抓不出问题）。
+### 角色绑定的边界（最容易搞错）
+
+- ✅ **Dispatch 与 Arbitrate 可以是同一个 agent**（调度方天然中立，**前提是它自己没有下场执行**）；
+- ❌ **Dispatch 与 Execute 不能是同一个**（派活的人不该自己干，否则没人复核）；
+- ❌ **Review 与 Execute 不能是同一个**（等于自己审自己，抓不出问题）；
+- ❌ **Arbitrate 必须是争议双方之外的第三方** —— 若 Dispatch 本人参与了 Execute/Review，
+  **它就不能当仲裁方**，必须另找一个中立的 agent。
 
 ---
 
@@ -85,9 +88,10 @@ hermes -z "<提示词>"                  # 一次性执行（长文本建议走�
 hermes --continue                     # 续上一次会话
 hermes --resume <session-id>          # 续指定会话
 
-# Codex CLI（执行方：写代码）—— ⚠️ 以本机 codex --help 为准
+# Codex CLI（执行方：写代码）—— 已用 codex --help 实测核对
 codex exec --sandbox workspace-write \
   --add-dir <可写目录1> --add-dir <可写目录2> \
+  -C <独立工作目录> \
   "<任务内容>"
 
 # DSH（DeepSeek Harness，执行/文档方）—— ⚠️ 以本机 dsh --help 为准
@@ -108,7 +112,7 @@ openclaw agent --message "<任务内容>" --timeout <秒>
 
 ---
 
-## 三、Workflow（五步）
+## 三、Workflow（五步 + 返工闭环）
 
 ```
 第零步  人 → Dispatch（需求可能分多段）
@@ -121,8 +125,29 @@ openclaw agent --message "<任务内容>" --timeout <秒>
    ↓
 ④ 交叉复审（Review，以"陌生视角"）→ 意见落文件
    ↓
-⑤ 仲裁（冲突时）+ 汇报（Dispatch → 人，一条）
+   ├─ 复审通过 ──────────→ ⑤ 汇报（Dispatch → 人，一条）
+   │
+   └─ 复审发现问题 ──→ 退回 ③（Execute 修正）
+                          ↓
+                     ①' 复验（Review 只验改动点）
+                          ↓
+                     ├─ 通过 → ⑤ 汇报
+                     └─ 仍有问题 → 再退回（限 2 轮）
+                                    ↓
+                          2 轮仍不过 → 仲裁（⑤）或上报人决策
 ```
+
+**返工闭环的三条规矩**：
+
+1. **复审意见必须落到文件**（哪一条不通过、要改成什么），Execute 照着改，不靠口头传；
+2. **复验只验改动点**，不重跑全文（省时间，也避免"越改越乱"）；
+3. **限 2 轮** —— 两轮还不过，说明**任务单本身有问题**，交给仲裁或上报人，
+   **不要无限来回**（那正是最烧 token 的死循环）。
+
+### 仲裁后也要闭环
+
+仲裁判某一方错 → **错的那方按裁定修正 → 复验一次 → 才结案**。
+**仲裁不是终点，是"回到 Execute 再走一遍"的起点。**
 
 ### ① 任务单要写清什么
 
@@ -204,9 +229,19 @@ openclaw agent --message "<任务内容>" --timeout <秒>
 
 ## 五、名字处理（对外发布的规矩）
 
-- **写 agent 本身的名字**：Hermes / OpenClaw / Codex / DSH / Muse 等；
-- **不写内部昵称、代号、人名**；
-- 理由：昵称只在内部有语境，对外没有意义；agent 名是通用标识。
+- **对外文档**里，用 **agent 产品名**：Hermes / OpenClaw / Codex / DSH / Muse；
+- **不写内部昵称、代号、人名** —— 昵称只在内部有语境，对外没有意义；
+- ⚠️ **但产品名在多机部署时不唯一**（你可能有两台机器都跑 Codex）。
+
+**⇒ 规则**：
+
+| 场景 | 用什么 |
+|---|---|
+| 对外文档、文章、技能说明 | **产品名**（Codex、Hermes）|
+| 实际寻址、派活、路由 | **唯一 agent ID**（如 `codex-desktop`、`codex-laptop`）|
+| 写任务单的"收件人" | **唯一 ID**，并在括号里标产品名（如 `codex-desktop`（Codex））|
+
+**理由**：产品名是给人看懂的，唯一 ID 是给系统执行的。**两者都要有，但别混。**
 
 ---
 
