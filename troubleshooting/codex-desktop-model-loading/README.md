@@ -65,3 +65,63 @@ codex exec -C <空目录> --skip-git-repo-check --sandbox read-only "只回复 O
 ```
 
 CLI 正常 + 桌面端卡加载，基本就是同一类。
+
+---
+
+## 版本族谱（2026-10-18 由 Codex CLI 实测核对）
+
+桌面版和 CLI **同源**（都用 Codex core），但**不是同一个软件包**，版本序列完全独立：
+
+| 层 | 版本 | 怎么查 |
+|---|---|---|
+| CLI（npm 安装） | `0.147.0` | `codex --version` |
+| 桌面版外层 MSIX 包 | `26.1013.4894.0` | `Get-AppxPackage -Name "*Codex*"` |
+| 桌面版内层 Electron 应用 | `26.1013.40934` | `app.asar` 内 `package.json` |
+| **桌面版内置的 codex 后端** | **`0.163.0-alpha.10.2`** | `<MSIX>\app\resources\codex.exe --version` |
+
+**两个要点：**
+
+1. **桌面版捆绑的后端比 npm CLI 还新**（`0.163.0-alpha.10.2` > `0.147.0`）。所以「升级 CLI 修桌面版」是走不通的 —— 它们各自升级。
+2. **`26.1013.40934` 不是 MSIX 包版本**，那是内层 Electron 应用的版本；外层包是 `26.1013.4894.0`。查 issue #54841 时注意别对错号。
+
+---
+
+## 交叉核对的两点修正（Codex CLI 复核）
+
+CDX 在本机 `app.asar` 里**直接搜到了同一处报错条件**，证实了报告的代码级定位：
+
+```js
+requireWorkBrowserIdentity && node_repl != null && principal == null
+  → throw Error('Work browser access requires an authenticated account')
+```
+
+同时提出两点修正，原报告已按此更新：
+
+| 项 | 原报告 | 修正后 |
+|---|---|---|
+| `26.1013.40934` 的层级 | 标为 MSIX 包版本 | **内层 Electron 应用版本**（外层 MSIX 是 `26.1013.4894.0`） |
+| originator 修改的必要性 | 列为修复步骤之一 | **不能证明是必要根因** —— 这一次同时改了登录态、模式、模型记忆、45 个会话 model、22 个 originator，多变量并发，只能视为「兼容性清理」 |
+
+**方法论提醒**：一次修复合了多个改动时，别把每个改动都当成必要条件写进结论 —— 下次照抄可能白改。
+
+---
+
+## 附带发现的另一个坑：Windows 沙箱 runner 挂了
+
+排查过程中撞上第二个独立故障，**与模型加载问题无关**：
+
+```
+codex exec -s workspace-write ... 
+→ windows sandbox: timed out after 15000ms connecting runner pipe-in
+```
+
+- 连裸 `echo` 都失败；`-s danger-full-access`（不走沙箱）完全正常
+- 桌面版退出、node 进程清零后仍然复现 ⇒ **不是配置文件冲突**
+- DSH 不受影响，因为 DSH 用自己的沙箱实现（`dsh-sandbox-windows-acl`），不走 `codex-windows-sandbox-service`
+
+**临时绕法**：唤醒脚本 `wake-codex.cmd` 默认改用 `danger-full-access`（备份 `.bak-20261018`）。
+⚠️ **注意**：`danger-full-access` 没有沙箱保护，删除/移动/覆盖类任务必须先经人确认。
+
+---
+
+*版本族谱与交叉核对部分由蓝莓（Hermes）在 2026-10-18 依据 Codex CLI 的回复整理。*
