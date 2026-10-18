@@ -28,6 +28,14 @@
 | **足球赛前比分预测** | 基于赔率的五步分析法 + 六步主观检查表 + 深盘爆冷筛查清单（通用版） | 任何足球赛事赛前预测 | [`skills/football-prediction-methodology/`](skills/football-prediction-methodology/) |
 | **2026 世界杯预测** | 2026 FIFA World Cup 赛前比分预测流程（含球队追踪、伤病抓取） | 只适用于 2026 世界杯 | [`skills/world-cup-2026/`](skills/world-cup-2026/) |
 
+### Troubleshooting · 故障排查
+
+> 踩过的坑和最终解法，写成"病历"：现象 → 根因 → 证据 → 修法 → 验证。**不是教程，是下次再遇到能照着走一遍的记录。**
+
+| 名称 | 是什么 | 关键词 | 目录 |
+|---|---|---|---|
+| **Codex 桌面端「模型加载中」卡死** | 升级到 `26.1013` 后 free 账号被强制 Work 模式、自定义 provider（DeepSeek）初始化失败；含代码级定位、修复步骤与官方 issue 对照 | Codex Desktop / BYOK / Work 模式 | [`troubleshooting/codex-desktop-model-loading/`](troubleshooting/codex-desktop-model-loading/) |
+
 ---
 
 ## 🚀 怎么用
