@@ -1,99 +1,108 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="kb-title kb-desc" font-family="system-ui, -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif">
-  <title id="kb-title">自建知识库 · 架构</title>
-  <desc id="kb-desc">自建知识库分为事实源、证据层、判断层和展示层；Agent 查询 FTS5，人查看 Obsidian。</desc>
+  <title id="kb-title">自建知识库架构图</title>
+  <desc id="kb-desc">需求方与协调、执行、复核智能体协同，将原位资料转化为可检索证据、可核验判断和可浏览知识库。</desc>
   <defs>
-    <pattern id="grid" width="48" height="48" patternUnits="userSpaceOnUse">
-      <path d="M48 0H0V48" fill="none" stroke="#162538" stroke-width="1"/>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.6" fill="#1e293b"/>
     </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+    <marker id="arrowG" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#34d399"/>
+    </marker>
+    <marker id="arrowP" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#a78bfa"/>
+    </marker>
   </defs>
 
-  <rect width="1400" height="900" fill="#07111f"/>
-  <rect width="1400" height="900" fill="url(#grid)"/>
+  <rect width="1400" height="900" fill="#020617"/>
+  <rect width="1400" height="900" fill="url(#dots)"/>
 
-  <rect x="679" y="27" width="42" height="5" rx="2.5" fill="#38bdf8"/>
-  <text x="700" y="71" text-anchor="middle" font-size="40" font-weight="700" fill="#f8fafc">自建知识库 · 架构</text>
-  <text x="700" y="107" text-anchor="middle" font-size="20" fill="#b6c4d3">资料原位只读 · 证据精确召回 · 判断有人负责 · 展示只给人看</text>
+  <!-- 标题 -->
+  <text x="48" y="58" font-size="34" font-weight="700" fill="#ffffff">自建知识库 · 架构图</text>
+  <rect x="410" y="32" width="136" height="30" rx="15" fill="#064e3b" stroke="#34d399" stroke-width="1.4"/>
+  <text x="478" y="53" text-anchor="middle" font-size="16" font-weight="700" fill="#34d399">落地架构</text>
+  <text x="48" y="97" font-size="18" fill="#94a3b8">从原位资料到可检索证据、可核验判断与可浏览 Wiki</text>
 
-  <rect x="530" y="126" width="340" height="42" rx="21" fill="#201707" stroke="#eab308" stroke-width="2"/>
-  <text x="700" y="153" text-anchor="middle" font-size="18" font-weight="700" fill="#fde68a">通道：ACP 信箱 + SSH 门铃</text>
+  <!-- 左侧：入口与协调 -->
+  <rect x="48" y="120" width="286" height="680" rx="14" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="9 6"/>
+  <text x="70" y="148" font-size="20" font-weight="700" fill="#fbbf24">入口与协调</text>
 
-  <g id="fact-source">
-    <rect x="48" y="190" width="1304" height="130" rx="14" fill="#0d2233" stroke="#38bdf8" stroke-width="2"/>
-    <rect x="48" y="190" width="245" height="130" rx="14" fill="#0c3147"/>
-    <path d="M293 190V320" stroke="#38bdf8" stroke-width="2"/>
-    <text x="170" y="260" text-anchor="middle" font-size="26" font-weight="700" fill="#7dd3fc">01 · 事实源</text>
+  <rect x="70" y="158" width="242" height="125.2" rx="10" fill="#111827" stroke="#94a3b8" stroke-width="1.8"/>
+  <text x="84" y="200" font-size="18" fill="#94a3b8">▣</text>
+  <text x="116" y="205" font-size="18" font-weight="700" fill="#ffffff">需求方</text>
+  <text x="116" y="241" font-size="18" fill="#cbd5e1">提出需求 · 验收决策</text>
 
-    <rect x="311" y="206" width="327" height="98" rx="9" fill="#102b40" stroke="#1f4e69" stroke-width="1.5"/>
-    <text x="474" y="246" text-anchor="middle" font-size="20" font-weight="700" fill="#f8fafc">原文件目录</text>
-    <text x="474" y="279" text-anchor="middle" font-size="18" fill="#dbeafe">原位保留，只读</text>
+  <rect x="70" y="287.2" width="242" height="125.2" rx="10" fill="#04241c" stroke="#34d399" stroke-width="1.8"/>
+  <text x="84" y="329.2" font-size="18" fill="#34d399">&lt;/&gt;</text>
+  <text x="116" y="334.2" font-size="18" font-weight="700" fill="#ffffff">协调 Agent</text>
+  <text x="116" y="370.2" font-size="18" fill="#cbd5e1">拆步派活 · 首查 · 收口</text>
 
-    <rect x="652" y="206" width="327" height="98" rx="9" fill="#102b40" stroke="#1f4e69" stroke-width="1.5"/>
-    <text x="815" y="246" text-anchor="middle" font-size="20" font-weight="700" fill="#f8fafc">文件规模</text>
-    <text x="815" y="279" text-anchor="middle" font-size="18" fill="#dbeafe">12,000+ 文件</text>
+  <rect x="70" y="416.4" width="242" height="125.2" rx="10" fill="#04241c" stroke="#34d399" stroke-width="1.8"/>
+  <text x="84" y="458.4" font-size="18" fill="#34d399">&lt;/&gt;</text>
+  <text x="116" y="463.4" font-size="18" font-weight="700" fill="#ffffff">执行 Agent</text>
+  <text x="116" y="499.4" font-size="18" fill="#cbd5e1">盘点 · 解析 · 建库 · 生成</text>
 
-    <rect x="993" y="206" width="327" height="98" rx="9" fill="#102b40" stroke="#1f4e69" stroke-width="1.5"/>
-    <text x="1156" y="246" text-anchor="middle" font-size="20" font-weight="700" fill="#f8fafc">数据流向</text>
-    <text x="1156" y="279" text-anchor="middle" font-size="18" fill="#dbeafe">进入证据抽取</text>
-  </g>
+  <rect x="70" y="545.6" width="242" height="125.2" rx="10" fill="#04241c" stroke="#34d399" stroke-width="1.8"/>
+  <text x="84" y="587.6" font-size="18" fill="#34d399">&lt;/&gt;</text>
+  <text x="116" y="592.6" font-size="18" font-weight="700" fill="#ffffff">复核 Agent</text>
+  <text x="116" y="628.6" font-size="18" fill="#cbd5e1">架构评审 · 安全复核</text>
 
-  <g id="evidence">
-    <rect x="48" y="338" width="1304" height="130" rx="14" fill="#191331" stroke="#a78bfa" stroke-width="2"/>
-    <rect x="48" y="338" width="245" height="130" rx="14" fill="#2a2050"/>
-    <path d="M293 338V468" stroke="#a78bfa" stroke-width="2"/>
-    <text x="170" y="408" text-anchor="middle" font-size="26" font-weight="700" fill="#ddd6fe">02 · 证据层</text>
+  <rect x="70" y="674.8" width="242" height="125.2" rx="10" fill="#261105" stroke="#fb923c" stroke-width="1.8"/>
+  <text x="84" y="713.8" font-size="18" fill="#fb923c">≡</text>
+  <text x="116" y="718.8" font-size="18" font-weight="700" fill="#ffffff">消息与唤醒</text>
+  <text x="116" y="750.8" font-size="18" fill="#cbd5e1">ACP 信箱 + SSH 门铃</text>
+  <text x="116" y="778.8" font-size="18" fill="#fb923c">按需唤醒 · 用完关闭</text>
 
-    <rect x="311" y="354" width="327" height="98" rx="9" fill="#201944" stroke="#44357b" stroke-width="1.5"/>
-    <text x="474" y="394" text-anchor="middle" font-size="20" font-weight="700" fill="#f8fafc">SQLite + FTS5</text>
-    <text x="474" y="427" text-anchor="middle" font-size="18" fill="#ede9fe">关键词精确召回</text>
+  <text x="191" y="821" text-anchor="middle" font-size="16" fill="#7d8da1">常开协调 · 按需执行</text>
 
-    <rect x="652" y="354" width="327" height="98" rx="9" fill="#201944" stroke="#44357b" stroke-width="1.5"/>
-    <text x="815" y="394" text-anchor="middle" font-size="20" font-weight="700" fill="#f8fafc">索引方式</text>
-    <text x="815" y="427" text-anchor="middle" font-size="18" fill="#ede9fe">倒排表直接命中</text>
+  <!-- 右侧：四层数据与判断链 -->
+  <rect x="356" y="120" width="996" height="680" rx="14" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="9 6"/>
+  <text x="380" y="148" font-size="20" font-weight="700" fill="#fbbf24">四层数据与判断链</text>
 
-    <rect x="993" y="354" width="327" height="98" rx="9" fill="#201944" stroke="#44357b" stroke-width="1.5"/>
-    <text x="1156" y="394" text-anchor="middle" font-size="20" font-weight="700" fill="#f8fafc">查询输出</text>
-    <text x="1156" y="427" text-anchor="middle" font-size="18" fill="#ede9fe">文件 · 段落 · 位置</text>
-  </g>
+  <!-- 01 事实源 -->
+  <rect x="382" y="158" width="944" height="149.5" rx="10" fill="#111827" stroke="#94a3b8" stroke-width="1.8"/>
+  <text x="854" y="181" text-anchor="middle" font-size="18" fill="#94a3b8">▣</text>
+  <text x="854" y="205" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">01　事实源 · 原位只读</text>
+  <text x="854" y="237" text-anchor="middle" font-size="18" fill="#cbd5e1">原件保留在原文件目录，不搬入展示层</text>
+  <text x="854" y="267" text-anchor="middle" font-size="16" fill="#94a3b8">3,326 个文件 · 12.27 GiB</text>
 
-  <g id="judgment">
-    <rect x="48" y="486" width="1304" height="130" rx="14" fill="#0e2723" stroke="#34d399" stroke-width="2"/>
-    <rect x="48" y="486" width="245" height="130" rx="14" fill="#123b31"/>
-    <path d="M293 486V616" stroke="#34d399" stroke-width="2"/>
-    <text x="170" y="556" text-anchor="middle" font-size="26" font-weight="700" fill="#a7f3d0">03 · 判断层</text>
+  <line x1="854" y1="307.5" x2="854" y2="321.5" stroke="#a78bfa" stroke-width="2.5" marker-end="url(#arrowP)"/>
 
-    <rect x="311" y="502" width="327" height="98" rx="9" fill="#113a31" stroke="#236b58" stroke-width="1.5"/>
-    <text x="474" y="542" text-anchor="middle" font-size="20" font-weight="700" fill="#f8fafc">实体卡</text>
-    <text x="474" y="575" text-anchor="middle" font-size="18" fill="#d1fae5">项目与主题沉淀</text>
+  <!-- 02 证据层 -->
+  <rect x="382" y="321.5" width="944" height="149.5" rx="10" fill="#170b33" stroke="#a78bfa" stroke-width="1.8"/>
+  <text x="854" y="344.5" text-anchor="middle" font-size="18" fill="#a78bfa">▤</text>
+  <text x="854" y="368.5" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">02　证据层 · FTS5 主召回</text>
+  <text x="854" y="400.5" text-anchor="middle" font-size="18" fill="#cbd5e1">SQLite + FTS5 · 中文精确检索 · BM25</text>
+  <text x="854" y="430.5" text-anchor="middle" font-size="16" fill="#94a3b8">返回文件、段落与位置</text>
 
-    <rect x="652" y="502" width="327" height="98" rx="9" fill="#113a31" stroke="#236b58" stroke-width="1.5"/>
-    <text x="815" y="542" text-anchor="middle" font-size="20" font-weight="700" fill="#f8fafc">人工判断</text>
-    <text x="815" y="575" text-anchor="middle" font-size="18" fill="#d1fae5">每条结论带证据</text>
+  <line x1="854" y1="471" x2="854" y2="485" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrowG)"/>
 
-    <rect x="993" y="502" width="327" height="98" rx="9" fill="#113a31" stroke="#236b58" stroke-width="1.5"/>
-    <text x="1156" y="542" text-anchor="middle" font-size="20" font-weight="700" fill="#f8fafc">不确定项</text>
-    <text x="1156" y="575" text-anchor="middle" font-size="18" fill="#d1fae5">标注状态待核</text>
-  </g>
+  <!-- 03 判断层 -->
+  <rect x="382" y="485" width="944" height="149.5" rx="10" fill="#04241c" stroke="#34d399" stroke-width="1.8"/>
+  <text x="854" y="508" text-anchor="middle" font-size="18" fill="#34d399">&lt;/&gt;</text>
+  <text x="854" y="532" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">03　判断层 · 卡片主作答</text>
+  <text x="854" y="564" text-anchor="middle" font-size="18" fill="#cbd5e1">项目卡 · 主题页 · 决策页 · 问答页</text>
+  <text x="854" y="594" text-anchor="middle" font-size="16" fill="#fb7185">证据不足写「状态待核」</text>
 
-  <g id="display">
-    <rect x="48" y="634" width="1304" height="130" rx="14" fill="#291f0b" stroke="#fbbf24" stroke-width="2"/>
-    <rect x="48" y="634" width="245" height="130" rx="14" fill="#46340e"/>
-    <path d="M293 634V764" stroke="#fbbf24" stroke-width="2"/>
-    <text x="170" y="704" text-anchor="middle" font-size="26" font-weight="700" fill="#fde68a">04 · 展示层</text>
+  <line x1="854" y1="634.5" x2="854" y2="648.5" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)"/>
 
-    <rect x="311" y="650" width="327" height="98" rx="9" fill="#3d2c0d" stroke="#76571a" stroke-width="1.5"/>
-    <text x="474" y="690" text-anchor="middle" font-size="20" font-weight="700" fill="#f8fafc">Obsidian</text>
-    <text x="474" y="723" text-anchor="middle" font-size="18" fill="#fef3c7">卡片与双链</text>
+  <!-- 04 展示层 -->
+  <rect x="382" y="648.5" width="630" height="149.5" rx="10" fill="#03202b" stroke="#22d3ee" stroke-width="1.8"/>
+  <text x="697" y="671.5" text-anchor="middle" font-size="18" fill="#22d3ee">▦</text>
+  <text x="697" y="695.5" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">04　展示层 · Obsidian Wiki</text>
+  <text x="697" y="727.5" text-anchor="middle" font-size="18" fill="#cbd5e1">人看卡片与双链 · 非 Agent 主入口</text>
+  <text x="697" y="757.5" text-anchor="middle" font-size="16" fill="#94a3b8">Bases 属性视图 · 无插件可降级</text>
 
-    <rect x="652" y="650" width="327" height="98" rx="9" fill="#3d2c0d" stroke="#76571a" stroke-width="1.5"/>
-    <text x="815" y="690" text-anchor="middle" font-size="20" font-weight="700" fill="#f8fafc">给人看</text>
-    <text x="815" y="723" text-anchor="middle" font-size="18" fill="#fef3c7">浏览、关联、判断</text>
+  <rect x="1030" y="648.5" width="296" height="149.5" rx="10" fill="#241703" stroke="#fbbf24" stroke-width="1.8"/>
+  <text x="1178" y="671.5" text-anchor="middle" font-size="18" fill="#fbbf24">☁</text>
+  <text x="1178" y="695.5" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">Obsidian CLI</text>
+  <text x="1178" y="727.5" text-anchor="middle" font-size="18" fill="#cbd5e1">辅助桥 · 非主入口</text>
+  <text x="1178" y="757.5" text-anchor="middle" font-size="16" fill="#94a3b8">中文命令落文件后取回</text>
 
-    <rect x="993" y="650" width="327" height="98" rx="9" fill="#3d2c0d" stroke="#76571a" stroke-width="1.5"/>
-    <text x="1156" y="690" text-anchor="middle" font-size="20" font-weight="700" fill="#f8fafc">入口边界</text>
-    <text x="1156" y="723" text-anchor="middle" font-size="18" fill="#fef3c7">Agent 主入口是 FTS5</text>
-  </g>
-
-  <line x1="700" y1="780" x2="700" y2="800" stroke="#475569" stroke-width="2"/>
-  <rect x="390" y="800" width="620" height="56" rx="28" fill="#111c2d" stroke="#334155" stroke-width="1.5"/>
-  <text x="700" y="836" text-anchor="middle" font-size="20" font-weight="700" fill="#f8fafc">Agent 查 FTS5 · 人看 Obsidian</text>
+  <!-- 实测结果 -->
+  <rect x="48" y="838" width="1304" height="48" rx="24" fill="#0f172a" stroke="#1e293b" stroke-width="1.8"/>
+  <text x="72" y="868" font-size="22" font-weight="700" fill="#ffffff">实测结果</text>
+  <text x="210" y="868" font-size="18" fill="#e2e8f0">3,326 个文件全部有终态 · 292 条双链 / 0 断链</text>
 </svg>
