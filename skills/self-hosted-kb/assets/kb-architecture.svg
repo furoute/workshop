@@ -1,0 +1,174 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="1210" viewBox="0 0 1280 1210" font-family="system-ui, -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif">
+  <defs>
+    <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.6" fill="#1e293b"/>
+    </pattern>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
+    </marker>
+    <marker id="arrowG" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#34d399"/>
+    </marker>
+    <marker id="arrowP" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#a78bfa"/>
+    </marker>
+  </defs>
+
+  <!-- archify dark classic -->
+  <rect width="1280" height="1210" fill="#020617"/>
+  <rect width="1280" height="1210" fill="url(#dots)"/>
+
+  <!-- Title -->
+  <text x="48" y="54" font-size="27" font-weight="700" fill="#ffffff">自建知识库 · 架构图</text>
+  <rect x="316" y="32" width="186" height="26" rx="13" fill="#064e3b" stroke="#34d399" stroke-width="1.2"/>
+  <text x="409" y="50" text-anchor="middle" font-size="12" font-weight="700" fill="#34d399">试点实测版 · 已结项</text>
+  <text x="48" y="82" font-size="13" fill="#94a3b8">某某中心试点（2026-10-24 结项）· 按实际建成形态绘制 · 智能体检索走 SQLite/FTS5 主召回，卡片主作答，人看 Obsidian</text>
+
+  <!-- ===== Left region: people & coordination ===== -->
+  <rect x="48" y="108" width="248" height="724" rx="12" fill="none" stroke="#fbbf24" stroke-width="1.6" stroke-dasharray="8 5"/>
+  <text x="64" y="134" font-size="13.5" font-weight="700" fill="#fbbf24">入口与协调 · 上网本常开</text>
+
+  <!-- fu external -->
+  <rect x="68" y="150" width="208" height="92" rx="9" fill="#111827" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="82" y="170" font-size="11" fill="#94a3b8">▣</text>
+  <text x="172" y="182" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">fu（骏粑粑）</text>
+  <text x="172" y="204" text-anchor="middle" font-size="11.5" fill="#94a3b8">提需求 · 拍板 · 口述决定</text>
+  <text x="172" y="224" text-anchor="middle" font-size="11.5" fill="#94a3b8">验收（10 问清单）</text>
+
+  <!-- Hermes backend -->
+  <rect x="68" y="268" width="208" height="104" rx="9" fill="#04241c" stroke="#34d399" stroke-width="1.5"/>
+  <text x="82" y="288" font-size="11" fill="#34d399">&lt;/&gt;</text>
+  <text x="172" y="300" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">协调 agent（Hermes）</text>
+  <text x="172" y="322" text-anchor="middle" font-size="11.5" fill="#94a3b8">上网本 · 维护者 / 协调</text>
+  <text x="172" y="342" text-anchor="middle" font-size="11.5" fill="#94a3b8">拆步派活 · 首查 · 收口</text>
+  <text x="172" y="360" text-anchor="middle" font-size="11.5" fill="#94a3b8">公共档案唯一写权限</text>
+
+  <!-- 执行 backend -->
+  <rect x="68" y="398" width="208" height="104" rx="9" fill="#04241c" stroke="#34d399" stroke-width="1.5"/>
+  <text x="82" y="418" font-size="11" fill="#34d399">&lt;/&gt;</text>
+  <text x="172" y="430" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">执行 agent（桌面机）</text>
+  <text x="172" y="452" text-anchor="middle" font-size="11.5" fill="#94a3b8">执行：盘点 / 解析 / 建库 / 生成卡</text>
+  <text x="172" y="472" text-anchor="middle" font-size="11.5" fill="#94a3b8">单写者</text>
+  <text x="172" y="490" text-anchor="middle" font-size="11.5" fill="#fb7185">自估耗时严重高估 · 以实测为准</text>
+
+  <!-- 复审 / Dangao backend -->
+  <rect x="68" y="528" width="208" height="92" rx="9" fill="#04241c" stroke="#34d399" stroke-width="1.5"/>
+  <text x="82" y="548" font-size="11" fill="#34d399">&lt;/&gt;</text>
+  <text x="172" y="560" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">复审 · 复核 agent</text>
+  <text x="172" y="582" text-anchor="middle" font-size="11.5" fill="#94a3b8">架构评审（只审争议判断）</text>
+  <text x="172" y="602" text-anchor="middle" font-size="11.5" fill="#94a3b8">复核 / 安全复核</text>
+
+  <!-- message bus -->
+  <rect x="68" y="646" width="208" height="104" rx="9" fill="#261105" stroke="#fb923c" stroke-width="1.5"/>
+  <text x="82" y="666" font-size="11" fill="#fb923c">≡</text>
+  <text x="172" y="678" text-anchor="middle" font-size="14" font-weight="700" fill="#ffffff">ACP 信箱 + SSH 门铃</text>
+  <text x="172" y="700" text-anchor="middle" font-size="11.5" fill="#94a3b8">正文走 ACP 签名信（msg_id）</text>
+  <text x="172" y="720" text-anchor="middle" font-size="11.5" fill="#94a3b8">SSH 只递一句「去看信」</text>
+  <text x="172" y="738" text-anchor="middle" font-size="11.5" fill="#94a3b8">智能插座按需开机 · 用完关机</text>
+
+  <text x="172" y="792" text-anchor="middle" font-size="11.5" fill="#7d8da1">下一步：58 个 draft 核验 → verified</text>
+  <text x="172" y="812" text-anchor="middle" font-size="11.5" fill="#7d8da1">归档档分批建库 · kb 契约三件套</text>
+
+  <!-- connection left -> desktop -->
+  <line x1="296" y1="698" x2="322" y2="698" stroke="#34d399" stroke-width="2" marker-end="url(#arrowG)"/>
+  <text x="309" y="686" text-anchor="middle" font-size="10" fill="#34d399">唤醒</text>
+
+  <!-- ===== Desktop region ===== -->
+  <rect x="320" y="108" width="912" height="724" rx="12" fill="none" stroke="#fbbf24" stroke-width="1.6" stroke-dasharray="8 5"/>
+  <text x="336" y="134" font-size="13.5" font-weight="700" fill="#fbbf24">台式机 · Win11 · 按需开机（非 7×24 · 无镜像）</text>
+
+  <!-- Layer 1 external: fact source -->
+  <rect x="344" y="150" width="864" height="138" rx="9" fill="#111827" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="358" y="170" font-size="11" fill="#94a3b8">▣</text>
+  <text x="776" y="182" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">事实源 · D 盘原件</text>
+  <text x="776" y="204" text-anchor="middle" font-size="12" fill="#94a3b8">D:\资料盘\某某中心 · 3,326 文件 / 12.27 GiB · 原位只读，不搬入 Obsidian</text>
+  <text x="364" y="232" font-size="12" fill="#cbd5e1">终态全覆盖：有正文 ok 1,485 · 仅元数据 975 · 重复件 816（取时间戳最新）· 打印版 PDF 39（不 OCR）· 裁定跳过 10 · 空文件 2</text>
+  <text x="364" y="256" font-size="12" fill="#94a3b8">处理规则（口述决定 2026-10-23）：资料汇总只做文件名索引 · 官方容器 19 份不抽取 · 正文不写设备绝对路径</text>
+
+  <line x1="776" y1="288" x2="776" y2="310" stroke="#a78bfa" stroke-width="2" marker-end="url(#arrowP)"/>
+  <text x="790" y="303" font-size="10.5" fill="#34d399">解析正文 · SHA-256 去重</text>
+
+  <!-- Layer 2 database -->
+  <rect x="344" y="314" width="864" height="138" rx="9" fill="#170b33" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="358" y="334" font-size="11" fill="#a78bfa">▤</text>
+  <text x="776" y="346" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">证据层 · kb.sqlite3 + FTS5</text>
+  <text x="776" y="368" text-anchor="middle" font-size="12" fill="#94a3b8">Agent 主召回入口 · 中文 trigram 倒排索引 · BM25 排序</text>
+  <text x="364" y="396" font-size="12" fill="#cbd5e1">正文文本块 85,716 · 总字符 1.2 亿 · 去重后内容 2,510 份 · content ↔ occurrence 多对多（同一内容在几个项目一查便知）</text>
+  <text x="364" y="420" font-size="12" fill="#94a3b8">实测体检：integrity_check = ok · ambiguous = 0 · 删除 35,987 个文件后检索零影响（被删者本就不在索引里）</text>
+  <text x="364" y="442" font-size="12" fill="#94a3b8">可移植性靠契约不靠进程：doc_id + 相对路径 + SHA-256</text>
+
+  <line x1="776" y1="452" x2="776" y2="474" stroke="#34d399" stroke-width="2" marker-end="url(#arrowG)"/>
+  <text x="790" y="467" font-size="10.5" fill="#34d399">据证据生成 · 每条结论带三件套</text>
+
+  <!-- Layer 3 backend: judgment -->
+  <rect x="344" y="478" width="864" height="150" rx="9" fill="#04241c" stroke="#34d399" stroke-width="1.5"/>
+  <text x="358" y="498" font-size="11" fill="#34d399">&lt;/&gt;</text>
+  <text x="776" y="510" text-anchor="middle" font-size="16" font-weight="700" fill="#ffffff">判断层 · 卡片主作答</text>
+  <text x="776" y="532" text-anchor="middle" font-size="12" fill="#94a3b8">项目卡 13 · 主题页 6 · 决策页 4 · 问答页 11 —— 人工判断的沉淀</text>
+  <text x="364" y="560" font-size="12" fill="#cbd5e1">状态只许枚举：business_status 在做 / 已结束 / 分析中；bid_status 已中标 / 未投标 / 已投标未中标 / 状态待核</text>
+  <text x="364" y="584" font-size="12" fill="#cbd5e1">证据三件套：doc_id + 相对源根路径 + SHA-256 + locator；推断标 [inferred]，口述决定单独标注，不伪装成文件证据</text>
+  <text x="364" y="608" font-size="12" fill="#fb7185">红线：证据不足写「状态待核」，不得越级写成 —— 合同额 ≠ 已回款 · 候选人公示 ≠ 已中标 · 报价 ≠ 预算；每页必写证据边界</text>
+
+  <line x1="640" y1="628" x2="640" y2="650" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="654" y="643" font-size="10.5" fill="#94a3b8">组织成 Wiki 供人查阅</text>
+
+  <!-- Layer 4 frontend presentation -->
+  <rect x="344" y="654" width="528" height="150" rx="9" fill="#03202b" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="358" y="674" font-size="11" fill="#22d3ee">▦</text>
+  <text x="608" y="686" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">展示层 · LLM Wiki（Obsidian）</text>
+  <text x="608" y="708" text-anchor="middle" font-size="12" fill="#94a3b8">index.md · LLM-Wiki.md · _gen 20 · _templates 4</text>
+  <text x="364" y="736" font-size="12" fill="#cbd5e1">Bases 属性视图（核心能力）：按状态看项目 / 问答</text>
+  <text x="364" y="760" font-size="12" fill="#cbd5e1">无插件降级 = 纯 Markdown 表格 · 未装任何社区插件</text>
+  <text x="364" y="784" font-size="12" fill="#94a3b8">全库双链 292 条 · 断链 0（obsidian unresolved 自检）</text>
+
+  <!-- Obsidian CLI cloud -->
+  <rect x="888" y="654" width="320" height="150" rx="9" fill="#241703" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="902" y="674" font-size="11" fill="#fbbf24">☁</text>
+  <text x="1048" y="686" text-anchor="middle" font-size="15" font-weight="700" fill="#ffffff">Obsidian CLI · 辅助桥</text>
+  <text x="1048" y="708" text-anchor="middle" font-size="12" fill="#94a3b8">活状态 / UI 动作 · 不是主入口</text>
+  <text x="908" y="736" font-size="12" fill="#cbd5e1">前置开关：设置 → 关于 → 高级 → 命令行界面</text>
+  <text x="908" y="760" font-size="12" fill="#cbd5e1">坑：中文经管道乱码 → 落文件后取回</text>
+  <text x="908" y="784" font-size="12" fill="#94a3b8">坑：启动 Obsidian 须投到会话 1（schtasks）</text>
+
+  <!-- ===== Measured strip ===== -->
+  <rect x="48" y="856" width="1184" height="112" rx="12" fill="#0f172a" stroke="#1e293b" stroke-width="1.5"/>
+  <text x="72" y="888" font-size="14" font-weight="700" fill="#ffffff">实测数据 · 试点结项（2026-10-24）</text>
+  <text x="72" y="918" font-size="13" fill="#e2e8f0">3,326 文件全部有终态　·　双链 292 / 断链 0　·　15 个项目卡生成约 4 分钟　·　试点 12.27 GiB</text>
+  <text x="72" y="946" font-size="13" fill="#94a3b8"></text>
+
+  <!-- ===== Legend (archify style with count pills) ===== -->
+  <text x="48" y="1012" font-size="15" font-weight="700" fill="#ffffff">图例</text>
+  <rect x="48" y="1028" width="16" height="16" rx="4" fill="none" stroke="#34d399" stroke-width="1.6"/>
+  <text x="70" y="1041" font-size="12.5" fill="#e2e8f0">后端 / 判断</text>
+  <rect x="152" y="1029" width="22" height="15" rx="7" fill="#1e293b"/>
+  <text x="163" y="1041" text-anchor="middle" font-size="10.5" fill="#e2e8f0">4</text>
+
+  <rect x="196" y="1028" width="16" height="16" rx="4" fill="none" stroke="#a78bfa" stroke-width="1.6"/>
+  <text x="218" y="1041" font-size="12.5" fill="#e2e8f0">数据库</text>
+  <rect x="268" y="1029" width="22" height="15" rx="7" fill="#1e293b"/>
+  <text x="279" y="1041" text-anchor="middle" font-size="10.5" fill="#e2e8f0">1</text>
+
+  <rect x="312" y="1028" width="16" height="16" rx="4" fill="none" stroke="#22d3ee" stroke-width="1.6"/>
+  <text x="334" y="1041" font-size="12.5" fill="#e2e8f0">前端展示</text>
+  <rect x="396" y="1029" width="22" height="15" rx="7" fill="#1e293b"/>
+  <text x="407" y="1041" text-anchor="middle" font-size="10.5" fill="#e2e8f0">1</text>
+
+  <rect x="440" y="1028" width="16" height="16" rx="4" fill="none" stroke="#fbbf24" stroke-width="1.6"/>
+  <text x="462" y="1041" font-size="12.5" fill="#e2e8f0">云服务 / 辅助桥</text>
+  <rect x="576" y="1029" width="22" height="15" rx="7" fill="#1e293b"/>
+  <text x="587" y="1041" text-anchor="middle" font-size="10.5" fill="#e2e8f0">1</text>
+
+  <rect x="620" y="1028" width="16" height="16" rx="4" fill="none" stroke="#fb923c" stroke-width="1.6"/>
+  <text x="642" y="1041" font-size="12.5" fill="#e2e8f0">消息总线</text>
+  <rect x="704" y="1029" width="22" height="15" rx="7" fill="#1e293b"/>
+  <text x="715" y="1041" text-anchor="middle" font-size="10.5" fill="#e2e8f0">1</text>
+
+  <rect x="748" y="1028" width="16" height="16" rx="4" fill="none" stroke="#94a3b8" stroke-width="1.6"/>
+  <text x="770" y="1041" font-size="12.5" fill="#e2e8f0">外部系统</text>
+  <rect x="832" y="1029" width="22" height="15" rx="7" fill="#1e293b"/>
+  <text x="843" y="1041" text-anchor="middle" font-size="10.5" fill="#e2e8f0">2</text>
+
+  <text x="48" y="1076" font-size="11.5" fill="#7d8da1">依据：某某中心试点结项说明（2026-10-24）· FTS5 索引影响分析（2026-10-24）· Obsidian CLI 开关记录（2026-10-23）</text>
+  <text x="640" y="1128" text-anchor="middle" font-size="13" fill="#94a3b8">与设计稿的区别：四层按建成形态定稿 —— 事实源 / 证据层 / 判断层 / 展示层；向量未上，镜像未建，插件一个没装</text>
+  <text x="640" y="1156" text-anchor="middle" font-size="12" fill="#475569">绒毛（muse-cloud）绘制 · 2026-10-24 · 深色版（ACP-lite 拓扑图同款 archify dark 风格）</text>
+</svg>
