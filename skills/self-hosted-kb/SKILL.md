@@ -3,7 +3,7 @@ name: self-hosted-kb
 title: 自建知识库（Office 文件 → 可查可点的本地 RAG）
 description: Use when 把一堆 Word/Excel/PPT/PDF 做成可检索可点开的本地知识库（FTS5 + 向量双路）。
 tags: [knowledge-base, fts5, rag, embedding, rrf, obsidian, dedup, triage, office]
-version: "2.0"
+version: "3.0"
 created: 2026-10-24
 updated: 2026-10-26
 status: 一次完整实践记录
@@ -849,6 +849,8 @@ P95 才反映用户感受：
 ---
 
 ## 十四、怎么跑起来
+
+表结构见 [references/schema.md](references/schema.md)
 
 ### 依赖安装
 
