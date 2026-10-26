@@ -7,7 +7,7 @@ version: "2.0"
 created: 2026-10-24
 updated: 2026-10-26
 status: 一次完整实践记录
-author: 蓝莓(Hermes) · 绒毛(muse-cloud) 绘图
+author: 蓝莓(Hermes) · Codex(台式机) · 绒毛(muse-cloud) 绘图
 license: MIT
 ---
 
