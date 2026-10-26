@@ -1,108 +1,133 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="900" viewBox="0 0 1400 900" role="img" aria-labelledby="kb-title kb-desc" font-family="system-ui, -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif">
-  <title id="kb-title">自建知识库架构图</title>
-  <desc id="kb-desc">需求方与协调、执行、复核智能体协同，将原位资料转化为可检索证据、可核验判断和可浏览知识库。</desc>
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1000" viewBox="0 0 1600 1000" font-family="system-ui, -apple-system, 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif">
   <defs>
     <pattern id="dots" width="24" height="24" patternUnits="userSpaceOnUse">
       <circle cx="2" cy="2" r="1.6" fill="#1e293b"/>
     </pattern>
-    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto-start-reverse" markerUnits="strokeWidth">
       <path d="M0,0 L8,3 L0,6 Z" fill="#64748b"/>
     </marker>
-    <marker id="arrowG" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L8,3 L0,6 Z" fill="#34d399"/>
+    <marker id="arrGold" markerWidth="16" markerHeight="12" refX="13" refY="6" orient="auto-start-reverse" markerUnits="userSpaceOnUse" viewBox="0 0 16 12">
+      <path d="M1,1 L15,6 L1,11 Z" fill="#fbbf24"/>
     </marker>
-    <marker id="arrowP" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
-      <path d="M0,0 L8,3 L0,6 Z" fill="#a78bfa"/>
+    <marker id="arrCyan" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto-start-reverse" markerUnits="strokeWidth">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#22d3ee"/>
+    </marker>
+    <marker id="arrLayer" markerWidth="14" markerHeight="10" refX="11" refY="5" orient="auto-start-reverse" markerUnits="userSpaceOnUse" viewBox="0 0 14 10">
+      <path d="M1,1 L13,5 L1,9 Z" fill="#64748b"/>
     </marker>
   </defs>
 
-  <rect width="1400" height="900" fill="#020617"/>
-  <rect width="1400" height="900" fill="url(#dots)"/>
+  <!-- archify dark -->
+  <rect width="1600" height="1000" fill="#020617"/>
+  <rect width="1600" height="1000" fill="url(#dots)"/>
 
-  <!-- 标题 -->
-  <text x="48" y="58" font-size="34" font-weight="700" fill="#ffffff">自建知识库 · 架构图</text>
-  <rect x="410" y="32" width="136" height="30" rx="15" fill="#064e3b" stroke="#34d399" stroke-width="1.4"/>
-  <text x="478" y="53" text-anchor="middle" font-size="16" font-weight="700" fill="#34d399">落地架构</text>
-  <text x="48" y="97" font-size="18" fill="#94a3b8">从原位资料到可检索证据、可核验判断与可浏览 Wiki</text>
+  <!-- Title -->
+  <text x="800" y="66" text-anchor="middle" font-size="44" font-weight="700" fill="#ffffff">自建知识库·架构v3</text>
 
-  <!-- 左侧：入口与协调 -->
-  <rect x="48" y="120" width="286" height="680" rx="14" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="9 6"/>
-  <text x="70" y="148" font-size="20" font-weight="700" fill="#fbbf24">入口与协调</text>
+  <!-- ===== Left region frame: compute & collaboration ===== -->
+  <rect x="36" y="100" width="844" height="864" rx="14" fill="none" stroke="#fbbf24" stroke-width="1.6" stroke-dasharray="8 5"/>
+  <text x="60" y="142" font-size="24" font-weight="700" fill="#fbbf24">算力与协作</text>
 
-  <rect x="70" y="158" width="242" height="125.2" rx="10" fill="#111827" stroke="#94a3b8" stroke-width="1.8"/>
-  <text x="84" y="200" font-size="18" fill="#94a3b8">▣</text>
-  <text x="116" y="205" font-size="18" font-weight="700" fill="#ffffff">需求方</text>
-  <text x="116" y="241" font-size="18" fill="#cbd5e1">提出需求 · 验收决策</text>
+  <!-- Card A: production host (desktop) -->
+  <rect x="60" y="158" width="380" height="240" rx="10" fill="#04241c" stroke="#34d399" stroke-width="1.5"/>
+  <text x="250" y="200" text-anchor="middle" font-size="24" font-weight="700" fill="#ffffff">生产主机</text>
+  <rect x="144" y="214" width="212" height="34" rx="17" fill="#064e3b" stroke="#34d399" stroke-width="1.2"/>
+  <text x="250" y="237" text-anchor="middle" font-size="18" font-weight="700" fill="#34d399">Codex + DSH（台式机）</text>
+  <text x="86" y="280" font-size="20" font-weight="600" fill="#e2e8f0">CPU 6 核 12 线程 · 32 GB</text>
+  <text x="86" y="307" font-size="20" font-weight="600" fill="#e2e8f0">GPU 1060 · 6 GB 独显</text>
+  <rect x="80" y="312" width="316" height="30" rx="5" fill="#fbbf24" opacity="0.13"/>
+  <text x="86" y="334" font-size="20" font-weight="700" fill="#fbbf24">SSD 465 GB · 索引在此</text>
+  <text x="86" y="361" font-size="20" font-weight="600" fill="#e2e8f0">HDD 1.8 TB·查询服务</text>
+  <text x="86" y="388" font-size="20" font-weight="600" fill="#e2e8f0">按需开机·智能插座通电·SSH唤醒</text>
 
-  <rect x="70" y="287.2" width="242" height="125.2" rx="10" fill="#04241c" stroke="#34d399" stroke-width="1.8"/>
-  <text x="84" y="329.2" font-size="18" fill="#34d399">&lt;/&gt;</text>
-  <text x="116" y="334.2" font-size="18" font-weight="700" fill="#ffffff">协调 Agent</text>
-  <text x="116" y="370.2" font-size="18" fill="#cbd5e1">拆步派活 · 首查 · 收口</text>
+  <!-- Card B: compute node (laptop) -->
+  <rect x="476" y="158" width="380" height="240" rx="10" fill="#1d1838" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="666" y="200" text-anchor="middle" font-size="24" font-weight="700" fill="#ffffff">算力节点</text>
+  <rect x="573" y="214" width="186" height="34" rx="17" fill="#2e1065" stroke="#a78bfa" stroke-width="1.2"/>
+  <text x="666" y="237" text-anchor="middle" font-size="18" font-weight="700" fill="#a78bfa">Codex（笔记本）</text>
+  <text x="502" y="284" font-size="20" font-weight="600" fill="#e2e8f0">CPU 24 核 32 线程 · 32 GB</text>
+  <text x="502" y="318" font-size="20" font-weight="600" fill="#e2e8f0">GPU 4060 · 8 GB 显存</text>
+  <text x="502" y="352" font-size="20" font-weight="600" fill="#e2e8f0">抽取 · 切块 · 向量化</text>
+  <text x="502" y="386" font-size="20" font-weight="600" fill="#e2e8f0">NVMe 1 TB · 插电+网线才上岗</text>
 
-  <rect x="70" y="416.4" width="242" height="125.2" rx="10" fill="#04241c" stroke="#34d399" stroke-width="1.8"/>
-  <text x="84" y="458.4" font-size="18" fill="#34d399">&lt;/&gt;</text>
-  <text x="116" y="463.4" font-size="18" font-weight="700" fill="#ffffff">执行 Agent</text>
-  <text x="116" y="499.4" font-size="18" fill="#cbd5e1">盘点 · 解析 · 建库 · 生成</text>
+  <!-- Corridor connections (numbered badges, legend below) -->
+  <!-- 3: thick snapshot link between top cards, routed below them -->
+  <path d="M390,398 V428 H526 V398" fill="none" stroke="#fbbf24" stroke-width="5" marker-start="url(#arrGold)" marker-end="url(#arrGold)"/>
+  <text x="470" y="452" text-anchor="middle" font-size="18" font-weight="700" fill="#fbbf24">千兆网线·快照</text>
+  <!-- 2: console -> compute node, dashed -->
+  <path d="M430,530 V472 H666 V401" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arr)"/>
+  <text x="640" y="464" text-anchor="middle" font-size="18" fill="#cbd5e1">ACP信箱</text>
+  <!-- 1: console -> production host, dashed, intermittent wake -->
+  <line x1="120" y1="530" x2="120" y2="401" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 5" marker-end="url(#arr)"/>
+  <text x="140" y="470" font-size="18" fill="#cbd5e1">ACP信箱·SSH唤醒</text>
+  <!-- 4/5: HTTP query up / return down -->
+  <line x1="330" y1="530" x2="330" y2="401" stroke="#22d3ee" stroke-width="2" marker-end="url(#arrCyan)"/>
+  <line x1="364" y1="398" x2="364" y2="527" stroke="#22d3ee" stroke-width="2" marker-end="url(#arrCyan)"/>
+  <text x="347" y="436" text-anchor="middle" font-size="18" fill="#22d3ee" stroke="#020617" stroke-width="5" paint-order="stroke">HTTP查询</text>
+  <text x="347" y="478" text-anchor="middle" font-size="18" fill="#22d3ee" stroke="#020617" stroke-width="5" paint-order="stroke">HTTP返回</text>
 
-  <rect x="70" y="545.6" width="242" height="125.2" rx="10" fill="#04241c" stroke="#34d399" stroke-width="1.8"/>
-  <text x="84" y="587.6" font-size="18" fill="#34d399">&lt;/&gt;</text>
-  <text x="116" y="592.6" font-size="18" font-weight="700" fill="#ffffff">复核 Agent</text>
-  <text x="116" y="628.6" font-size="18" fill="#cbd5e1">架构评审 · 安全复核</text>
+  <!-- Card C: console (netbook) -->
+  <rect x="60" y="530" width="380" height="180" rx="10" fill="#07242e" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="250" y="572" text-anchor="middle" font-size="24" font-weight="700" fill="#ffffff">控制台</text>
+  <rect x="157" y="586" width="186" height="34" rx="17" fill="#083344" stroke="#22d3ee" stroke-width="1.2"/>
+  <text x="250" y="609" text-anchor="middle" font-size="18" font-weight="700" fill="#22d3ee">Hermes（上网本）</text>
+  <text x="86" y="656" font-size="20" font-weight="600" fill="#e2e8f0">CPU 4 核 · 8 GB · 无独显</text>
+  <text x="86" y="690" font-size="20" font-weight="600" fill="#e2e8f0">协调·分发·判断·24×7</text>
 
-  <rect x="70" y="674.8" width="242" height="125.2" rx="10" fill="#261105" stroke="#fb923c" stroke-width="1.8"/>
-  <text x="84" y="713.8" font-size="18" fill="#fb923c">≡</text>
-  <text x="116" y="718.8" font-size="18" font-weight="700" fill="#ffffff">消息与唤醒</text>
-  <text x="116" y="750.8" font-size="18" fill="#cbd5e1">ACP 信箱 + SSH 门铃</text>
-  <text x="116" y="778.8" font-size="18" fill="#fb923c">按需唤醒 · 用完关闭</text>
+  <!-- Data flow block -->
+  <rect x="476" y="530" width="380" height="270" rx="10" fill="#0b1220" stroke="#334155" stroke-width="1.5"/>
+  <text x="666" y="572" text-anchor="middle" font-size="24" font-weight="700" fill="#ffffff">数据流</text>
+  <text x="502" y="612" font-size="20" font-weight="600" fill="#e2e8f0">语料 33 GB·6,657 文件</text>
+  <text x="502" y="647" font-size="20" font-weight="600" fill="#e2e8f0">↓ 去重 → 6,427 文件</text>
+  <text x="502" y="682" font-size="20" font-weight="600" fill="#e2e8f0">↓ 抽取切块 → 40 万块</text>
+  <text x="502" y="717" font-size="20" font-weight="600" fill="#e2e8f0">↓ 向量化 → 512 维</text>
+  <text x="502" y="752" font-size="20" font-weight="600" fill="#e2e8f0">↓ 建库 FTS5 + 向量</text>
+  <text x="502" y="787" font-size="20" font-weight="600" fill="#e2e8f0">↓ 查询·100 ms 级</text>
 
-  <text x="191" y="821" text-anchor="middle" font-size="16" fill="#7d8da1">常开协调 · 按需执行</text>
+  <!-- Key annotation (body size, per review) -->
+  <text x="476" y="842" font-size="20" font-weight="600" fill="#fbbf24">※ 向量化改由 4060 承接 · 快 4–6 倍</text>
+  <text x="476" y="874" font-size="20" font-weight="600" fill="#fbbf24">GPU 收益最大 · 值得单独调度</text>
 
-  <!-- 右侧：四层数据与判断链 -->
-  <rect x="356" y="120" width="996" height="680" rx="14" fill="none" stroke="#fbbf24" stroke-width="2" stroke-dasharray="9 6"/>
-  <text x="380" y="148" font-size="20" font-weight="700" fill="#fbbf24">四层数据与判断链</text>
+  <!-- Legend -->
+  <text x="60" y="756" font-size="18" font-weight="700" fill="#fbbf24">图例</text>
+  <line x1="60" y1="784" x2="108" y2="784" stroke="#94a3b8" stroke-width="2"/>
+  <text x="120" y="790" font-size="18" fill="#cbd5e1">细实线·常驻连接</text>
+  <line x1="60" y1="816" x2="108" y2="816" stroke="#94a3b8" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="120" y="822" font-size="18" fill="#cbd5e1">虚线·间歇唤醒</text>
+  <line x1="60" y1="848" x2="108" y2="848" stroke="#fbbf24" stroke-width="5"/>
+  <text x="120" y="854" font-size="18" fill="#cbd5e1">粗实线·大数据传输</text>
 
-  <!-- 01 事实源 -->
-  <rect x="382" y="158" width="944" height="149.5" rx="10" fill="#111827" stroke="#94a3b8" stroke-width="1.8"/>
-  <text x="854" y="181" text-anchor="middle" font-size="18" fill="#94a3b8">▣</text>
-  <text x="854" y="205" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">01　事实源 · 原位只读</text>
-  <text x="854" y="237" text-anchor="middle" font-size="18" fill="#cbd5e1">原件保留在原文件目录，不搬入展示层</text>
-  <text x="854" y="267" text-anchor="middle" font-size="16" fill="#94a3b8">3,326 个文件 · 12.27 GiB</text>
+  <!-- ===== Right region frame: four layers (compressed) ===== -->
+  <rect x="904" y="100" width="660" height="864" rx="14" fill="none" stroke="#fbbf24" stroke-width="1.6" stroke-dasharray="8 5"/>
+  <text x="928" y="142" font-size="24" font-weight="700" fill="#fbbf24">四层数据链</text>
 
-  <line x1="854" y1="307.5" x2="854" y2="321.5" stroke="#a78bfa" stroke-width="2.5" marker-end="url(#arrowP)"/>
+  <!-- Layer 4: presentation -->
+  <rect x="964" y="196" width="552" height="132" rx="10" fill="#062a33" stroke="#22d3ee" stroke-width="1.5"/>
+  <text x="1240" y="254" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">④ 展示层</text>
+  <text x="1240" y="296" text-anchor="middle" font-size="20" font-weight="600" fill="#e2e8f0">卡片 / 双链 / 关系图</text>
 
-  <!-- 02 证据层 -->
-  <rect x="382" y="321.5" width="944" height="149.5" rx="10" fill="#170b33" stroke="#a78bfa" stroke-width="1.8"/>
-  <text x="854" y="344.5" text-anchor="middle" font-size="18" fill="#a78bfa">▤</text>
-  <text x="854" y="368.5" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">02　证据层 · FTS5 主召回</text>
-  <text x="854" y="400.5" text-anchor="middle" font-size="18" fill="#cbd5e1">SQLite + FTS5 · 中文精确检索 · BM25</text>
-  <text x="854" y="430.5" text-anchor="middle" font-size="16" fill="#94a3b8">返回文件、段落与位置</text>
+  <line x1="1240" y1="334" x2="1240" y2="352" stroke="#64748b" stroke-width="2" marker-start="url(#arrLayer)" marker-end="url(#arrLayer)"/>
 
-  <line x1="854" y1="471" x2="854" y2="485" stroke="#34d399" stroke-width="2.5" marker-end="url(#arrowG)"/>
+  <!-- Layer 3: judgment -->
+  <rect x="964" y="358" width="552" height="132" rx="10" fill="#04241c" stroke="#34d399" stroke-width="1.5"/>
+  <text x="1240" y="416" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">③ 判断层</text>
+  <text x="1240" y="458" text-anchor="middle" font-size="20" font-weight="600" fill="#e2e8f0">人工结论 + 证据绑定</text>
 
-  <!-- 03 判断层 -->
-  <rect x="382" y="485" width="944" height="149.5" rx="10" fill="#04241c" stroke="#34d399" stroke-width="1.8"/>
-  <text x="854" y="508" text-anchor="middle" font-size="18" fill="#34d399">&lt;/&gt;</text>
-  <text x="854" y="532" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">03　判断层 · 卡片主作答</text>
-  <text x="854" y="564" text-anchor="middle" font-size="18" fill="#cbd5e1">项目卡 · 主题页 · 决策页 · 问答页</text>
-  <text x="854" y="594" text-anchor="middle" font-size="16" fill="#fb7185">证据不足写「状态待核」</text>
+  <line x1="1240" y1="496" x2="1240" y2="514" stroke="#64748b" stroke-width="2" marker-start="url(#arrLayer)" marker-end="url(#arrLayer)"/>
 
-  <line x1="854" y1="634.5" x2="854" y2="648.5" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)"/>
+  <!-- Layer 2: evidence (FTS5 + vector + RRF) -->
+  <rect x="964" y="520" width="552" height="140" rx="10" fill="#1d1838" stroke="#a78bfa" stroke-width="1.5"/>
+  <text x="1240" y="576" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">② 证据层</text>
+  <text x="1240" y="616" text-anchor="middle" font-size="20" font-weight="600" fill="#e2e8f0">FTS5 + 向量 + RRF 融合</text>
+  <text x="1240" y="646" text-anchor="middle" font-size="18" fill="#cbd5e1">FTS5 字面 · 向量语义 · RRF 投票</text>
 
-  <!-- 04 展示层 -->
-  <rect x="382" y="648.5" width="630" height="149.5" rx="10" fill="#03202b" stroke="#22d3ee" stroke-width="1.8"/>
-  <text x="697" y="671.5" text-anchor="middle" font-size="18" fill="#22d3ee">▦</text>
-  <text x="697" y="695.5" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">04　展示层 · Obsidian Wiki</text>
-  <text x="697" y="727.5" text-anchor="middle" font-size="18" fill="#cbd5e1">人看卡片与双链 · 非 Agent 主入口</text>
-  <text x="697" y="757.5" text-anchor="middle" font-size="16" fill="#94a3b8">Bases 属性视图 · 无插件可降级</text>
+  <line x1="1240" y1="666" x2="1240" y2="684" stroke="#64748b" stroke-width="2" marker-start="url(#arrLayer)" marker-end="url(#arrLayer)"/>
 
-  <rect x="1030" y="648.5" width="296" height="149.5" rx="10" fill="#241703" stroke="#fbbf24" stroke-width="1.8"/>
-  <text x="1178" y="671.5" text-anchor="middle" font-size="18" fill="#fbbf24">☁</text>
-  <text x="1178" y="695.5" text-anchor="middle" font-size="22" font-weight="700" fill="#ffffff">Obsidian CLI</text>
-  <text x="1178" y="727.5" text-anchor="middle" font-size="18" fill="#cbd5e1">辅助桥 · 非主入口</text>
-  <text x="1178" y="757.5" text-anchor="middle" font-size="16" fill="#94a3b8">中文命令落文件后取回</text>
+  <!-- Layer 1: source -->
+  <rect x="964" y="690" width="552" height="132" rx="10" fill="#111827" stroke="#94a3b8" stroke-width="1.5"/>
+  <text x="1240" y="748" text-anchor="middle" font-size="30" font-weight="700" fill="#ffffff">① 事实源</text>
+  <text x="1240" y="790" text-anchor="middle" font-size="20" font-weight="600" fill="#e2e8f0">原文件原位只读</text>
 
-  <!-- 实测结果 -->
-  <rect x="48" y="838" width="1304" height="48" rx="24" fill="#0f172a" stroke="#1e293b" stroke-width="1.8"/>
-  <text x="72" y="868" font-size="22" font-weight="700" fill="#ffffff">实测结果</text>
-  <text x="210" y="868" font-size="18" fill="#e2e8f0">3,326 个文件全部有终态 · 292 条双链 / 0 断链</text>
+  <!-- Direction note -->
+  <text x="1240" y="884" text-anchor="middle" font-size="18" fill="#cbd5e1">↑ 建库判断 · ↓ 查询作答</text>
 </svg>
