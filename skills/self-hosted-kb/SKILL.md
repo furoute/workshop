@@ -848,7 +848,91 @@ P95 才反映用户感受：
 
 ---
 
-## 十四、给智能体的用法
+## 十四、怎么跑起来
+
+### 依赖安装
+
+```bash
+pip install -r requirements.txt
+```
+
+扫描件需要 OCR 时，再按 `requirements.txt` 中的注释安装
+`rapidocr-onnxruntime`。
+
+### 五步流程对应的命令
+
+所有路径都是显式参数。先在输出目录准备好建库所需的
+`entity-inventory/` 或已经完成抽取、切块、向量化的中间目录，再运行：
+
+```bash
+python scripts/build_full.py \
+  --source-dir <语料根目录> \
+  --output-dir <主建库输出目录>
+
+python scripts/build_index.py \
+  --output-dir <主建库输出目录>
+
+python scripts/build_others.py \
+  --source-dir <第二个库的语料根目录> \
+  --run-root <抽取切块向量中间目录> \
+  --output-root <第二个库输出目录>
+
+python scripts/build_catalog.py \
+  --source-dir <目录一> \
+  --source-dir <目录二> \
+  --output-dir <文件目录库输出目录> \
+  --privacy-dir-name <需要整树排除的目录名>
+
+python scripts/query.py \
+  --query "<问题>" \
+  --main-dir <主建库输出目录> \
+  --others-dir <第二个库输出目录>
+```
+
+验收校验单独运行：
+
+```bash
+python scripts/verify.py --output-dir <主建库输出目录>
+```
+
+### 模型
+
+默认模型为 `BAAI/bge-small-zh-v1.5`（512 维，float16）。查询脚本
+默认从 Hugging Face 缓存加载，也可传入：
+
+```bash
+python scripts/query.py \
+  --query "<问题>" \
+  --main-dir <主建库输出目录> \
+  --others-dir <第二个库输出目录> \
+  --model-dir <本地模型目录>
+```
+
+换模型、向量指纹和可选模型见
+[`references/models.md`](references/models.md)。
+
+### 按算力调整
+
+| 算力 | `--batch-size` | 预期 |
+|---|---:|---|
+| GPU 有 8 GB 显存 | 32 | 全量向量化约 30-60 分钟 |
+| GPU 有 6 GB 显存 | 16 | 约 2-3 小时 |
+| GPU 有 4 GB 或更少 | 8 | 或改用 CPU |
+| 无 GPU（纯 CPU） | 8 | 慢 4-6 倍，建议先用小样本验证 |
+| 内存低于 16 GB | 8 | 抽取阶段分片跑，别一次扫全部 |
+
+向量化脚本使用 `--batch-size`；`build_full.py` 的抽取线程数使用
+`--workers`。参数值要按实际显存、内存、磁盘和温度调整。
+
+### 注意
+
+所有路径都是命令行参数，没有默认值。
+
+⇒ 换机器不用改代码，只改参数。
+
+---
+
+## 十五、给智能体的用法
 
 **这套东西的目的是：让智能体照框架做，少写提示词。**
 
@@ -871,7 +955,7 @@ P95 才反映用户感受：
 
 ---
 
-## 十五、一句话总结
+## 十六、一句话总结
 
 > **方法论在七步，重头在证据层。**
 > **FTS5 查字面，向量查语义，RRF 投票——两条腿缺一条就瘸。**
