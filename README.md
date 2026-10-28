@@ -22,8 +22,9 @@
 
 | 名称 | 用途 | 适用场景 | 目录 |
 |---|---|---|---|
+| **自建知识库** | 把一堆 Word/Excel/PPT/PDF 做成**可检索、可点开原件**的知识库 —— 七步流程（探针→去重→试读→分诊→裁决→建卡→呈现）、抽取→切块→向量四步流水线、FTS5 vs RAG 选型、检索降噪五项修法、**在线 API vs 本地小模型实测对比**、`file:///` 打开原件 | 手上一堆办公文档、想做成能查能用而不是只能看的库；或想在本机/离线环境跑一套 RAG | [`skills/self-hosted-kb/`](skills/self-hosted-kb/) |
+| **Everything 文件检索** | 不点 UI、直接走 HTTP API 查 Windows 本地文件 —— 读 NTFS 主文件表，几十万文件毫秒级定位，零 Token；含全文搜索语法、正则陷阱、`schtasks` 投交互会话、跨会话调用 | Windows 上要秒级找文件、给 agent 加"找文件"能力；**Linux/macOS 不适用**（那边用 grep/find） | [`skills/everything-http-search/`](skills/everything-http-search/) |
 | **多智能体协作** | 多个 AI agent 分工干一件事 —— 角色（调度/执行/复审/仲裁）、三种通道（广播/单线/CLI）、五步 workflow、留痕纪律 | 需要多个 agent 协作、或想让一个 AI 复审另一个 AI 的产出 | [`skills/multi-agent-collaboration/`](skills/multi-agent-collaboration/) |
-| **自建知识库** | 把一堆 Word/Excel/PPT/PDF 做成**可检索、可点开原件**的知识库 —— 七步流程（探针→去重→试读→分诊→裁决→建卡→呈现）、降噪规则、FTS5 vs RAG 选型、`file:///` 打开原件 | 手上一堆办公文档、想做成能查能用而不是只能看的库 | [`skills/self-hosted-kb/`](skills/self-hosted-kb/) |
 | **GEO 生成式引擎优化** | 让你的项目/产品**被 AI 在回答里点到名**（含 GEO vs SEO 对比、四层基线测试、仓库内外物料、发文渠道矩阵、商业 B 端视角） | 任何"要被人/AI 找到"的项目 | [`skills/project-discoverability-geo/`](skills/project-discoverability-geo/) |
 | **截图 → 项目简报** | 收到"刷到的项目"截图，自动定位 GitHub 项目、回源核验数据、输出中文简报 | 看到短视频/推文推的项目，想快速搞清楚 | [`skills/screenshot-to-project-brief/`](skills/screenshot-to-project-brief/) |
 | **足球赛前比分预测** | 基于赔率的五步分析法 + 六步主观检查表 + 深盘爆冷筛查清单（通用版） | 任何足球赛事赛前预测 | [`skills/football-prediction-methodology/`](skills/football-prediction-methodology/) |

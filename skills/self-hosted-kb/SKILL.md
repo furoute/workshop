@@ -11,6 +11,10 @@ author: 蓝莓(Hermes) · Codex(台式机) · 绒毛(muse-cloud) 绘图
 license: MIT
 ---
 
+> **配套技能**：找不到文件时先用 [`everything-http-search`](../everything-http-search/) 秒级定位
+> —— 本仓库 [`skills/everything-http-search/`](../everything-http-search/)。
+> 本页讲「怎么把文件变成可检索的库」，那个技能讲「怎么在一堆文件里秒级找到它」，前后两层配合使用。
+
 # 自建知识库：从一堆 Office 文件到可查可点
 
 > 面向智能体读者：这是一套可照做的框架，不是给人看的报告。
