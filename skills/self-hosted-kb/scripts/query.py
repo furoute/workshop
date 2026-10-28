@@ -16,6 +16,7 @@ import sqlite3
 import sys
 import time
 from dataclasses import dataclass
+from functools import lru_cache
 from pathlib import Path, PurePosixPath
 
 
@@ -26,6 +27,39 @@ QUERY_PREFIX = "为这个句子生成表示以用于检索相关文章："
 QUERY_PREFIX_OVERRIDE = False
 RRF_K = 60
 TOP_CANDIDATES = 1_000
+VECTOR_SHORTLIST_CANDIDATES = 1_500
+EXTENSION_WEIGHTS = {
+    # 表格类：块数爆炸源，降权
+    ".xlsx": 0.4,
+    ".xls": 0.4,
+    ".csv": 0.4,
+    # 正文类：主力资料，正常
+    ".pdf": 1.0,
+    ".docx": 1.0,
+    ".doc": 1.0,
+    ".pptx": 0.8,
+    ".ppt": 0.8,
+    # 其它
+    ".txt": 0.9,
+    ".md": 0.9,
+}
+DEFAULT_EXT_WEIGHT = 0.9
+# 回退本次候选加权：将下一行改为 False。
+APPLY_CANDIDATE_WEIGHTING = True
+FILENAME_HIT_WEIGHT_STEP = 1.0
+FILENAME_HIT_WEIGHT_CAP = 3.0
+# 回退文件名命中加权：将下一行改为 False。
+APPLY_FILENAME_BOOST = True
+CONTENT_INTENT_PATTERN = re.compile(
+    r"(?:内容|查询|如何|怎么|介绍|说明|原理|配置|故障|方案|几次|次数)"
+)
+FILENAME_BOOST_ENTITY_PATTERN = re.compile(
+    r"(?:(?<![A-Za-z0-9])(?:BBU|HBA|VNX|DMX)(?![A-Za-z0-9])"
+    r"|(?<![A-Za-z0-9])[A-Za-z]{2,}[_-]?\d+[A-Za-z0-9_-]*(?![A-Za-z0-9]))",
+    flags=re.IGNORECASE,
+)
+CONTENT_FILE_METADATA_WEIGHT = 0.9
+VECTOR_WEIGHT = 0.8
 
 
 @dataclass(frozen=True)
@@ -74,6 +108,43 @@ def fts_expressions(query: str) -> tuple[str, str]:
 def like_terms(query: str) -> list[str]:
     terms = re.findall(r"[\w\u3400-\u9fff]+", query, flags=re.UNICODE)
     return list(dict.fromkeys(term for term in terms if len(term) >= 2))
+
+
+@lru_cache(maxsize=128)
+def filename_query_tokens(query: str) -> list[str]:
+    tokens = like_terms(query)
+    for segment in re.findall(r"[\u3400-\u9fff]+", query):
+        for size in range(2, min(6, len(segment)) + 1):
+            tokens.extend(
+                segment[start : start + size]
+                for start in range(len(segment) - size + 1)
+            )
+    return list(dict.fromkeys(token.casefold() for token in tokens if token))
+
+
+def filename_hit_weight(source_relpath: str, query: str) -> float:
+    if not APPLY_FILENAME_BOOST or not source_relpath or not query:
+        return 1.0
+    if CONTENT_INTENT_PATTERN.search(query) and not (
+        FILENAME_BOOST_ENTITY_PATTERN.search(query)
+    ):
+        return 1.0
+    basename = Path(source_relpath).stem.casefold()
+    hits = 0
+    for token in filename_query_tokens(query):
+        if not token:
+            continue
+        if token.isascii():
+            pattern = rf"(?<![a-z0-9]){re.escape(token)}(?![a-z0-9])"
+            hits += re.search(pattern, basename) is not None
+        else:
+            hits += token in basename
+    if hits == 0:
+        return 1.0
+    return min(
+        FILENAME_HIT_WEIGHT_CAP,
+        1.0 + FILENAME_HIT_WEIGHT_STEP * hits,
+    )
 
 
 def chunk_key(dataset_id: str, chunk_id: str) -> str:
@@ -166,7 +237,7 @@ class JointSearchEngine:
             for dataset in DATASETS
         }
         self.vector_arrays = {
-            dataset.dataset_id: np.load(dataset.vectors, mmap_mode="r")
+            dataset.dataset_id: np.load(dataset.vectors, mmap_mode="c")
             for dataset in DATASETS
         }
         self.query_prefix = self._validate_index_metadata()
@@ -304,26 +375,33 @@ class JointSearchEngine:
         self, dataset_id: str, query_vector
     ) -> list[str]:
         np = self.np
+        torch = self.torch
         vectors = self.vector_arrays[dataset_id]
         chunk_ids = self.chunk_id_lists[dataset_id]
         indices: list[np.ndarray] = []
         scores: list[np.ndarray] = []
-        for start in range(0, vectors.shape[0], 25_000):
-            block = np.asarray(vectors[start : start + 25_000], dtype=np.float32)
-            block_scores = block @ query_vector
+        query_tensor = torch.from_numpy(query_vector)
+        query_half = query_tensor.half()
+        for start in range(0, vectors.shape[0], 50_000):
+            block = torch.from_numpy(vectors[start : start + 50_000])
+            block_scores = (block @ query_half).numpy()
             local_count = min(TOP_CANDIDATES, block_scores.shape[0])
-            local_indices = (
-                np.argpartition(block_scores, -local_count)[-local_count:]
-                if local_count < block_scores.shape[0]
-                else np.arange(block_scores.shape[0])
-            )
+            local_indices = np.argpartition(block_scores, -local_count)[-local_count:]
             indices.append(local_indices.astype(np.int64) + start)
             scores.append(block_scores[local_indices])
         all_indices = np.concatenate(indices)
         all_scores = np.concatenate(scores)
-        keep = min(TOP_CANDIDATES, all_scores.shape[0])
+        keep = min(VECTOR_SHORTLIST_CANDIDATES, all_scores.shape[0])
         positions = np.argpartition(all_scores, -keep)[-keep:]
-        order = positions[np.argsort(-all_scores[positions])]
+        all_indices = all_indices[positions]
+        # 半精度只负责扩大候选池；最终候选回到原 float32 精度重算。
+        exact_scores = (
+            torch.tensor(vectors[all_indices], dtype=torch.float32)
+            @ query_tensor
+        )
+        _, order = torch.topk(
+            exact_scores, min(TOP_CANDIDATES, exact_scores.shape[0])
+        )
         return [
             chunk_key(dataset_id, chunk_ids[int(all_indices[position])])
             for position in order
@@ -332,12 +410,35 @@ class JointSearchEngine:
     def _file_rows(self, dataset_id: str, query: str) -> dict[str, dict]:
         connection = self.connections[dataset_id]
         rows: list[tuple[str, str, str, str]] = []
-        term_sets = list(
-            dict.fromkeys(
-                [query.strip().strip('"')] + like_terms(query)
+        fts_rows: list[tuple[str, str, str, str]] = []
+        if connection.execute(
+            "SELECT 1 FROM sqlite_master WHERE name='file_fts'"
+        ).fetchone():
+            for expression in fts_expressions(query):
+                if not expression:
+                    continue
+                fts_rows = connection.execute(
+                    """
+                    SELECT filename, source_relpath, record_id, record_type
+                    FROM file_fts
+                    WHERE file_fts MATCH ?
+                    ORDER BY bm25(file_fts), rowid
+                    LIMIT ?
+                    """,
+                    (expression, TOP_CANDIDATES),
+                ).fetchall()
+                if fts_rows:
+                    break
+        term_sets = (
+            []
+            if fts_rows
+            else list(
+                dict.fromkeys(
+                    [query.strip().strip('"')] + like_terms(query)
+                )
             )
         )
-        for terms in ([term_sets[0]], term_sets[1:]):
+        for terms in ([term_sets[0]] if term_sets else [], term_sets[1:]):
             if not terms:
                 continue
             if self.file_schemas[dataset_id] == "filename_only":
@@ -390,25 +491,7 @@ class JointSearchEngine:
                     )
                 )
 
-        if connection.execute(
-            "SELECT 1 FROM sqlite_master WHERE name='file_fts'"
-        ).fetchone():
-            for expression in fts_expressions(query):
-                if not expression:
-                    continue
-                fts_rows = connection.execute(
-                    """
-                    SELECT filename, source_relpath, record_id, record_type
-                    FROM file_fts
-                    WHERE file_fts MATCH ?
-                    ORDER BY bm25(file_fts), rowid
-                    LIMIT ?
-                    """,
-                    (expression, TOP_CANDIDATES),
-                ).fetchall()
-                if fts_rows:
-                    rows = fts_rows + rows
-                    break
+        rows = fts_rows or rows
 
         details: dict[str, dict] = {}
         for filename, source_relpath, record_id, record_type in rows:
@@ -450,12 +533,39 @@ class JointSearchEngine:
             for chunk_id, source_relpath, chunk_index, text in rows
         }
 
+    def _load_chunk_paths(
+        self, dataset_id: str, chunk_ids: list[str]
+    ) -> dict[str, str]:
+        if not chunk_ids:
+            return {}
+        connection = self.connections[dataset_id]
+        placeholders = ",".join("?" for _ in chunk_ids)
+        rows = connection.execute(
+            f"""
+            SELECT chunk_id, source_relpath
+            FROM chunks
+            WHERE chunk_id IN ({placeholders})
+            """,
+            chunk_ids,
+        ).fetchall()
+        return {
+            chunk_key(dataset_id, chunk_id): source_relpath
+            for chunk_id, source_relpath in rows
+        }
+
     def search(
         self, query: str, query_vector, top: int = 10
     ) -> dict:
         started = time.perf_counter()
         channels: dict[str, list[str]] = {}
         details: dict[str, dict] = {}
+        content_intent = APPLY_CANDIDATE_WEIGHTING and bool(
+            CONTENT_INTENT_PATTERN.search(query)
+        )
+        filename_boost_enabled = APPLY_FILENAME_BOOST and (
+            not CONTENT_INTENT_PATTERN.search(query)
+            or FILENAME_BOOST_ENTITY_PATTERN.search(query)
+        )
         for dataset in DATASETS:
             dataset_id = dataset.dataset_id
             fts_keys, fts_details = self._search_chunks(dataset_id, query)
@@ -471,7 +581,10 @@ class JointSearchEngine:
             )
             file_details = (
                 self._file_rows(dataset_id, query)
-                if self.file_schemas[dataset_id] != "none" or filename_query
+                if (
+                    self.file_schemas[dataset_id] != "none" or filename_query
+                )
+                and (not content_intent or filename_query)
                 else {}
             )
             file_keys = list(file_details)
@@ -488,17 +601,65 @@ class JointSearchEngine:
             ][:50]
             details.update(file_details)
 
+        missing_chunk_ids: dict[str, list[str]] = {}
+        if APPLY_CANDIDATE_WEIGHTING:
+            for channel, keys in channels.items():
+                if channel.endswith((":file_exact", ":file_metadata")):
+                    continue
+                for key in keys:
+                    if key in details:
+                        continue
+                    dataset_id, record_type, record_id = key.split("\0", 2)
+                    if record_type == "chunk":
+                        missing_chunk_ids.setdefault(dataset_id, []).append(record_id)
+        chunk_paths: dict[str, str] = {}
+        for dataset_id, chunk_ids in missing_chunk_ids.items():
+            chunk_paths.update(self._load_chunk_paths(dataset_id, chunk_ids))
+
         fused_scores: dict[str, float] = {}
         support: dict[str, list[dict]] = {}
+        filename_weights: dict[str, float] = {}
         for channel, keys in channels.items():
-            weight = (
+            is_chunk_channel = channel.endswith((":chunk_fts", ":vector"))
+            # 原逻辑：按通道固定权重，chunk 一律 1.0。
+            base_weight = (
                 5.0
                 if channel.endswith(":file_exact")
+                else CONTENT_FILE_METADATA_WEIGHT
+                if channel.endswith(":file_metadata") and content_intent
                 else 1.5
                 if channel.endswith(":file_metadata")
+                else VECTOR_WEIGHT
+                if APPLY_CANDIDATE_WEIGHTING and channel.endswith(":vector")
                 else 1.0
             )
             for rank, key in enumerate(keys, start=1):
+                weight = base_weight
+                if APPLY_CANDIDATE_WEIGHTING and is_chunk_channel:
+                    detail = details.get(key)
+                    source_relpath = (
+                        detail["source_relpath"]
+                        if detail is not None
+                        else chunk_paths.get(key, "")
+                    )
+                    ext = PurePosixPath(source_relpath).suffix.lower()
+                    weight *= EXTENSION_WEIGHTS.get(ext, DEFAULT_EXT_WEIGHT)
+                    if filename_boost_enabled:
+                        if source_relpath not in filename_weights:
+                            filename_weights[source_relpath] = filename_hit_weight(
+                                source_relpath, query
+                            )
+                        weight *= filename_weights[source_relpath]
+                elif filename_boost_enabled and not is_chunk_channel:
+                    detail = details.get(key)
+                    source_relpath = (
+                        detail["source_relpath"] if detail is not None else ""
+                    )
+                    if source_relpath not in filename_weights:
+                        filename_weights[source_relpath] = filename_hit_weight(
+                            source_relpath, query
+                        )
+                    weight *= filename_weights[source_relpath]
                 fused_scores[key] = fused_scores.get(key, 0.0) + weight / (
                     RRF_K + rank
                 )
