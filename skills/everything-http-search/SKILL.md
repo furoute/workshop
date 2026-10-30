@@ -164,6 +164,40 @@ minimized=1               ← 启动即最小化
 > 所以 `run_in_background` 和 `show_tray_icon` 必须成对出现。
 >
 > 图形界面路径：**工具 → 选项 → 界面** → 同时勾「后台运行(B)」+「显示托盘图标(I)」
+#### ⚠️ 配完这两项，最容易撞上的「进程被占用」
+
+**症状**：勾了「后台运行」但没勾「显示托盘图标」→ 点了 × 之后程序**看不见但还在跑**。
+然后去双击 `Everything.exe` 想重新打开，弹「**进程已被占用**」——想改设置都没入口。
+
+**根因**：旧实例还占着单实例锁，新实例起不来，而旧实例又没有 UI 可以点。
+
+**三步修复（不需要重启机器）：**
+
+```powershell
+# ① 杀掉所有残留实例（这一步解决"被占用"）
+Get-Process Everything -ErrorAction SilentlyContinue | Stop-Process -Force
+Start-Sleep -Seconds 3
+(Get-Process Everything -ErrorAction SilentlyContinue | Measure-Object).Count   # 应为 0
+
+# ② 改 ini 四键（先关程序再改，否则退出时会回写旧值）
+$ini = "<Everything目录>\Everything.ini"
+Copy-Item $ini "$ini.bak" -Force
+$t = Get-Content $ini -Encoding UTF8
+$t = $t -replace '^show_tray_icon=0$',     'show_tray_icon=1'
+$t = $t -replace '^run_in_background=0$',  'run_in_background=1'
+$t = $t -replace '^minimize_to_tray=0$',   'minimize_to_tray=1'
+$t = $t -replace '^minimized=0$',          'minimized=1'
+$t | Set-Content $ini -Encoding UTF8
+
+# ③ 重新启动
+Start-Process "<Everything目录>\Everything.exe" -ArgumentList "-startup","-minimized"
+```
+
+**关键顺序：先杀进程 → 再改 ini → 再启动。** 顺序反了会被回写覆盖，等于白改。
+
+**验证**：`Get-Process Everything` 有进程、`MainWindowHandle=0`、8089 监听 1 条、
+托盘区能看见图标、右键图标能呼出窗口。
+
 
 配套已有的 `http_server_enabled=1` / `http_server_port=8089` / `http_server_bindings=127.0.0.1`。
 
