@@ -329,6 +329,17 @@ GET http://127.0.0.1:8089/?search=<urlencode(关键词)>&json=1&count=20&path_co
 
 ## 语法速查（转给其他 agent 照做即可）
 
+> **完整参考在 `references/`，本文只留高频项。**
+>
+> | 文件 | 内容 |
+> |---|---|
+> | [`references/search-syntax.md`](references/search-syntax.md) | 搜索语法完整表：操作符 / 通配符 / 宏 / 修饰符 / 全部函数 / 大小与日期语法 / 属性常数 |
+> | [`references/command-line.md`](references/command-line.md) | 命令行选项完整表（134 条）+ 常用组合 |
+> | [`references/regex.md`](references/regex.md) | 正则表达式：实测通过 / 实测失败 / 何时该用 |
+>
+> 遇到没用过的函数或参数，先去 references 里查，别凭印象写。
+
+
 ### 【默认规则】不加盘符 = 搜全部已索引的盘
 
 **用户问「我电脑上有没有 X」，不要自己限定 `d:`。**
@@ -464,6 +475,9 @@ path:"D:\历史工单\服务报告\" regex:.*^\d+\s\d+\s.*  → 1965 条
 # ⑥ 带版本号的文档（版本管理/多版本共存审查）
 "D:\项目资料\" regex:.*V\d+.*\.docx$ dm:>2025                → 59 条
 ```
+
+> 更多函数（`child:` `dupe:` `sizedupe:` `attribdupe:` `frn:` `parents:` `shell:` 等）
+> 和完整的日期/大小常数，见 [`references/search-syntax.md`](references/search-syntax.md)。
 
 ### 三条必踩的坑（实测）
 
