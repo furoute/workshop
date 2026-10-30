@@ -247,7 +247,7 @@ http_server_enabled=1
 http_server_port=8089
 http_server_bindings=127.0.0.1    # 只本机；跨机才改 0.0.0.0
 run_in_background=1               # 「界面→后台运行」：点 × 不退出（人手用时最关键）
-show_tray_icon=1                  # 原来 0 时关了窗口就找不回来
+show_tray_icon=1                  # 「界面→显示托盘图标」：缺了它就再也叫不出窗口（必须与上一行成对）
 minimize_to_tray=1                # 点 × 缩托盘，不退出
 minimized=1                       # 启动即最小化
 ```
