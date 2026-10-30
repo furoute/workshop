@@ -246,6 +246,7 @@ FTS5 用 `tokenize='trigram'`（按 3 字符滑窗建索引）。英文还凑合
 http_server_enabled=1
 http_server_port=8089
 http_server_bindings=127.0.0.1    # 只本机；跨机才改 0.0.0.0
+run_in_background=1               # 「界面→后台运行」：点 × 不退出（人手用时最关键）
 show_tray_icon=1                  # 原来 0 时关了窗口就找不回来
 minimize_to_tray=1                # 点 × 缩托盘，不退出
 minimized=1                       # 启动即最小化

@@ -144,10 +144,17 @@ allow_http_server=1
 #### ① 改 ini 三行（先关 Everything，改完再启）
 
 ```ini
+run_in_background=1       ← 「界面 → 后台运行」：点 × 不退出，缩托盘（人手用时最关键）
 show_tray_icon=1          ← 原来 0 就没有托盘图标，关了窗口就找不回来
 minimize_to_tray=1        ← 点 × 缩回托盘而不是退出
 minimized=1               ← 启动即最小化
 ```
+
+> **`run_in_background` 是给人用的开关，别漏。** 只配了 `minimize_to_tray` 时，agent 侧没问题，
+> 但人手动打开 Everything 点一下 ×，程序**直接退出**，HTTP 服务跟着没——下次 agent 查就
+> 连不上了。勾上「界面 → 后台运行」后才真正"关不掉"，只剩托盘图标。
+>
+> 图形界面等价路径：**工具 → 选项 → 界面 → 勾选「后台运行(B)」**
 
 配套已有的 `http_server_enabled=1` / `http_server_port=8089` / `http_server_bindings=127.0.0.1`。
 
@@ -173,6 +180,7 @@ $s.Save()
 Get-Process Everything                                    # 有进程
 Get-NetTCPConnection -LocalPort 8089 -State Listen        # 1 条
 (Get-Process Everything).MainWindowHandle                 # 0 = 无窗口，在托盘
+(Get-Content Everything.ini) | Select-String "run_in_background=1"   # 1 = 点×不退出
 Invoke-WebRequest "http://127.0.0.1:8089/?search=test&json=1" -UseBasicParsing  # 200
 ```
 
