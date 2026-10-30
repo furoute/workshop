@@ -338,6 +338,11 @@ GET http://127.0.0.1:8089/?search=<urlencode(关键词)>&json=1&count=20&path_co
 > | [`references/regex.md`](references/regex.md) | 正则表达式：实测通过 / 实测失败 / 何时该用 |
 >
 > 遇到没用过的函数或参数，先去 references 里查，别凭印象写。
+>
+> **给任何 agent 的提示词**：接手一切文件检索任务前，如需精确语法，
+> 读 `references/search-syntax.md`（完整语法字典）、
+> `references/command-line.md`（命令行参数）、
+> `references/regex.md`（正则陷阱）。三个文件都是纯 Markdown，可直接 grep。
 
 
 ### 【默认规则】不加盘符 = 搜全部已索引的盘
@@ -416,6 +421,9 @@ $            匹配文件名结尾
 ```
 
 写法：`regex:模式`，可与普通词、路径、属性前缀叠加。
+
+> 完整对照（实测通过 / 实测失败 / 何时该用 / 与通配符分工）见
+> [`references/regex.md`](references/regex.md)。
 
 ### ⚠️ 最重要的坑：正则作用于「完整路径 + 文件名」
 
