@@ -137,16 +137,69 @@ allow_http_server=1
 
 也可以用图形界面（等价）：**工具 → 选项 → HTTP 服务器 → 勾“启用 HTTP 服务器” → 端口 8089 → 绑定 127.0.0.1**
 
-### 用 schtasks 投到交互会话启动（SSH 场景必用）
+### 开机自启 + 静默托盘（一劳永逸，推荐）
 
-普通 `Start-Process` 启的进程会被 SSH 断连带走，必须走计划任务：
+目标：**开机就自动起、端口就绪、桌面看不到窗口**。装一次，以后不用管。
+
+#### ① 改 ini 三行（先关 Everything，改完再启）
+
+```ini
+show_tray_icon=1          ← 原来 0 就没有托盘图标，关了窗口就找不回来
+minimize_to_tray=1        ← 点 × 缩回托盘而不是退出
+minimized=1               ← 启动即最小化
+```
+
+配套已有的 `http_server_enabled=1` / `http_server_port=8089` / `http_server_bindings=127.0.0.1`。
+
+#### ② 在启动文件夹放个快捷方式（比 schtasks 更适合开机自启）
 
 ```powershell
-schtasks /create /tn "ACP-Start-Everything" /tr "\"C:\path\Everything.exe\" -startup" /sc once /st 23:59 /f /it
+$exe = "C:\path\Everything.exe"
+$lnk = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\Everything.lnk"
+$ws = New-Object -ComObject WScript.Shell
+$s = $ws.CreateShortcut($lnk)
+$s.TargetPath = $exe
+$s.WorkingDirectory = Split-Path $exe
+$s.Arguments = "-startup -minimized"   # ← 关键是 -minimized
+$s.WindowStyle = 7                     # 最小化窗口
+$s.Save()
+```
+
+> **为什么用启动文件夹而不是 schtasks**：schtasks 的 `/sc ONLOGON` 也能自启，但启动文件夹更直观、用户能在"启动"里看见、出问题好排查。`/it` 那个用法只适合**临时**从 SSH 拉起来，不适合常驻。
+
+#### ③ 验证（重启后）
+
+```powershell
+Get-Process Everything                                    # 有进程
+Get-NetTCPConnection -LocalPort 8089 -State Listen        # 1 条
+(Get-Process Everything).MainWindowHandle                 # 0 = 无窗口，在托盘
+Invoke-WebRequest "http://127.0.0.1:8089/?search=test&json=1" -UseBasicParsing  # 200
+```
+
+**实测**：重启 1.4 分钟后全部就绪，`MainWindowHandle=0`（真静默），8089 可查。
+
+### 临时拉起（SSH 场景）
+
+已经开机自启了就不用这段。只有在 Everything 被误退出、而你又不在那台机器前时才用：
+
+```powershell
+schtasks /create /tn "ACP-Start-Everything" /tr "\"C:\path\Everything.exe\" -startup -minimized" /sc once /st 23:59 /f /it
 schtasks /run /tn "ACP-Start-Everything"
 ```
 
-验证：`Get-NetTCPConnection -LocalPort 8089 -State Listen` 应有 1 条。
+普通 `Start-Process` 启的进程会被 SSH 断连带走。
+
+### ⚠️ 托盘类配置的坑（实测踩过）
+
+**改了 `tray_event` 这种托盘相关配置后，不要从 SSH 重启程序。**
+
+Windows 的 SSH 会话处在隔离的 session 里，**建不出系统托盘图标**，程序会直接退出。日志特征：
+
+```
+ERROR [[Tray]] tray icon error: 未指定的错误 (os error -2147467259)
+```
+
+`-2147467259` 就是 `E_FAIL`。同理适用于 Clash Verge 这类常驻托盘的软件——它们的托盘行为只能在图形界面里改，改完让用户自己点图标启动。
 
 ## 查询接口
 

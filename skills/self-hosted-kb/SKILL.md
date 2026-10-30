@@ -236,17 +236,56 @@ FTS5 用 `tokenize='trigram'`（按 3 字符滑窗建索引）。英文还凑合
 问"X 这个方案讲了什么"    → 知识库检索（切块 + 向量）
 ```
 
-### 7.2 不开 UI 的启动方式（SSH 里调用必备）
+### 7.2 装一次，开机就能查（别每次手动启）
 
-SSH 里直接起 `Everything.exe`，进程会随 SSH 断连被杀，端口跟着没。解法是投到交互会话：
+**关键认知：agent 不该依赖"人先手工点开 Everything"。** 开机自启 + 静默托盘 + HTTP 常开，这三件事一起配好，之后 `curl http://127.0.0.1:8089` 随叫随到。
+
+#### 三行 ini（先关程序，改完再启）
+
+```ini
+http_server_enabled=1
+http_server_port=8089
+http_server_bindings=127.0.0.1    # 只本机；跨机才改 0.0.0.0
+show_tray_icon=1                  # 原来 0 时关了窗口就找不回来
+minimize_to_tray=1                # 点 × 缩托盘，不退出
+minimized=1                       # 启动即最小化
+```
+
+#### 启动文件夹放快捷方式（带 `-minimized`）
+
+```powershell
+$exe = "C:\Program Files\Everything\Everything.exe"
+$lnk = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\Everything.lnk"
+$ws  = New-Object -ComObject WScript.Shell
+$s   = $ws.CreateShortcut($lnk)
+$s.TargetPath = $exe; $s.WorkingDirectory = Split-Path $exe
+$s.Arguments = "-startup -minimized"; $s.WindowStyle = 7
+$s.Save()
+```
+
+#### 重启后这样验
+
+```powershell
+Get-Process Everything                              # 有进程
+Get-NetTCPConnection -LocalPort 8089 -State Listen  # 1 条
+(Get-Process Everything).MainWindowHandle           # 0 = 无窗口（真静默）
+```
+
+**实测**：重启 1.4 分钟全部就绪，无任何弹窗，8089 立即可查。
+
+#### SSH 里临时拉起（只在被误退出时用）
+
+普通 `Start-Process` 起的进程会被 SSH 断连带走，必须投交互会话：
 
 ```bat
-schtasks /create /tn "Everything-HTTP" /tr "C:\Program Files\Everything\Everything.exe -startup" ^
+schtasks /create /tn "Everything-HTTP" /tr "C:\Program Files\Everything\Everything.exe -startup -minimized" ^
   /sc once /st 00:00 /it /f
 schtasks /run /tn "Everything-HTTP"
 ```
 
-`/it` 是关键——只有投到交互会话，UI 和 HTTP 服务才起得来。
+`/it` 是关键——只有投到交互会话，UI 和 HTTP 服务才起得来。但**它不适合当开机自启**，开机自启用启动文件夹。
+
+> **托盘类配置的坑**：从 SSH 启的进程在隔离 session 里建不出托盘图标，设了 `minimize_to_tray=1` 会直接退出，日志 `tray icon error: os error -2147467259`（E_FAIL）。改完这类配置让用户自己点图标启动。
 
 ### 7.3 三条铁律
 
