@@ -240,19 +240,25 @@ FTS5 用 `tokenize='trigram'`（按 3 字符滑窗建索引）。英文还凑合
 
 **关键认知：agent 不该依赖"人先手工点开 Everything"。** 开机自启 + 静默托盘 + HTTP 常开，这三件事一起配好，之后 `curl http://127.0.0.1:8089` 随叫随到。
 
-#### 三行 ini（先关程序，改完再启）
+#### 五个 ini 键 = 三个必须 + 两个可选
 
 ```ini
-http_server_enabled=1
+# ── 三个必须 ──
+http_server_enabled=1             # HTTP 服务（ini 里设，界面页没有）
 http_server_port=8089
 http_server_bindings=127.0.0.1    # 只本机；跨机才改 0.0.0.0
-run_in_background=1               # 「界面→后台运行」：点 × 不退出（人手用时最关键）
-show_tray_icon=1                  # 「界面→显示托盘图标」：缺了它就再也叫不出窗口（必须与上一行成对）
-                                   # 只勾一个的后果：程序在跑但点 × 就隐身，
-                                   # 再双击 exe 会报「进程已被占用」→ 详见 everything-http-search 技能
-minimize_to_tray=1                # 点 × 缩托盘，不退出
+run_in_background=1               # 「界面→后台运行(B)」：点 × 不退出
+show_tray_icon=1                  # 「界面→显示托盘图标(I)」：有图标才叫得出窗口
+                                   #   两者缺一：程序在跑但点 × 就隐身，再双击 exe 报「进程已被占用」
+                                   #   → 详见 everything-http-search 技能的修复三步
+
+# ── 两个可选（只为桌面整洁）──
 minimized=1                       # 启动即最小化
+minimize_to_tray=1                # ini 里有这个键，但界面页没有对应选项，不是配置步骤
 ```
+
+> 界面上真正要勾的只有两个：**后台运行(B)** + **显示托盘图标(I)**。
+> 「开机启动」不在选项页里（便携版没有），要靠启动文件夹放快捷方式。
 
 #### 启动文件夹放快捷方式（带 `-minimized`）
 
