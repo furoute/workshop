@@ -141,120 +141,23 @@ allow_http_server=1
 
 目标：**开机就自动起、端口就绪、桌面看不到窗口**。装一次，以后不用管。
 
-#### ① 两个核心开关 + 一个 HTTP 开关（先关 Everything，改完再启）
+#### 一次配好，开机就能用
 
 ```ini
-run_in_background=1     ← 「界面→后台运行(B)」：点 × 不退出
-show_tray_icon=1        ← 「界面→显示托盘图标(I)」：有图标才叫得出窗口
-http_server_enabled=1   ← HTTP 服务（跟界面页无关，ini 里设置）
+run_in_background=1       # 界面→后台运行(B)：点 × 不退出
+show_tray_icon=1          # 界面→显示托盘图标(I)：有图标才叫得出窗口
+http_server_enabled=1     # HTTP 服务（ini 里设）
 http_server_port=8089
 http_server_bindings=127.0.0.1
 ```
 
-**这三样齐了，点 × 就自动进托盘、HTTP 一直在、随时能用。** 不需要额外配 `minimize_to_tray`。
+开机自启：**启动文件夹放快捷方式**（`%APPDATA%\Microsoft\Windows\Start\Menu\Programs\Startup\Everything.lnk`，
+参数 `-startup`）。图形界面里没有这个选项。
 
-> **真正必须成对的只有两个，而且都在「界面」页里：**
->
-> | ini 键 | 图形界面（工具 → 选项 → 界面） | 缺了会怎样 |
-> |---|---|---|
-> | `run_in_background=1` | **后台运行(B)** | 点 × **直接退出**，HTTP 服务跟着没 |
-> | `show_tray_icon=1` | **显示托盘图标(I)** | 程序还在跑，**但没图标可点** → 人再也叫不出窗口 |
->
-> 这两个勾上以后，点 × 会自动收到托盘（不需要另外的"最小化到托盘"选项——Everything 1.4 的
-> 界面页里根本没有这一项）。HTTP 服务是 ini 里 `http_server_enabled=1` 控制的，跟界面页无关。
->
-> **最坑的是「后台运行勾了、托盘图标没勾」**：程序确实在跑、HTTP 也通、agent 查得到，
-> 但人手上完全看不见它——想改个设置、想手动搜一下，**没有任何入口**，
-> 再双击 exe 还会报「进程已被占用」，只能去任务管理器杀进程。
->
-> ⚠️ **更正**：早期版本本文写过 `minimize_to_tray=1` 要放进"一个不能少"的组合，那是错的——
-> 界面页里没有这一项，`minimize_to_tray` 是 ini 里存在的键但不该当成配置步骤讲。
-> `minimized=1` 只影响"启动时是否最小化"，可以用，但它不是防"退回后台"的开关。
+**托盘配置坑**：从 SSH 启的进程在隔离 session 里建不出托盘图标，会直接退出
+（`tray icon error: os error -2147467259`）。
 
-### 开机自启：图形界面里没有这一项
-
-Everything **界面的选项页里没有"开机启动"开关**（便携版尤其没有）。要开机自启，两条路：
-
-**① 放启动文件夹（推荐，最直观）**
-
-```powershell
-$exe = "<Everything目录>\Everything.exe"
-$lnk = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\Everything.lnk"
-$ws  = New-Object -ComObject WScript.Shell
-$s   = $ws.CreateShortcut($lnk)
-$s.TargetPath = $exe; $s.WorkingDirectory = Split-Path $exe
-$s.Arguments = "-startup"
-$s.WindowStyle = 7
-$s.Save()
-```
-
-**② 装成服务的安装版**：安装版在 `工具 → 选项 → 常规` 里有"随 Windows 启动"，便携版没有。
-
-> 想确认到底起没起：`Get-ChildItem "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup"`
-
-#### ⚠️ 配完这两项，最容易撞上的「进程被占用」
-
-**症状**：勾了「后台运行」但没勾「显示托盘图标」→ 点了 × 之后程序**看不见但还在跑**。
-然后去双击 `Everything.exe` 想重新打开，弹「**进程已被占用**」——想改设置都没入口。
-
-**根因**：旧实例还占着单实例锁，新实例起不来，而旧实例又没有 UI 可以点。
-
-**三步修复（不需要重启机器）：**
-
-```powershell
-# ① 杀掉所有残留实例（这一步解决"被占用"）
-Get-Process Everything -ErrorAction SilentlyContinue | Stop-Process -Force
-Start-Sleep -Seconds 3
-(Get-Process Everything -ErrorAction SilentlyContinue | Measure-Object).Count   # 应为 0
-
-# ② 改 ini 四键（先关程序再改，否则退出时会回写旧值）
-$ini = "<Everything目录>\Everything.ini"
-Copy-Item $ini "$ini.bak" -Force
-$t = Get-Content $ini -Encoding UTF8
-$t = $t -replace '^show_tray_icon=0$',     'show_tray_icon=1'
-$t = $t -replace '^run_in_background=0$',  'run_in_background=1'
-$t = $t -replace '^http_server_enabled=0$','http_server_enabled=1'
-$t | Set-Content $ini -Encoding UTF8
-
-# ③ 重新启动
-Start-Process "<Everything目录>\Everything.exe" -ArgumentList "-startup","-minimized"
-```
-
-**关键顺序：先杀进程 → 再改 ini → 再启动。** 顺序反了会被回写覆盖，等于白改。
-
-**验证**：`Get-Process Everything` 有进程、`MainWindowHandle=0`、8089 监听 1 条、
-托盘区能看见图标、右键图标能呼出窗口。
-
-
-配套已有的 `http_server_enabled=1` / `http_server_port=8089` / `http_server_bindings=127.0.0.1`。
-
-#### ② 在启动文件夹放个快捷方式（比 schtasks 更适合开机自启）
-
-```powershell
-$exe = "C:\path\Everything.exe"
-$lnk = "$env:APPDATA\Microsoft\Windows\Start Menu\Programs\Startup\Everything.lnk"
-$ws = New-Object -ComObject WScript.Shell
-$s = $ws.CreateShortcut($lnk)
-$s.TargetPath = $exe
-$s.WorkingDirectory = Split-Path $exe
-$s.Arguments = "-startup -minimized"   # ← 关键是 -minimized
-$s.WindowStyle = 7                     # 最小化窗口
-$s.Save()
-```
-
-> **为什么用启动文件夹而不是 schtasks**：schtasks 的 `/sc ONLOGON` 也能自启，但启动文件夹更直观、用户能在"启动"里看见、出问题好排查。`/it` 那个用法只适合**临时**从 SSH 拉起来，不适合常驻。
-
-#### ③ 验证（重启后）
-
-```powershell
-Get-Process Everything                                    # 有进程
-Get-NetTCPConnection -LocalPort 8089 -State Listen        # 1 条
-(Get-Process Everything).MainWindowHandle                 # 0 = 无窗口，在托盘
-(Get-Content Everything.ini) | Select-String "run_in_background=1"   # 1 = 点×不退出
-Invoke-WebRequest "http://127.0.0.1:8089/?search=test&json=1" -UseBasicParsing  # 200
-```
-
-**实测**：重启后 **1–4 分钟**就绪（热重启约 1.5 分钟，智能插座冷启动约 4 分钟，视磁盘和负载而定）；`MainWindowHandle=0`（真静默），8089 可查。
+⇒ **完整命令、三步修复「进程被占用」、验证清单：[`references/install.md`](references/install.md)**
 
 ### 临时拉起（SSH 场景）
 
@@ -278,6 +181,19 @@ ERROR [[Tray]] tray icon error: 未指定的错误 (os error -2147467259)
 ```
 
 `-2147467259` 就是 `E_FAIL`。同理适用于 Clash Verge 这类常驻托盘的软件——它们的托盘行为只能在图形界面里改，改完让用户自己点图标启动。
+
+## 📚 参考资料（`references/`）
+
+| 文件 | 内容 | 什么时候看 |
+|---|---|---|
+| [search-syntax.md](references/search-syntax.md) | 完整语法字典：基础 / 操作符 / 通配符 / 宏 / 修饰符 / 57 个函数 / 大小与日期 / 属性常数 / 实战组合 | 想到新写法、不确定某个函数 |
+| [command-line.md](references/command-line.md) | 命令行 129 条（按用途分组）+ 常用组合 | 要写启动参数、装服务、导索引 |
+| [regex.md](references/regex.md) | 完整元字符表 + 实测通过 / 实测失败清单 + 何时该用 | 正则没命中时先查这里 |
+| [install.md](references/install.md) | ini 四键 / 启动文件夹 / 三步修复「进程被占用」/ 验证清单 | 新机器部署、程序挂了 |
+| [pitfalls.md](references/pitfalls.md) | 四类污染源、重复文件去重实测 | 结果里全是副本 |
+
+> **给任何 agent**：本文是速查，遇到没见过的语法/参数先去上面查，别凭印象写。
+> 五个文件都是纯 Markdown，可以直接 grep。
 
 ## 查询接口
 
@@ -306,262 +222,11 @@ GET http://127.0.0.1:8089/?search=<urlencode(关键词)>&json=1&count=20&path_co
 - `path` 字段是父目录，完整路径要自己拼 `path + "\\" + name`
 - 终端显示「æ¢¦ç½」不一定是真乱码：Python 里 `r.read().decode("utf-8")` 通常正常，PowerShell `Invoke-WebRequest` 会显示错 → 用 Python 取
 
-### 排除自己造成的副本（不排除就没法用）
-
-任何在盘上做过「拷贝/转换/建库」的机器，同一批文件都会有 2–4 份副本，结果列表会被副本淹没。查询时**默认带上排除**：
-
-```
-!ACP-Shared !KB-Vectorization !03-converted !*副本* !~* !*.lnk
-```
-
-对应四类污染源：
-
-| 干扰源 | 表现 | 处理 |
-|---|---|---|
-| `01-source` 补捞包 | 和第①②批原件同名同路径尾 | `!ACP-Shared` |
-| `KB-Vectorization\packages\...\source` | 建库时的源快照 | `!KB-Vectorization` |
-| `03-converted` | LibreOffice 转换产物 | `!03-converted` |
-| `vault_bak*` / `AppData\...\Recent` | Obsidian 备份、`.lnk` 快捷方式 | `!vault_bak*` `!*.lnk` |
-
-**判据**：某个主题命中数忽然到几百，而你以为只有几十份 —— 一定是副本。先加排除再看，否则会把「重复」误报成「资料很多」。
-
-**路径限定比排除更省事**：已知资料归属某个根（`D:\项目资料`、`D:\历史工单`），直接 `"D:\项目资料\" 主题词`，副本自然被挡在外面。
-
-## 语法速查（转给其他 agent 照做即可）
-
-> **完整参考在 `references/`，本文只留高频项。**
->
-> | 文件 | 内容 |
-> |---|---|
-> | [`references/search-syntax.md`](references/search-syntax.md) | 搜索语法完整表：操作符 / 通配符 / 宏 / 修饰符 / 全部函数 / 大小与日期语法 / 属性常数 |
-> | [`references/command-line.md`](references/command-line.md) | 命令行选项完整表（134 条）+ 常用组合 |
-> | [`references/regex.md`](references/regex.md) | 正则表达式：实测通过 / 实测失败 / 何时该用 |
->
-> 遇到没用过的函数或参数，先去 references 里查，别凭印象写。
->
-> **给任何 agent 的提示词**：接手一切文件检索任务前，如需精确语法，
-> 读 `references/search-syntax.md`（完整语法字典）、
-> `references/command-line.md`（命令行参数）、
-> `references/regex.md`（正则陷阱）。三个文件都是纯 Markdown，可直接 grep。
-
-
-### 【默认规则】不加盘符 = 搜全部已索引的盘
-
-**用户问「我电脑上有没有 X」，不要自己限定 `d:`。**
-
-Everything 索引的不止 C/D：实测 `ntfs_volume_paths` 里有 `C:`、`D:` 和一堆 `E:`（可移动卷/U盘/虚拟盘），共 27 个卷。只写 `d: 麻将` 会漏掉 C 盘和一切外接盘。
-
-```
-✅ 麻将                     全盘（所有已索引的 NTFS 卷）
-✅ C: 麻将                  只查 C 盘
-✅ C:|D:|E: 麻将            指定多个盘
-❌ d: 麻将                  用户没指定盘时，自己缩范围 = 漏查
-```
-
-**什么时候才限定盘符：**
-
-- 用户明确说了「在 D 盘」「在我的文档里」
-- 已通过目录排查确认资料归属某个根（`D:\项目资料`）
-
-**判断「Everything 到底覆盖了哪些盘」：**
-
-```
-读 Everything.ini 的这三行，长度应一致：
-  ntfs_volume_paths="C:","D:","E:",...      ← 实际盘符
-  ntfs_volume_includes=1,1,1,...            ← 1=纳入索引
-  ntfs_volume_roots="","",...               ← 可选的根限制
-```
-
-或用 HTTP 探：`C: ` / `D: ` / `E: ` 各自带空关键词查一次，返回 0 的就是没这个盘或没索引。
-
-两个前缀最重要：`regex:` 和 `content:`；再加路径/扩展名限定就够了。
-
-### 基础搜索语法（Everything 1.4 内置）
-
-```
-abc            文件名含 abc
-a b            AND
-"a b"          精确短语
-a|b            OR
-!a             NOT
-a*             前缀
-*.a            扩展名
-[a-z]          字符范围
-size:>1mb      大小
-size:10mb..50mb  大小区间
-dm:today       修改日期
-date:today     创建日期
-attrib:H       属性（H隐藏/S系统/D目录）
-content:关键词  搜内容（需 IFilter）
-```
-
-### 正则表达式语法（Everything 1.4 完整支持，实测通过）
-
-```
-a|b          匹配 a 或 b
-gr(a|e)y     匹配 gray 或 grey
-.            匹配任一字符
-[abc]        匹配 a 或 b 或 c
-[^abc]       匹配除 a,b,c 外的任一字符
-[a-z]        匹配 a 到 z
-[a-zA-Z]     匹配 a-z 及 A-Z
-^            匹配文件名开头
-$            匹配文件名结尾
-( )          捕获组
-\1..\9       引用第 n 个捕获组
-\b           词边界
-*            前项 0 或多次
-?            前项 0 或 1 次
-+            前项 1 或多次
-*?  +?       懒人模式
-{x}          前项恰 x 次
-{x,}         前项 >= x 次
-{x,y}        前项 x 到 y 次
-\            特殊字符转义
-```
-
-写法：`regex:模式`，可与普通词、路径、属性前缀叠加。
-
-> 完整对照（实测通过 / 实测失败 / 何时该用 / 与通配符分工）见
-> [`references/regex.md`](references/regex.md)。
-
-### ⚠️ 最重要的坑：正则作用于「完整路径 + 文件名」
-
-```
-❌ "D:\项目资料\" regex:汇报.*\.pptx$      → 0 命中（路径开头是 D:，永远对不上）
-✅ "D:\项目资料\" regex:.*汇报.*\.pptx$     → 82 命中
-```
-
-加路径限定时，正则前面必须加 `.*` 把路径吃掉。`^` 在带路径限定时等于匹配盘符，不是文件名开头。
-（实测：单个 regex 的两种写法拿到的命中数完全一致，说明 `regex` 丢的是整条全路径。）
-
-### 正则 vs 关键词：能用关键词就别用正则
-
-实测对比（同一意图，都是 82 命中、0.03 秒）：
-
-```
-"D:\项目资料\" regex:.*汇报.*\.pptx$ dm:>2024     → 82
-"D:\项目资料\" 汇报 ext:pptx dm:>2024            → 82   ← 更好写
-```
-
-**正则只在下面三种情况才值得用：**
-
-```
-① 要匹配固定格式（SR号格式、日期格式、版本号）
-② 要精确限定文件名首/尾
-③ 要排除特定模式
-```
-
-### 目录限定的两套写法（实测都通）
-
-```
-path:"D:\项目资料\...\某项目(2025.12)"      → 59 条
-"D:\...\项目名(2025.12)\"                 → 58 条（结尾 \ 表示只要该目录）
-path:项目名 dm:>2025                       → 12 条（只按路径关键词）
-```
-
-**坑**：目录名带半角括号 `(2025.12)` 时，用 `path:"..."` 比直接把整个字符串当词项稳。
-
-### 六个实用组合（已实测，都是 0.0x 秒）
-
-```
-# ① 2024年后改过、大于20MB的PDF方案
-"D:\项目资料\" regex:.*方案.*\.pdf$ size:>20mb dm:>2024      → 5 条
-
-# ② 所有中标/成交通知类文档
-<中标|成交> ext:doc;docx;pdf;xlsx                          → 51 条
-
-# ③ 某厂商 2012 年全部 Case（目录级别）
-"D:\历史工单\案例\2012\" folder:                      → 689 个
-
-# ④ 某年区间 + 主题
-dm:2025-01-01..2025-12-31 ext:docx regex:.*立项.*          → 6 条
-
-# ⑤ 统一命名的服务报告（SR号 空格 Task号 开头）
-path:"D:\历史工单\服务报告\" regex:.*^\d+\s\d+\s.*  → 1965 条
-
-# ⑥ 带版本号的文档（版本管理/多版本共存审查）
-"D:\项目资料\" regex:.*V\d+.*\.docx$ dm:>2025                → 59 条
-```
-
-> 更多函数（`child:` `dupe:` `sizedupe:` `attribdupe:` `frn:` `parents:` `shell:` 等）
-> 和完整的日期/大小常数，见 [`references/search-syntax.md`](references/search-syntax.md)。
-
-### 三条必踩的坑（实测）
-
-1. **点号必须转义**。`2022.` 中 `.` 会匹配任意字符，误命中 `2022年` `2022-`；写 `2022\.`。
-2. **不要用嵌套复杂分组**。`(20\d{2})[.\-年](0?[1-9]|1[0-2])` 实测 0 命中；改写为 `20\d\d.\d\d` 即可。
-3. **方括号内的连字符**。`[.\-年]` 不稳；用 `[\/\.\-年]` 这种显式列举。
-4. **`$` 锚点 + 扩展名分组会静默失败**。`regex:中标通知书\.(pdf|docx?)$` 实测 0 命中，而同名文件确实存在。要定位「以某词结尾的文档」，改用扩展名前缀 + 普通主题词分离匹配：`中标通知书 ext:pdf;doc`，别在一条 regex 里同时赌 `$` 和分组。
-5. **正则和通配符不要混在同一个词项里**。一条查询里写了 `regex:`，同词项的 `*` 会被当正则量词；要限定扩展名就另起一个 `ext:` 词项。
-
-### 两个关键例子（其他 agent 照抄即可）
-
-**例 1：找服务报告里的所有更换记录**
-
-```
-path:服务报告 replace <部件> *.tif
-```
-
-命中 4 条，每条文件名自带 SR 号、Task 号、客户名。同理 `Check BBU` 得 2 条。
-
-**例 2：找某主题下带日期的报价表**
-
-```
-d: 云桌面 ext:xls;xlsx;xlsm regex:报价
-```
-
-只要把 `某主题词` 换成任意业务词（项目名、厂商名、设备名……），套路完全一样。
-
-### 通用套路（任何需求都能套）
-
-```
-<盘符或路径限定> <主题词> <扩展名限定> <可选的 regex/content>
-```
-
-例如：
-
-```
-d: 主题词 ext:doc;docx;pdf       主题相关文档（排掉图片）
-path:服务报告 regex:.*^\d{7,8}      厂商目录下数字开头的 Case（注意 .* 前缀）
-regex:.*20\d{2}.?\d{1,2}.*\.docx$ 全盘文件名带年月的 Word
-```
-
-### ⚠️ 关键词搜索会漏掉「目录式收藏」（必读）
-**只按文件名搜会漏掉整夹东西。** 实测：问「我有哪些某某品牌资料」，按 `<品牌名>` 搜出 400 条，但真正的主力 `D:\职业认证\`（33 个文件 / 9.53 GB，某认证全套课程）**一条都没出现** —— 因为里面是 `模块A.zip` `模块B.zip` `模块C.zip` `模块D.zip`，文件名根本不含品牌名。
-
-**所以问「我有哪些 X 资料」时，必须三步都过：**
-
-```
-① 关键词搜       <X|中文别名>                    找文件名带 X 的
-② 目录搜         path:X folder:                  找名字叫 X 的文件夹
-③ 目录内枚举     "D:\项目资料\X\"                 把整个文件夹里的东西全列出来
-```
-
-**目录批量的实战例子**：`D:\职业认证\` 下 33 个文件 / 9.53 GB，按子目录分类报给用户（子目录 A 20 个 / 子目录 B 6 个 / 根目录书籍 5 个）；统计时用 `os.walk` 统计每组文件数 + 字节数，比逐条列文件名有用。
-
-**特别提醒**：很多人的收藏习惯是「建一个主题文件夹，里面放一堆通用命名的文件」。只搜文件名会得到“我这里没有”的错误结论。**先搜目录，再搜文件。**
-
-### 重复副本：结果里往往只有不到一半是真文件
-
-实测 400 条结果里，大部分是同一批文件的 3–4 份拷贝。常见重复源（按优先级排除）：
-
-```
-!ACP-Shared                       同步共享区的副本
-!KB-Vectorization                 建库时拷的 source 副本
-!03-converted                     老格式转换产物
-!.lnk                             Windows 快捷方式
-!KB-老资料* !KB-新质*             知识库工作目录
-!*副本* !~$*                      手工副本与 Office 临时文件
-```
-
-推荐默认带上的“去噪尾巴”：
-
-```
-!KB-* !ACP-Shared !KB-Vectorization !03-converted !*.lnk !~$*
-```
-
-**去重手法**：先 `name+path` 去重，再按 `path` 前缀归组；同一个 `name` 出现在多个根目录 = 副本。
+### 排除自己造成的副本
+
+降权常见污染源：`KB-*`（知识库副本）、`03-converted/`（格式转换产物）、
+`~$*`（Office 锁文件）、`.lnk`（快捷方式）。**不排除就没法用**——结果里一半是副本。
+⇒ **四类污染源的完整对照 + 去重实测：[`references/pitfalls.md`](references/pitfalls.md)**
 
 ## 用法：先搜目录，再搜文件，最后读正文
 
