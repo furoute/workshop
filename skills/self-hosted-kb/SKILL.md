@@ -271,7 +271,7 @@ Get-NetTCPConnection -LocalPort 8089 -State Listen  # 1 条
 (Get-Process Everything).MainWindowHandle           # 0 = 无窗口（真静默）
 ```
 
-**实测**：重启 1.4 分钟全部就绪，无任何弹窗，8089 立即可查。
+**实测**：重启后 **1–4 分钟**就绪（热重启约 1.5 分钟，智能插座冷启动约 4 分钟），无任何弹窗，8089 立即可查。
 
 #### SSH 里临时拉起（只在被误退出时用）
 

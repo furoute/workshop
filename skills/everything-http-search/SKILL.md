@@ -176,7 +176,7 @@ Get-NetTCPConnection -LocalPort 8089 -State Listen        # 1 条
 Invoke-WebRequest "http://127.0.0.1:8089/?search=test&json=1" -UseBasicParsing  # 200
 ```
 
-**实测**：重启 1.4 分钟后全部就绪，`MainWindowHandle=0`（真静默），8089 可查。
+**实测**：重启后 **1–4 分钟**就绪（热重启约 1.5 分钟，智能插座冷启动约 4 分钟，视磁盘和负载而定）；`MainWindowHandle=0`（真静默），8089 可查。
 
 ### 临时拉起（SSH 场景）
 
