@@ -257,9 +257,12 @@ Start-Process "C:\Program Files\Clash Verge\clash-verge.exe"
 `Clash Verge` 的静默更新会自己下载新版本，下完自动退出——**日志特征是 `WebSocket protocol error: Connection reset` 紧跟 `Application exited`，没有 `SIGTERM`。**
 
 ```
-有 SIGTERM      → 被 kill 的（自己重启、调脚本时常见）
+有 SIGTERM        → 被 kill 的（自己重启、调脚本时常见）
 无 SIGTERM 直接退 → 静默更新干的，去 logs/*.log 找 "Silent updater: downloading"
 ```
 
-想彻底避免：**设置 → 杂项设置 → 关掉「自动检查更新」**。关掉后不会自己下、不会自己退，代价是不再提示新版（自己隔段时间看 GitHub Release 即可）。
+**不要为了这个关掉「自动检查更新」。**
+
+自动更新是有意义的——它推新版通常是在修问题（发版频繁恰恰说明上一版有毛病要马上补）。
+关掉等于放弃安全修复和 bug 修复，收益不抵风险。**掉线就按上面的方式拉起来，别动更新配置。**
 
