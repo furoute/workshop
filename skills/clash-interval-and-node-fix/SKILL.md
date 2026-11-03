@@ -209,3 +209,57 @@ for root, _, files in os.walk("."):
 PY
 ```
 
+## 代理没开时怎么办（事件触发，不做常驻守护）
+
+**原则：不装守护进程。** 常驻脚本会占资源、时间长了忘掉自己装过什么，重装系统后还要记得恢复。改成**用时检查**。
+
+任何需要访问外网的活儿之前，先花 1 秒测一下：
+
+```bash
+# 代理是否可用（超时短一点，别卡住主流程）
+curl -s -o /dev/null -m 5 -w '%{http_code}' -x http://127.0.0.1:7897 https://github.com
+```
+
+判断与处置：
+
+```
+返回 200 或 3xx  → 代理正常，直接干活
+返回 000 或其他  → 先对照测一次直连（--noproxy '*'）
+                    直连也不通 → 可能真没网，报告用户
+                    直连能通     → 是 Clash 挂了，按下面拉起
+```
+
+拉起来的命令：
+
+```bash
+# Linux（GUI 程序必须带 DISPLAY，否则起不来）
+DISPLAY=:0 XAUTHORITY=$HOME/.Xauthority \
+  DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$UID/bus \
+  nohup /usr/bin/clash-verge > /tmp/clash-verge.log 2>&1 &
+sleep 15
+# 再测一次，通了继续，不通就告诉用户
+```
+
+```powershell
+# Windows（从 SSH 里 Popen 起的 GUI 进程会随 SSH 断开被杀，用计划任务）
+schtasks /run /tn "ACP-CV-Start"
+# 或直接
+Start-Process "C:\Program Files\Clash Verge\clash-verge.exe"
+```
+
+两条纪律：
+
+1. **拉起之后要告诉用户一声。** 用户可能以为它一直开着，实际断了很久。
+2. **拉起两分钟后仍不通，就停下来报告**，不要反复重试、不要改配置猜测。
+
+### 什么时候会掉（已知原因，别误判）
+
+`Clash Verge` 的静默更新会自己下载新版本，下完自动退出——**日志特征是 `WebSocket protocol error: Connection reset` 紧跟 `Application exited`，没有 `SIGTERM`。**
+
+```
+有 SIGTERM      → 被 kill 的（自己重启、调脚本时常见）
+无 SIGTERM 直接退 → 静默更新干的，去 logs/*.log 找 "Silent updater: downloading"
+```
+
+想彻底避免：**设置 → 杂项设置 → 关掉「自动检查更新」**。关掉后不会自己下、不会自己退，代价是不再提示新版（自己隔段时间看 GitHub Release 即可）。
+
