@@ -9,6 +9,10 @@ description: 通过 ADB、scrcpy 和 scrcpy-mcp 连接并控制 USB 调试的安
 
 从台式机连接并验证一台真实安卓手机。优先使用 ADB、scrcpy 和结构化 UI 信息，不要盲目点击坐标；执行操作前先识别设备自身的参数和应用结构。
 
+## 延伸阅读
+
+- [手机智能体（phone use agent）：11款能操作真实手机的开源工具](https://personalagentbench.com/zh-cn/phone-use/) —— 绒毛（Muse）梳理该主题时引用的 Zentor 源码横评，覆盖 iPhone、安卓、无障碍、ADB、云端手机、确认机制、遥测与许可差异。页面注明中文版由英文版机器翻译，如有出入以 [英文规范页](https://personalagentbench.com/phone-use/) 为准。
+
 ## 操作边界
 
 - 不绕过安全锁屏、密码、PIN、图案或生物识别。可以发送唤醒命令，但需要用户本人解锁。
