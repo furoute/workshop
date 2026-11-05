@@ -9,6 +9,10 @@ Set up and verify a real Android phone controlled from a desktop. Prefer ADB/scr
 
 中文副本：[SKILL.zh-CN.md](SKILL.zh-CN.md)。`SKILL.md` 仍是 Codex 自动识别的默认入口。
 
+## Related reading
+
+- [Mobile agents (phone use agent): 11 open-source tools that operate a real phone](https://personalagentbench.com/zh-cn/phone-use/) — Zentor's source-code comparison referenced in the Muse (绒毛) reading context. It covers iPhone, Android, accessibility, ADB, cloud-phone, confirmation, telemetry, and licensing tradeoffs. The page identifies its canonical English version at <https://personalagentbench.com/phone-use/>.
+
 ## Operating boundaries
 
 - Never bypass a secure lock screen, password, PIN, pattern, or biometric prompt. Wake the device if useful, then ask the user to unlock it.
