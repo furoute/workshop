@@ -9,7 +9,6 @@
 
 | 问题 | 对象 | 关键词 | 目录 |
 |---|---|---|---|
-| **DSH 桌面版升级后起不来** | DSH 桌面版 `0.2.1-rc.2` → `0.2.2-rc.1` | `tools.mode`、`llm-deepseek-account.models`、字段语义翻转、`cordis.patch.yml` | [`dsh-config-field-flip/`](dsh-config-field-flip/) |
 | **Codex 桌面端「模型加载中」卡死** | ChatGPT / Codex Desktop `26.1013` + 自定义 provider（DeepSeek） | Work 模式、BYOK、`forced_login_method`、`auth.json` | [`codex-desktop-model-loading/`](codex-desktop-model-loading/) |
 
 ---
