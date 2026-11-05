@@ -1,0 +1,4 @@
+interface:
+  display_name: "安卓 ADB / scrcpy 控制"
+  short_description: "连接安卓手机并配置 ADB、scrcpy 与 MCP 控制链路"
+  default_prompt: "使用 $android-adb-scrcpy 检查并配置这台安卓手机的 ADB、scrcpy 和 MCP 控制。"
