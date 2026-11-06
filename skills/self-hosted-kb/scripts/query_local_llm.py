@@ -6,7 +6,7 @@ Usage:
     python scripts/query_local_llm.py \
         --query "BBU 换过几次" \
         --service-url http://127.0.0.1:8756 \
-        --llm-url http://10.196.0.9:11434 \
+        --llm-url http://<ollama-host>:11434 \
         --llm-model qwen3.5:9b \
         --top-k 10
 
@@ -50,7 +50,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--llm-url",
         required=True,
-        help="Ollama 基础地址，例如 http://10.196.0.9:11434",
+        help="Ollama 基础地址，例如 http://<ollama-host>:11434",
     )
     parser.add_argument(
         "--llm-model",
