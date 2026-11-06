@@ -22,6 +22,7 @@ Codex，经 MCP stdio 调 scrcpy-mcp，再经 adb 命令连本地 ADB Server）�
 adbd 接收命令，scrcpy-server 用 MediaCodec 编码 H.264 回传）。
 
 图按通用能力描述，不绑定具体机型、厂商系统版本、账号或网络地址，可直接迁移到任意安卓手机。
+字号按「缩到手机宽度 750px 仍可读」设计，可直接分享或截图使用。
 源文件：[`assets/adb-architecture-zh.svg`](assets/adb-architecture-zh.svg)
 
 ## 操作边界
