@@ -1,0 +1,252 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="960" viewBox="0 0 1600 960" role="img" aria-labelledby="diagram-title diagram-desc">
+  <title id="diagram-title">ADB 控制安卓手机架构图 v2（脱敏版）</title>
+  <desc id="diagram-desc">用户通过语音或文字向 Codex 下达指令，Codex 经 MCP stdio 调用 scrcpy-mcp，scrcpy-mcp 使用 adb 命令访问本机 ADB Server，再通过 USB 与手机 adbd 双向连接；scrcpy-mcp 推送并启动 scrcpy-server，由 adbd 在手机系统内执行。</desc>
+
+  <defs>
+    <pattern id="dot-grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.1" fill="#30363d" opacity="0.55"/>
+    </pattern>
+
+    <marker id="arrow-user" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#67e8f9"/>
+    </marker>
+    <marker id="arrow-agent" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#34d399"/>
+    </marker>
+    <marker id="arrow-mcp" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#a78bfa"/>
+    </marker>
+    <marker id="arrow-adb" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#fbbf24"/>
+    </marker>
+    <marker id="arrow-phone" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 Z" fill="#fb7185"/>
+    </marker>
+
+    <style>
+      svg {
+        font-family: "Microsoft YaHei", "Noto Sans CJK SC", "PingFang SC", "Hiragino Sans GB", sans-serif;
+        color: #e6edf3;
+      }
+      .mono { font-family: "Cascadia Mono", "JetBrains Mono", "SFMono-Regular", Consolas, monospace; }
+      .title { fill: #f8fafc; font-size: 42px; font-weight: 750; letter-spacing: -0.8px; }
+      .subtitle { fill: #94a3b8; font-size: 16px; font-weight: 500; }
+      .zone-label { font-size: 20px; font-weight: 700; }
+      .zone-sub { fill: #8b949e; font-size: 13px; font-weight: 500; }
+      .node-title { font-size: 23px; font-weight: 720; letter-spacing: -0.2px; }
+      .node-sub { fill: #c9d1d9; font-size: 14px; font-weight: 500; }
+      .node-fine { fill: #8b949e; font-size: 12.5px; font-weight: 500; }
+      .edge-label { font-size: 12.5px; font-weight: 650; paint-order: stroke; }
+      .legend { fill: #c9d1d9; font-size: 12.5px; font-weight: 550; }
+      .footnote { fill: #8b949e; font-size: 13px; font-weight: 500; }
+      .zone {
+        fill: #0b1220;
+        fill-opacity: 0.28;
+        stroke: #d29922;
+        stroke-opacity: 0.55;
+        stroke-width: 1.3;
+        stroke-dasharray: 8 6;
+      }
+      .node {
+        stroke-width: 1.5;
+      }
+      .badge-text { font-size: 13px; font-weight: 750; text-anchor: middle; dominant-baseline: middle; }
+      .connector { fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+      .label-bg {
+        fill: #0d1117;
+        stroke: #30363d;
+        stroke-width: 1;
+      }
+    </style>
+  </defs>
+
+  <rect width="1600" height="960" fill="#0d1117"/>
+  <rect width="1600" height="960" fill="url(#dot-grid)"/>
+
+  <g id="header">
+    <rect x="64" y="42" width="176" height="28" rx="14" fill="#13212c" stroke="#38bdf8" stroke-opacity="0.6"/>
+    <circle cx="82" cy="56" r="4" fill="#67e8f9"/>
+    <text x="96" y="61" class="mono" font-size="12" font-weight="700" fill="#67e8f9" letter-spacing="1.2">ARCHITECTURE · V2</text>
+    <text x="63" y="112" class="title"><tspan fill="#fbbf24">ADB</tspan><tspan> 控制安卓手机 · 架构图</tspan></text>
+    <text x="64" y="140" class="subtitle">从用户意图到手机内执行的一条可复现控制链路</text>
+
+    <rect x="1208" y="50" width="328" height="34" rx="17" fill="#111827" stroke="#30363d"/>
+    <circle cx="1228" cy="67" r="4.5" fill="#34d399"/>
+    <text x="1242" y="72" class="mono" font-size="12" font-weight="650" fill="#c9d1d9" letter-spacing="0.8">LOCAL LINK · USB · DEVICE-AGNOSTIC</text>
+  </g>
+
+  <g id="zones">
+    <rect x="56" y="166" width="240" height="722" rx="18" class="zone"/>
+    <rect x="328" y="166" width="568" height="722" rx="18" class="zone"/>
+    <rect x="936" y="166" width="608" height="722" rx="18" class="zone"/>
+  </g>
+
+  <g id="zone-headers">
+    <g aria-label="用户侧分区">
+      <rect x="80" y="184" width="30" height="22" rx="6" fill="#13212c" stroke="#38bdf8" stroke-opacity="0.55"/>
+      <text x="95" y="200" text-anchor="middle" class="mono" font-size="11" font-weight="700" fill="#67e8f9">01</text>
+      <text x="120" y="202" class="zone-label" fill="#67e8f9">用户侧</text>
+      <text x="80" y="225" class="zone-sub">发出意图 · 验收结果</text>
+    </g>
+
+    <g aria-label="控制端分区">
+      <rect x="352" y="184" width="30" height="22" rx="6" fill="#2a2110" stroke="#fbbf24" stroke-opacity="0.55"/>
+      <text x="367" y="200" text-anchor="middle" class="mono" font-size="11" font-weight="700" fill="#fbbf24">02</text>
+      <text x="392" y="202" class="zone-label" fill="#fbbf24">控制端</text>
+      <text x="352" y="225" class="zone-sub">台式机 Windows · 本地执行环境</text>
+    </g>
+
+    <g aria-label="手机端分区">
+      <rect x="960" y="184" width="30" height="22" rx="6" fill="#2b151b" stroke="#fb7185" stroke-opacity="0.55"/>
+      <text x="975" y="200" text-anchor="middle" class="mono" font-size="11" font-weight="700" fill="#fb7185">03</text>
+      <text x="1000" y="202" class="zone-label" fill="#fb7185">手机端</text>
+      <text x="960" y="225" class="zone-sub">安卓手机 · 任意机型 · 厂商系统不限</text>
+    </g>
+  </g>
+
+  <g id="node-user" aria-label="用户">
+    <rect x="88" y="262" width="176" height="112" rx="15" fill="#0d1b24" stroke="#38bdf8" stroke-opacity="0.9" class="node"/>
+    <rect x="88" y="262" width="4" height="112" rx="2" fill="#67e8f9"/>
+    <circle cx="122" cy="306" r="19" fill="#102a35" stroke="#38bdf8" stroke-opacity="0.65"/>
+    <circle cx="122" cy="301" r="7" fill="none" stroke="#67e8f9" stroke-width="2"/>
+    <path d="M109 324 C112 314 132 314 135 324" fill="none" stroke="#67e8f9" stroke-width="2" stroke-linecap="round"/>
+    <text x="154" y="303" class="node-title" fill="#f8fafc">用户</text>
+    <text x="154" y="326" class="node-sub">语音 / 文字</text>
+    <text x="154" y="347" class="node-fine">下达目标 · 查看结果</text>
+  </g>
+
+  <g id="user-interactions">
+    <text x="88" y="431" class="mono" font-size="11" font-weight="700" fill="#67e8f9" letter-spacing="1.1">INTERACTION SIGNALS</text>
+    <rect x="88" y="448" width="176" height="42" rx="10" fill="#0f172a" stroke="#30363d"/>
+    <circle cx="105" cy="469" r="4" fill="#67e8f9"/>
+    <text x="120" y="474" class="node-sub">自然语言指令</text>
+    <rect x="88" y="500" width="176" height="42" rx="10" fill="#0f172a" stroke="#30363d"/>
+    <circle cx="105" cy="521" r="4" fill="#67e8f9"/>
+    <text x="120" y="526" class="node-sub">语音输入</text>
+    <rect x="88" y="552" width="176" height="42" rx="10" fill="#0f172a" stroke="#30363d"/>
+    <circle cx="105" cy="573" r="4" fill="#67e8f9"/>
+    <text x="120" y="578" class="node-sub">实时画面反馈</text>
+  </g>
+
+  <g id="user-note">
+    <rect x="80" y="748" width="192" height="106" rx="12" fill="#0b1220" stroke="#30363d" stroke-dasharray="5 4"/>
+    <text x="96" y="775" class="mono" font-size="11" font-weight="700" fill="#8b949e" letter-spacing="0.8">PORTABLE BY DESIGN</text>
+    <text x="96" y="801" class="node-fine">以通用能力描述链路，</text>
+    <text x="96" y="822" class="node-fine">不绑定特定设备或账号。</text>
+    <text x="96" y="842" class="node-fine" fill="#67e8f9">可迁移到任意安卓手机</text>
+  </g>
+
+  <g id="node-codex" aria-label="Codex AI agent">
+    <rect x="368" y="262" width="488" height="112" rx="16" fill="#0d201d" stroke="#34d399" stroke-opacity="0.9" class="node"/>
+    <rect x="390" y="278" width="58" height="58" rx="15" fill="#102d29" stroke="#34d399" stroke-opacity="0.65"/>
+    <text x="419" y="307" class="mono badge-text" fill="#34d399" font-size="12">&lt;/&gt;</text>
+    <text x="466" y="301" class="node-title" fill="#f8fafc">Codex</text>
+    <text x="466" y="326" class="node-sub">AI agent · 理解目标、编排工具、检查结果</text>
+    <text x="466" y="350" class="node-fine">把自然语言意图转换为可执行的控制步骤</text>
+  </g>
+
+  <g id="node-scrcpy-mcp" aria-label="scrcpy-mcp">
+    <rect x="368" y="438" width="488" height="112" rx="16" fill="#19182b" stroke="#a78bfa" stroke-opacity="0.9" class="node"/>
+    <rect x="390" y="454" width="66" height="58" rx="15" fill="#221d3b" stroke="#a78bfa" stroke-opacity="0.65"/>
+    <text x="423" y="483" class="mono badge-text" fill="#a78bfa">MCP</text>
+    <text x="474" y="478" class="node-title" fill="#f8fafc">scrcpy-mcp</text>
+    <text x="474" y="502" class="node-sub">MCP · Node 24+ · 44 工具</text>
+    <text x="474" y="526" class="node-fine">设备发现 · 画面控制 · 触控 / 键鼠输入</text>
+  </g>
+
+  <g id="node-adb-server" aria-label="ADB Server">
+    <rect x="368" y="618" width="488" height="112" rx="16" fill="#241d0c" stroke="#fbbf24" stroke-opacity="0.9" class="node"/>
+    <rect x="390" y="634" width="66" height="58" rx="15" fill="#33280e" stroke="#fbbf24" stroke-opacity="0.65"/>
+    <text x="423" y="663" class="mono badge-text" fill="#fbbf24">5037</text>
+    <text x="474" y="658" class="node-title" fill="#f8fafc">ADB Server</text>
+    <text x="474" y="682" class="node-sub">本地 5037 · USB 设备中转站</text>
+    <text x="474" y="706" class="node-fine">管理连接 · 转发通道 · 维护授权状态</text>
+  </g>
+
+  <g id="control-note">
+    <rect x="368" y="786" width="488" height="66" rx="12" fill="#0b1220" stroke="#30363d"/>
+    <path d="M395 809 h10 M395 816 h10 M395 823 h10" stroke="#fbbf24" stroke-width="2" stroke-linecap="round"/>
+    <text x="418" y="811" class="node-sub">本机链路：MCP stdio + ADB 5037 + USB</text>
+    <text x="418" y="834" class="node-fine">控制端不需要暴露公网服务或固定设备身份</text>
+  </g>
+
+  <g id="phone-device">
+    <rect x="964" y="254" width="548" height="510" rx="34" fill="#0b1220" stroke="#30363d" stroke-width="1.3"/>
+    <rect x="1192" y="254" width="92" height="16" rx="8" fill="#0d1117" stroke="#30363d"/>
+    <text x="1000" y="292" class="mono" font-size="11" font-weight="700" fill="#8b949e" letter-spacing="1">DEVICE BOUNDARY</text>
+    <line x1="1130" y1="287" x2="1476" y2="287" stroke="#30363d" stroke-width="1"/>
+    <rect x="1198" y="738" width="80" height="4" rx="2" fill="#484f58"/>
+  </g>
+
+  <g id="node-scrcpy-server" aria-label="scrcpy-server">
+    <rect x="1000" y="438" width="476" height="112" rx="16" fill="#29171c" stroke="#fb7185" stroke-opacity="0.9" class="node"/>
+    <rect x="1022" y="454" width="66" height="58" rx="15" fill="#381e25" stroke="#fb7185" stroke-opacity="0.65"/>
+    <text x="1055" y="483" class="mono badge-text" fill="#fb7185" font-size="11">H.264</text>
+    <text x="1106" y="478" class="node-title" fill="#f8fafc">scrcpy-server</text>
+    <text x="1106" y="502" class="node-sub">MediaCodec · H.264 视频流</text>
+    <text x="1106" y="526" class="node-fine">画面编码 · 触控 / 键鼠事件投递</text>
+  </g>
+
+  <g id="node-adbd" aria-label="adbd">
+    <rect x="1000" y="618" width="476" height="112" rx="16" fill="#29171c" stroke="#fb7185" stroke-opacity="0.9" class="node"/>
+    <rect x="1022" y="634" width="66" height="58" rx="15" fill="#381e25" stroke="#fb7185" stroke-opacity="0.65"/>
+    <text x="1055" y="663" class="mono badge-text" fill="#fb7185" font-size="11">adbd</text>
+    <text x="1106" y="658" class="node-title" fill="#f8fafc">adbd</text>
+    <text x="1106" y="682" class="node-sub">手机内守护进程 · 接受 ADB 命令</text>
+    <text x="1106" y="706" class="node-fine">USB 执行 · RSA 授权 · 进程启动</text>
+  </g>
+
+  <g id="connectors" aria-label="系统连接关系">
+    <line x1="264" y1="318" x2="368" y2="318" class="connector" stroke="#67e8f9"
+          marker-start="url(#arrow-user)" marker-end="url(#arrow-user)"/>
+    <rect x="273" y="270" width="94" height="42" rx="8" class="label-bg"/>
+    <text x="320" y="288" text-anchor="middle" class="edge-label" fill="#67e8f9">下指令</text>
+    <text x="320" y="304" text-anchor="middle" class="edge-label" fill="#67e8f9">看结果</text>
+
+    <line x1="612" y1="374" x2="612" y2="438" class="connector" stroke="#34d399"
+          marker-end="url(#arrow-agent)"/>
+    <rect x="562" y="390" width="100" height="28" rx="8" class="label-bg"/>
+    <text x="612" y="409" text-anchor="middle" class="edge-label" fill="#34d399">MCP stdio</text>
+
+    <line x1="612" y1="550" x2="612" y2="618" class="connector" stroke="#a78bfa"
+          marker-end="url(#arrow-mcp)"/>
+    <rect x="566" y="570" width="92" height="28" rx="8" class="label-bg"/>
+    <text x="612" y="589" text-anchor="middle" class="edge-label" fill="#a78bfa">adb 命令</text>
+
+    <line x1="856" y1="494" x2="1000" y2="494" class="connector" stroke="#a78bfa"
+          marker-end="url(#arrow-mcp)"/>
+    <rect x="866" y="464" width="118" height="26" rx="8" class="label-bg"/>
+    <text x="925" y="482" text-anchor="middle" class="edge-label" fill="#a78bfa">推 JAR · 启动</text>
+
+    <line x1="856" y1="674" x2="1000" y2="674" class="connector" stroke="#fbbf24"
+          marker-start="url(#arrow-adb)" marker-end="url(#arrow-adb)"/>
+    <rect x="860" y="620" width="132" height="42" rx="8" class="label-bg"/>
+    <text x="926" y="637" text-anchor="middle" class="edge-label" fill="#fbbf24">USB 双向</text>
+    <text x="926" y="653" text-anchor="middle" class="edge-label" fill="#fbbf24">RSA 授权</text>
+
+    <line x1="1238" y1="618" x2="1238" y2="550" class="connector" stroke="#fb7185"
+          marker-end="url(#arrow-phone)"/>
+    <rect x="1250" y="573" width="104" height="26" rx="8" class="label-bg"/>
+    <text x="1302" y="591" text-anchor="middle" class="edge-label" fill="#fb7185">系统内执行</text>
+  </g>
+
+  <g id="legend">
+    <rect x="1074" y="786" width="438" height="72" rx="12" fill="#0b1220" stroke="#30363d"/>
+    <text x="1092" y="809" class="mono" font-size="11" font-weight="700" fill="#8b949e" letter-spacing="1">LEGEND / 图例</text>
+    <circle cx="1098" cy="830" r="4.5" fill="#67e8f9"/>
+    <text x="1110" y="835" class="legend">用户交互</text>
+    <circle cx="1200" cy="830" r="4.5" fill="#34d399"/>
+    <text x="1212" y="835" class="legend">AI Agent</text>
+    <circle cx="1304" cy="830" r="4.5" fill="#a78bfa"/>
+    <text x="1316" y="835" class="legend">MCP 控制</text>
+    <circle cx="1098" cy="848" r="4.5" fill="#fbbf24"/>
+    <text x="1110" y="853" class="legend">ADB / USB</text>
+    <circle cx="1200" cy="848" r="4.5" fill="#fb7185"/>
+    <text x="1212" y="853" class="legend">手机运行时</text>
+    <line x1="1312" y1="848" x2="1354" y2="848" stroke="#8b949e" stroke-width="2"
+          marker-start="url(#arrow-phone)" marker-end="url(#arrow-phone)"/>
+    <text x="1364" y="853" class="legend">双向连接</text>
+  </g>
+
+  <text x="800" y="928" text-anchor="middle" class="footnote">脱敏版：不包含具体机型、系统版本、账号身份、网络地址、本地路径或设备序列号</text>
+</svg>

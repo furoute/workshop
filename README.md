@@ -24,7 +24,7 @@
 |---|---|---|---|
 | **自建知识库** | 把一堆 Word/Excel/PPT/PDF 做成**可检索、可点开原件**的知识库 —— 七步流程（探针→去重→试读→分诊→裁决→建卡→呈现）、抽取→切块→向量四步流水线、FTS5 vs RAG 选型、检索降噪五项修法、**在线 API vs 本地小模型实测对比**、`file:///` 打开原件 | 手上一堆办公文档、想做成能查能用而不是只能看的库；或想在本机/离线环境跑一套 RAG | [`skills/self-hosted-kb/`](skills/self-hosted-kb/) |
 | **Everything 文件检索** | 不点 UI、直接走 HTTP API 查 Windows 本地文件 —— 读 NTFS 主文件表，几十万文件毫秒级定位，零 Token；含全文搜索语法、正则陷阱、`schtasks` 投交互会话、跨会话调用 | Windows 上要秒级找文件、给 agent 加"找文件"能力；**Linux/macOS 不适用**（那边用 grep/find） | [`skills/everything-http-search/`](skills/everything-http-search/) |
-| **安卓 ADB / scrcpy 控制** | 从台式机连接真实安卓手机：Muse 三件套安装、型号/系统/双卡识别、USB 授权、投屏、截图、UI 点击、MCP 注册；含中英文工作手册、设备识别脚本，并附 11 款开源手机智能体源码横评 | 想让 Codex 通过 USB 操作安卓手机、排查 ADB 连接，或配置 scrcpy-mcp | [`skills/android-adb-scrcpy/`](skills/android-adb-scrcpy/) |
+| **安卓 ADB / scrcpy 控制** | 从台式机连接真实安卓手机：Muse 三件套安装、型号/系统/双卡识别、USB 授权、投屏、截图、UI 点击、MCP 注册；含中英文工作手册、设备识别脚本、**通用架构图**（脱敏、可迁移到任意机型），并附 11 款开源手机智能体源码横评 | 想让 Codex 通过 USB 操作安卓手机、排查 ADB 连接，或配置 scrcpy-mcp | [`skills/android-adb-scrcpy/`](skills/android-adb-scrcpy/) |
 | **Clash 自动切换修复** | 机场订阅把测速间隔写死成 86400（一天）+ Mihomo 的 `lazy` 默认开 —— 结果是节点挂了要等一天才换。用扩展脚本覆盖 interval（300 秒）并关掉 lazy，跨 Windows/Linux/macOS 一键批处理所有订阅，改的是配置不是订阅，订阅更新也不会被冲掉 | 代理动不动断几小时、自动选择明明设了却不切、多订阅/多终端要统一改 | [`skills/clash-interval-and-node-fix/`](skills/clash-interval-and-node-fix/) |
 | **多智能体协作** | 多个 AI agent 分工干一件事 —— 角色（调度/执行/复审/仲裁）、三种通道（广播/单线/CLI）、五步 workflow、留痕纪律 | 需要多个 agent 协作、或想让一个 AI 复审另一个 AI 的产出 | [`skills/multi-agent-collaboration/`](skills/multi-agent-collaboration/) |
 | **GEO 生成式引擎优化** | 让你的项目/产品**被 AI 在回答里点到名**（含 GEO vs SEO 对比、四层基线测试、仓库内外物料、发文渠道矩阵、商业 B 端视角） | 任何"要被人/AI 找到"的项目 | [`skills/project-discoverability-geo/`](skills/project-discoverability-geo/) |

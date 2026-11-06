@@ -13,6 +13,14 @@ Set up and verify a real Android phone controlled from a desktop. Prefer ADB/scr
 
 - [Mobile agents (phone use agent): 11 open-source tools that operate a real phone](https://personalagentbench.com/zh-cn/phone-use/) — Zentor's source-code comparison referenced in the Muse (绒毛) reading context. It covers iPhone, Android, accessibility, ADB, cloud-phone, confirmation, telemetry, and licensing tradeoffs. The page identifies its canonical English version at <https://personalagentbench.com/phone-use/>.
 
+## Architecture
+
+![ADB phone control architecture: user → Codex → scrcpy-mcp → ADB Server → adbd / scrcpy-server on the phone](assets/adb-architecture-zh.svg)
+
+The chain has three segments: **user side** (voice/text intent, live screen feedback) → **control side** (Codex on a Windows desktop drives scrcpy-mcp over MCP stdio, which talks to a local ADB Server over adb commands) → **phone side** (USB with RSA authorization; adbd receives commands, scrcpy-server encodes H.264 via MediaCodec).
+
+The diagram describes generic capabilities only — no specific model, vendor OS version, account, or network address — so it applies to any Android phone. Source: [`assets/adb-architecture-zh.svg`](assets/adb-architecture-zh.svg) (labels are in Chinese).
+
 ## Operating boundaries
 
 - Never bypass a secure lock screen, password, PIN, pattern, or biometric prompt. Wake the device if useful, then ask the user to unlock it.
