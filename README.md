@@ -31,7 +31,6 @@
 | **截图 → 项目简报** | 收到"刷到的项目"截图，自动定位 GitHub 项目、回源核验数据、输出中文简报 | 看到短视频/推文推的项目，想快速搞清楚 | [`skills/screenshot-to-project-brief/`](skills/screenshot-to-project-brief/) |
 | **足球赛前比分预测** | 基于赔率的五步分析法 + 六步主观检查表 + 深盘爆冷筛查清单（通用版） | 任何足球赛事赛前预测 | [`skills/football-prediction-methodology/`](skills/football-prediction-methodology/) |
 | **2026 世界杯预测** | 2026 FIFA World Cup 赛前比分预测流程（含球队追踪、伤病抓取） | 只适用于 2026 世界杯 | [`skills/world-cup-2026/`](skills/world-cup-2026/) |
-| **桌面版 Codex 的 CLI** | 命令行版本**自动跟随**桌面应用升级：运行时扫描 `%LOCALAPPDATA%\OpenAI\Codex\bin\<hash>\codex.exe` 取最新的那个，路径不写死 | 桌面版是新版、`codex` 命令却还是老版（实测差 20 个小版本）；或需要从 SSH / 计划任务调用 Codex | [`skills/codex-desktop-bundled-cli/`](skills/codex-desktop-bundled-cli/) |
 
 ### Troubleshooting · 故障排查
 
