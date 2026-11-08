@@ -39,6 +39,7 @@
 | 名称 | 是什么 | 关键词 | 目录 |
 |---|---|---|---|
 | **Codex 桌面端「模型加载中」卡死** | 升级到 `26.1013` 后 free 账号被强制 Work 模式、自定义 provider（DeepSeek）初始化失败；含代码级定位、修复步骤与官方 issue 对照 | Codex Desktop / BYOK / Work 模式 | [`troubleshooting/codex-desktop-model-loading/`](troubleshooting/codex-desktop-model-loading/) |
+| **Codex 桌面版升级后 CLI 版本落后** | 桌面版升了、`codex` 命令还是几个月前的老版（实测差 20 个小版本）；两条线怎么看清、怎么一条命令升上来，附「无终端调用会卡在等 stdin」与 `config.toml` 改坏的恢复方法 | Codex Desktop / Codex CLI | [`troubleshooting/codex-desktop-cli-version-drift/`](troubleshooting/codex-desktop-cli-version-drift/) |
 
 ---
 
