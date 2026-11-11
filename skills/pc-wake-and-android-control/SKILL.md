@@ -186,7 +186,7 @@ BIOS 里开 ErP，就是切断 USB、PCIe 插槽、网卡等外设的待机供�
 
 ### 架构
 
-![ADB 手机控制架构：用户 → Codex → scrcpy-mcp → ADB Server → 手机上的 adbd / scrcpy-server](assets/adb-architecture-zh.png)
+![ADB 手机控制架构：用户 → Codex → scrcpy-mcp → ADB Server → 手机上的 adbd / scrcpy-server](assets/adb-architecture-v3.png)
 
 ```
 用户侧   语音/文字意图，实时看屏幕
