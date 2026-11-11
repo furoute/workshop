@@ -178,12 +178,12 @@ Windows：
 
 ```bash
 # 有的发行版带这个命令
-wakeonlan 60:cf:84:70:a5:c1
+wakeonlan <目标机 MAC>
 
 # 没有就用 Python，绑到指定网卡
 python3 -c "
 import socket, struct
-MAC = bytes.fromhex('60cf8470a5c1')
+MAC = bytes.fromhex('<目标机 MAC，去掉冒号>')
 PKT = b'\xff'*6 + MAC*16
 s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
 s.setsockopt(socket.SOL_SOCKET, socket.SO_BROADCAST, 1)
@@ -231,7 +231,7 @@ WoL 工作在**第二层**，不用 IP。关机的机器没有 IP，路由器也
 
 ```
 以太网帧发到 FF:FF:FF:FF:FF:FF
-或 UDP 发到 255.255.255.255 / 192.168.0.255，端口 7 或 9
+或 UDP 发到 255.255.255.255 / 子网广播地址（如 192.168.0.255），端口 7 或 9
 ```
 
 同一广播域内所有网卡都收到，但只有 MAC 跟包里重复 16 次那个一致的才响应——广撒网、精匹配。
