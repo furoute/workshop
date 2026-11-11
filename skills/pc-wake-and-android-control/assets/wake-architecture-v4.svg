@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" role="img" aria-labelledby="diagram-title diagram-desc">
-  <title id="diagram-title">电脑之间互相唤醒架构图 v3（大字号脱敏版）</title>
+  <title id="diagram-title">电脑之间互相唤醒架构图 v3</title>
   <desc id="diagram-desc">人在手机上用 WiFi 下单，上网本常开接单后开智能插座让台式机通电自启，再经 SSH 接管台式机发魔术包唤醒笔记本；魔术包为 6 字节 FF 加目标 MAC 重复 16 次，二层广播，只认自己的 MAC。</desc>
 
   <defs>
@@ -64,7 +64,7 @@
     <circle cx="92" cy="56" r="5" fill="#67e8f9"/>
     <text x="110" y="63" class="mono" font-size="20" font-weight="700" fill="#67e8f9" letter-spacing="1.5">ARCHITECTURE · V3</text>
     <text x="62" y="123" class="title"><tspan>电脑之间</tspan><tspan fill="#fbbf24">互相唤醒</tspan><tspan> · 架构图</tspan></text>
-    <text x="64" y="160" class="subtitle">插座解决够不着的那一跳，WoL 解决够得着的那一跳</text>
+    <text x="64" y="160" class="subtitle">无网线通路走智能插座，有线可达走 WoL</text>
 
     <rect x="1020" y="43" width="516" height="48" rx="24" fill="#111827" stroke="#30363d"/>
     <circle cx="1048" cy="67" r="5.5" fill="#34d399"/>
@@ -89,7 +89,7 @@
       <rect x="576" y="226" width="44" height="32" rx="8" fill="#2a2110" stroke="#fbbf24" stroke-opacity="0.6"/>
       <text x="598" y="249" text-anchor="middle" class="mono" font-size="20" font-weight="700" fill="#fbbf24">02</text>
       <text x="632" y="252" class="zone-label" fill="#fbbf24">第一跳 · 智能插座</text>
-      <text x="576" y="285" class="zone-sub">隔墙时用这条 · 断电自启</text>
+      <text x="576" y="285" class="zone-sub">无网线通路时用这条 · 断电自启</text>
     </g>
 
     <g aria-label="第二跳分区">
@@ -227,5 +227,5 @@
     <text x="1436" y="559" text-anchor="middle" class="edge-label" fill="#34d399">唤醒</text>
   </g>
 
-  <text x="800" y="1170" text-anchor="middle" class="footnote">脱敏版：不包含具体机型、系统版本、账号身份、网络地址、本地路径或设备序列号</text>
+  
 </svg>

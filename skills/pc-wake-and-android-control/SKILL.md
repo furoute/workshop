@@ -13,7 +13,7 @@ description: Use when 需要远程唤醒关机的电脑（WoL / 魔术包 / ErP�
 
 三台机：**上网本**（Ubuntu，常开）、**台式机**（Win11）、**笔记本**（Ubuntu + Win11 双系统）。
 
-![电脑之间互相唤醒：入口 → 智能插座第一跳 → 网线 WoL 第二跳](assets/wake-architecture-v3.png)
+![电脑之间互相唤醒：入口 → 智能插座第一跳 → 网线 WoL 第二跳](assets/wake-architecture-v4.png)
 
 ### 现在实际在跑的闭环
 
