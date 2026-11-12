@@ -33,6 +33,15 @@
 | **足球赛前比分预测** | 基于赔率的五步分析法 + 六步主观检查表 + 深盘爆冷筛查清单（通用版） | 任何足球赛事赛前预测 | [`skills/football-prediction-methodology/`](skills/football-prediction-methodology/) |
 | **2026 世界杯预测** | 2026 FIFA World Cup 赛前比分预测流程（含球队追踪、伤病抓取） | 只适用于 2026 世界杯 | [`skills/world-cup-2026/`](skills/world-cup-2026/) |
 
+### Notes · 专题实测
+
+> 不是技能，也不是故障病历 —— 是**一整件事从选型到落地的完整记录**：为什么这么选、怎么装、踩了什么、实测数据、最后能干什么。
+> 留着给下一次的自己，也给别人少走一段。
+
+| 名称 | 是什么 | 关键词 | 目录 |
+|---|---|---|---|
+| **本地部署小模型，供 Agent 使用** | 把 9B 模型搬到自己的机器上给 agent 当"脑子"：三条运行时路线（Ollama 死 / llama-cpp-python 死 / llama.cpp 活）、预编译包部署、`--jinja` 是工具调用的唯一开关、客户端 `agent-default-model` 该改哪里、**假 Key / 断网 / 日志对账三招验真**、TTFT 0.07–4.1 s 与 TPS 40 的实测、十二轮能力边界、**Codex 接不上本地端点的协议根因** | 本地 LLM / llama.cpp / Qwen3.5-9B / 单卡 4060 8GB / Agent 自托管 | [`local-llm-for-agents/`](local-llm-for-agents/) |
+
 ### Troubleshooting · 故障排查
 
 > 踩过的坑和最终解法，写成"病历"：现象 → 根因 → 证据 → 修法 → 验证。**不是教程，是下次再遇到能照着走一遍的记录。**
