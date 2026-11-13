@@ -1,0 +1,128 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200" role="img" aria-labelledby="diagram-title diagram-desc">
+  <title id="diagram-title">三机分工 · 本地模型给 Agent 供算力</title>
+  <desc id="diagram-desc">三台机器，两条链路。笔记本跑本地大模型供算力，台式机跑 DSH 干活，上网本常开调度派活。算力走千兆网线直连，不经公网；联网搜索只从台式机出公网，按次收费。来源：furoute/workshop local-llm-for-agents（2026-11-12 实测）与蓝莓拓扑需求说明（2026-11-13）。</desc>
+
+  <defs>
+    <pattern id="dot-grid" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="2.5" cy="2.5" r="1.2" fill="#30363d" opacity="0.52"/>
+    </pattern>
+
+    <marker id="arrow-gold" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#fbbf24"/>
+    </marker>
+    <marker id="arrow-cyan" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#67e8f9"/>
+    </marker>
+    <marker id="arrow-rose" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L12,6 L0,12 Z" fill="#fb7185"/>
+    </marker>
+
+    <style>
+      svg {
+        font-family: "Microsoft YaHei", "Noto Sans CJK SC", "PingFang SC", "Hiragino Sans GB", sans-serif;
+        color: #e6edf3;
+      }
+      .mono { font-family: "Cascadia Mono", "JetBrains Mono", "SFMono-Regular", Consolas, monospace; }
+      .title { fill: #f8fafc; font-size: 58px; font-weight: 800; letter-spacing: -0.5px; }
+      .subtitle { fill: #fbbf24; font-size: 38px; font-weight: 800; }
+      .node-title { fill: #f8fafc; font-size: 46px; font-weight: 800; letter-spacing: -0.3px; }
+      .node-sub { fill: #d5dde5; font-size: 33px; font-weight: 650; }
+      .node-fine { fill: #e2e8f0; font-size: 30px; font-weight: 550; }
+      .node-key { font-size: 31px; font-weight: 800; }
+      .edge-label { fill: #f8fafc; font-size: 30px; font-weight: 700; paint-order: stroke; }
+      .edge-note { fill: #e2e8f0; font-size: 28px; font-weight: 550; }
+      .footnote { fill: #e2e8f0; font-size: 32px; font-weight: 550; }
+      .node { stroke-width: 2; }
+      .connector { fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .label-bg {
+        fill: #0d1117;
+        fill-opacity: 0.98;
+        stroke: #30363d;
+        stroke-width: 1.2;
+      }
+    </style>
+  </defs>
+
+  <rect width="1600" height="1200" fill="#0d1117"/>
+  <rect width="1600" height="1200" fill="url(#dot-grid)"/>
+
+  <!-- ===== 标题 ===== -->
+  <text x="800" y="82" text-anchor="middle" class="title">三机分工 · 本地模型给 Agent 供算力</text>
+  <text x="800" y="132" text-anchor="middle" class="subtitle">算，在本机；查，还得出去。</text>
+
+  <!-- ===== 连线（先画线，再画框压住端点） ===== -->
+  <!-- C → A：派活 / 触发 -->
+  <line x1="330" y1="375" x2="330" y2="540" class="connector" stroke="#67e8f9" stroke-width="3" marker-end="url(#arrow-cyan)"/>
+  <!-- C → B：派活 / 触发 -->
+  <line x1="560" y1="375" x2="1060" y2="540" class="connector" stroke="#67e8f9" stroke-width="3" marker-end="url(#arrow-cyan)"/>
+  <!-- A ↔ B：千兆网线 -->
+  <line x1="640" y1="720" x2="960" y2="720" class="connector" stroke="#fbbf24" stroke-width="7" marker-start="url(#arrow-gold)" marker-end="url(#arrow-gold)"/>
+  <!-- B → 公网：搜索，虚线 -->
+  <line x1="1330" y1="540" x2="1330" y2="355" class="connector" stroke="#fb7185" stroke-width="3" stroke-dasharray="9 7" marker-end="url(#arrow-rose)"/>
+
+  <!-- ===== 连线标注 ===== -->
+  <g aria-label="派活触发 C 到 A">
+    <rect x="245" y="438" width="170" height="42" rx="10" class="label-bg"/>
+    <text x="330" y="467" text-anchor="middle" class="edge-label">派活 / 触发</text>
+  </g>
+  <g aria-label="派活触发 C 到 B">
+    <rect x="725" y="418" width="170" height="42" rx="10" class="label-bg"/>
+    <text x="810" y="447" text-anchor="middle" class="edge-label">派活 / 触发</text>
+  </g>
+  <g aria-label="千兆网线">
+    <rect x="665" y="640" width="270" height="44" rx="10" class="label-bg"/>
+    <text x="800" y="670" text-anchor="middle" class="edge-label">千兆网线 · 不经公网</text>
+    <text x="800" y="762" text-anchor="middle" class="edge-note">断 WiFi 也不影响</text>
+  </g>
+  <g aria-label="搜索收费">
+    <rect x="1245" y="418" width="170" height="42" rx="10" class="label-bg"/>
+    <text x="1330" y="447" text-anchor="middle" class="edge-label">搜索 · 收费</text>
+  </g>
+
+  <!-- ===== 机器 C：调度机 · 上网本 ===== -->
+  <g id="node-dispatch" aria-label="调度机上网本">
+    <rect x="80" y="190" width="520" height="185" rx="18" fill="#0d1b24" stroke="#38bdf8" stroke-opacity="0.92" class="node"/>
+    <rect x="80" y="190" width="5" height="185" rx="2.5" fill="#67e8f9"/>
+    <text x="104" y="238" class="node-title">调度机 · 上网本</text>
+    <text x="104" y="284" class="node-sub">常开 7×24 · 派活 · 传话 · 触发操作</text>
+    <text x="104" y="326" class="node-fine">指挥的那台，不参与算力</text>
+    <text x="104" y="358" class="node-fine">低配笔记本 · 蓝莓 Hermes</text>
+  </g>
+
+  <!-- ===== 公网 ===== -->
+  <g id="node-internet" aria-label="公网互联网">
+    <rect x="1040" y="205" width="480" height="150" rx="18" fill="#1f1016" stroke="#fb7185" stroke-opacity="0.9" stroke-width="2" stroke-dasharray="10 7"/>
+    <text x="1072" y="258" class="node-title" fill="#fb7185">公网 · 互联网</text>
+    <text x="1072" y="305" class="node-sub">搜索服务 · 按次收费</text>
+    <text x="1072" y="343" class="node-fine">推理不走这里</text>
+  </g>
+
+  <!-- ===== 机器 A：算力机 · 笔记本 ===== -->
+  <g id="node-compute" aria-label="算力机笔记本">
+    <rect x="80" y="540" width="560" height="360" rx="18" fill="#241d0c" stroke="#fbbf24" stroke-opacity="0.92" class="node"/>
+    <rect x="80" y="540" width="5" height="360" rx="2.5" fill="#fbbf24"/>
+    <text x="106" y="602" class="node-title">算力机 · 笔记本</text>
+    <text x="106" y="652" class="node-sub">提供算力 · 跑本地模型</text>
+    <text x="106" y="706" class="node-fine">i9-13980HX / 4060 8GB / 32GB</text>
+    <text x="106" y="746" class="node-fine">Ubuntu · :8080 兼容端点</text>
+    <text x="106" y="786" class="node-fine">49K 上下文 · 40 tok/s</text>
+    <text x="106" y="838" class="node-key" fill="#fbbf24">只算不搜 · 没有联网能力</text>
+    <text x="106" y="878" class="node-fine">Qwen3.5-9B-Q4_K_M · 5.68 GB</text>
+  </g>
+
+  <!-- ===== 机器 B：工作机 · 台式机 ===== -->
+  <g id="node-worker" aria-label="工作机台式机">
+    <rect x="960" y="540" width="560" height="360" rx="18" fill="#0d201d" stroke="#34d399" stroke-opacity="0.92" class="node"/>
+    <rect x="960" y="540" width="5" height="360" rx="2.5" fill="#34d399"/>
+    <text x="986" y="602" class="node-title">工作机 · 台式机</text>
+    <text x="986" y="652" class="node-sub">跑 Agent（DSH）· 干活那台</text>
+    <text x="986" y="706" class="node-fine">i7-8700 / 1060 6GB / Win11</text>
+    <text x="986" y="746" class="node-fine">自己不推理 · 请求都发给笔记本</text>
+    <text x="986" y="786" class="node-key" fill="#fb7185">联网搜索从这出 · 断网就搜不了</text>
+    <text x="986" y="830" class="node-fine">搜索收费 · 推理不花钱</text>
+    <text x="986" y="870" class="node-fine">DSH 0.2.2-rc.2 · 桌面版 + CLI</text>
+  </g>
+
+  <!-- ===== 底部注解 ===== -->
+  
+</svg>
