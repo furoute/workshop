@@ -5,7 +5,7 @@
 >
 > 实测时间 2026-11-12｜模型 Qwen3.5-9B-Q4_K_M｜单卡 RTX 4060 Laptop 8GB
 
-![三机分工拓扑图](topology.png)
+<img src="topology.png" width="100%" alt="三机分工拓扑图">
 
 ---
 
