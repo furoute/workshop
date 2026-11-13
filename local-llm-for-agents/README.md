@@ -7,9 +7,6 @@
 
 ![三机分工拓扑图](topology.png)
 
-> 算力机只算不搜，工作机跑 Agent 并负责出公网搜索，调度机常开派活。
-> 矢量源见 [topology.svg](topology.svg)。
-
 ---
 
 ## 目录
