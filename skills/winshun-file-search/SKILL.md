@@ -26,6 +26,21 @@ metadata:
 
 ---
 
+## 📚 参考资料（`references/`）
+
+| 文件 | 内容 | 什么时候看 |
+|---|---|---|
+| [ws-cli.md](references/ws-cli.md) | **命令全参数**：11 个命令 / 全局选项 / 查询语法 / grep 命中格式 / 退出码 / 引号铁律 | 写命令、选项不确定 |
+| [features.md](references/features.md) | **能力全表**：15 章官方功能（文件搜索 / 全文 / 应用 / 网页 / 插件 / 剪贴板 / 截图 / MCP…） | 判断它还能干什么 |
+| [mcp-integration.md](references/mcp-integration.md) | **MCP 接入**：安全四原则 / 一键配置 / 装指令到 Claude、Cursor / MCP vs `ws` 怎么选 | 接别的 AI 客户端 |
+| [official-skill.md](references/official-skill.md) | **官方给 AI 的说明书原文**（英文，4 KB） | 与我们的说法冲突时以它为准 |
+
+> **给任何 agent**：本文是速查；细节去上面四个文件查，别凭印象写。
+> 官方随时改版 —— 拉最新：
+> `gh api repos/LingCore/WinShun/contents/skills/winshun/SKILL.md --jq .content | base64 -d`
+
+---
+
 ## 三条判断（先想清楚再动手）
 
 ```
