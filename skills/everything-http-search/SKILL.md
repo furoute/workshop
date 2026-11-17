@@ -191,9 +191,10 @@ ERROR [[Tray]] tray icon error: 未指定的错误 (os error -2147467259)
 | [regex.md](references/regex.md) | 完整元字符表 + 实测通过 / 实测失败清单 + 何时该用 | 正则没命中时先查这里 |
 | [install.md](references/install.md) | ini 四键 / 启动文件夹 / 三步修复「进程被占用」/ 验证清单 | 新机器部署、程序挂了 |
 | [pitfalls.md](references/pitfalls.md) | 四类污染源、重复文件去重实测 | 结果里全是副本 |
+| [winshun-comparison.md](references/winshun-comparison.md) | **WinShun 对照**：横评表（速度/内存/能力）、同一批查询实测、**智能体视角下哪步必须人上**、安装配置、`ws` 命令速查 | 需要搜正文/拼音，或在两个工具间选型 |
 
 > **给任何 agent**：本文是速查，遇到没见过的语法/参数先去上面查，别凭印象写。
-> 五个文件都是纯 Markdown，可以直接 grep。
+> 六个文件都是纯 Markdown，可以直接 grep。
 
 ## 查询接口
 
@@ -388,6 +389,9 @@ macOS    → mdfind（Spotlight 索引）
 | 「这份文件在哪」 | Everything | 秒级、零 Token、全盘覆盖、永不过期 |
 | 「某个项目有哪些材料/报价」 | Everything + `ext:` 过滤 + 目录分组 | 字面匹配不会被泛词带偏 |
 | 「这份文件写了什么」 | 直接读文件 | 定位后本地解析最快 |
+| 「哪个文件里提到这个词」 | **WinShun `ws grep`** | Everything 只索引文件名，搜不了正文；WinShun 能连 docx/pdf 正文一起搜 |
+| 「拼音/首字母打不出中文」 | **WinShun `ws find`** | `msxz` → 末世行者，中文场景刚需 |
+| 「读 docx/pdf 正文给 agent 看」 | **WinShun `ws text`** | 一句话出纯文本，不用另装解析库 |
 | 「跨文件推理/汇总」 | 向量库 + 本地小模型 | 只有这类才值得抽取/切块/向量化 |
 | 「换了多少次 / 哪个月最多」 | Everything 列表 + 脚本归并统计 | 数字是我们数出来的，库里没有这个结论 |
 
