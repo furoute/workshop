@@ -26,18 +26,33 @@ metadata:
 
 ---
 
-## 📚 参考资料（`references/`）
+## 📚 参考资料（`references/`）—— 用的时候查，别整份读
 
-| 文件 | 内容 | 什么时候看 |
-|---|---|---|
-| [ws-cli.md](references/ws-cli.md) | **命令全参数**：11 个命令 / 全局选项 / 查询语法 / grep 命中格式 / 退出码 / 引号铁律 | 写命令、选项不确定 |
-| [features.md](references/features.md) | **能力全表**：15 章官方功能（文件搜索 / 全文 / 应用 / 网页 / 插件 / 剪贴板 / 截图 / MCP…） | 判断它还能干什么 |
-| [mcp-integration.md](references/mcp-integration.md) | **MCP 接入**：安全四原则 / 一键配置 / 装指令到 Claude、Cursor / MCP vs `ws` 怎么选 | 接别的 AI 客户端 |
-| [official-skill.md](references/official-skill.md) | **官方给 AI 的说明书原文**（英文，4 KB） | 与我们的说法冲突时以它为准 |
+| 文件 | 内容 | 大小 | 什么时候查 |
+|---|---|---|---|
+| [official-skill.md](references/official-skill.md) | **官方给 AI 的说明书**（英文原文） | 4 KB | 命令怎么写、退出码、规则 —— **最常查这个** |
+| [official-manual-zh.md](references/official-manual-zh.md) | **官方中文使用说明全文** | 195 KB | UI 操作、搜索范围、WSL/NAS、MCP 权限细节 —— **按章节 grep，别整读** |
+| [ws-cli.md](references/ws-cli.md) | 命令与选项速查（表格化，中文） | 4 KB | 忘了某个参数 |
+| [mcp-integration.md](references/mcp-integration.md) | MCP 接入、安全四原则、MCP vs `ws` 取舍 | 3 KB | 接别的 AI 客户端 |
 
-> **给任何 agent**：本文是速查；细节去上面四个文件查，别凭印象写。
-> 官方随时改版 —— 拉最新：
-> `gh api repos/LingCore/WinShun/contents/skills/winshun/SKILL.md --jq .content | base64 -d`
+> ⚠️ **`official-manual-zh.md` 有 195 KB，整份读进上下文会直接撑爆。**
+> 正确姿势：`grep -A20 '## 搜文件里的文字' references/official-manual-zh.md`，只取需要的那一节。
+
+### 官方文档入口（有更新从这里拉）
+
+```
+仓库      https://github.com/LingCore/WinShun
+中文说明  https://github.com/LingCore/WinShun/blob/main/docs/使用说明.md
+AI 说明书 https://github.com/LingCore/WinShun/blob/main/skills/winshun/SKILL.md
+插件文档  https://github.com/LingCore/WinShun/blob/main/docs/plugins.md
+CLI 设计  https://github.com/LingCore/WinShun/blob/main/docs/design-cli.md
+```
+
+**⇒ 一条命令拉最新（覆盖本地 reference）：**
+
+```bash
+gh api repos/LingCore/WinShun/contents/skills/winshun/SKILL.md --jq .content | base64 -d
+```
 
 ---
 
@@ -168,6 +183,31 @@ ws find "报告" --json -l
 ```
 
 **退出码**：`0` 成功｜`1` 无结果｜`3` 未运行｜`4` 命令行未开放｜`6` 路径不在索引｜`7` 失败。
+
+---
+
+## 开机自启（实测：它自己管，不用你加）
+
+**⇒ 便携版**不写注册表 Run 键、不放启动文件夹**，但它的面板开关会建一条**计划任务**：**
+
+```
+任务名    \WinShun
+触发器    LogonTrigger（用户登录时）
+登录类型  Interactive / Limited（不提权）
+执行      <安装目录>\WinShun.exe
+```
+
+**⇒ 实测：重启后 **41 秒**自动起，静默进托盘（主窗口标题为空），索引 **29.5 万项零重建**。**
+
+**⇒ 所以找自启项时，**别只翻 `HKCU\...\Run` 和启动文件夹，要查 `Get-ScheduledTask`**。**
+
+**⇒ 验证命令：**
+
+```powershell
+Get-ScheduledTask | Where-Object { $_.Actions.Execute -like "*WinShun*" } | Select TaskName,State
+```
+
+**⇒ 索引为什么不重建：它读 NTFS 的 USN 变更日志，不是开机重扫全盘。**
 
 ---
 
