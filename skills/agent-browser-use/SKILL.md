@@ -5,6 +5,8 @@ description: Use when Agent 要用浏览器访问需要登录的站点或做多�
 
 # Agent 使用浏览器：Playwright + Chromium 实操
 
+![Agent 使用浏览器 · 架构图](assets/browser-architecture.svg)
+
 让 Agent 能远程操作浏览器、访问需要登录的站点，**不需要人守在电脑旁点确认**。
 内容分三层来源，引用时请区分：
 
