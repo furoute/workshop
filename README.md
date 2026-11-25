@@ -15,7 +15,7 @@
 | 名称 | 是什么 | 技术栈 | 目录 |
 |---|---|---|---|
 | **单词猫 (WordPet)** | 小学英语背单词 PWA —— 人教 PEP 3-6 年级词库、云养猫、自然拼读、复习、打卡、家长报告 | Vite + TypeScript | [`apps/word-memory/`](apps/word-memory/) |
-| **词光 (Word Atlas)** | 雅思背单词 PWA 的 **Windows 本地部署** —— 7,298 词 + 插画 + 22,905 段英美发音 + FSRS 复习；含 clone→构建→`vite preview --host` 全流程、Windows 防火墙坑、**一键启动器自动探测 IP + 终端二维码**（IP 每次重启都变，双击一次手机扫码即进）、导出/导入备份与多设备隔离实测 | Vite + TypeScript | [`apps/word-atlas/`](apps/word-atlas/) |
+| **词光 (Word Atlas)** | 雅思背单词 PWA —— 7,298 个雅思核心词，**每个词一幅原创插画、两句原创例句、英美双发音**；四种练法（看义选词 / 看图补句 / 听音辨词 / 拼写），FSRS 间隔复习按记忆曲线排期；19 个话题汇成一张三维词汇星图，学会一个点亮一颗星。免费、无需注册，进度只存本机 | Vite + TypeScript | [`apps/word-atlas/`](apps/word-atlas/) |
 
 ### Skills · Agent 技能
 
