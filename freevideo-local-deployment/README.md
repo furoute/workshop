@@ -17,7 +17,7 @@ Agent，签名信封通过安全闸门完成跨机协作，不需要中心服务
 
 | 中文介绍 | English intro | 山水首测 |
 |:---:|:---:|:---:|
-| [![ACP-lite 中文介绍](demo/acp-lite-intro-zh-poster.jpg)](demo/acp-lite-intro-zh.mp4) | [![ACP-lite English intro](demo/acp-lite-intro-en-poster.jpg)](demo/acp-lite-intro-en.mp4) | [![FreeVideo 山水首测](demo/freevideo-landscape-demo-poster.jpg)](demo/freevideo-landscape-demo.mp4) |
+| [![ACP-lite 中文介绍](demo/acp-lite-intro-zh.gif)](demo/acp-lite-intro-zh.mp4) | [![ACP-lite English intro](demo/acp-lite-intro-en.gif)](demo/acp-lite-intro-en.mp4) | [![FreeVideo 山水首测](demo/freevideo-landscape-demo.gif)](demo/freevideo-landscape-demo.mp4) |
 | [▶ 播放中文版](demo/acp-lite-intro-zh.mp4) | [▶ Play English](demo/acp-lite-intro-en.mp4) | [▶ 播放山水片](demo/freevideo-landscape-demo.mp4) |
 
 - ACP-lite 中英文版：1920×1080、5.175 秒、24fps；中文版生成耗时 742.33 秒
