@@ -12,17 +12,17 @@
 
 ## Demo
 
-下面这条 5 秒短片由本文安装好的 FreeVideo 实例生成，演示 ACP-lite 的核心意象：
-两台普通电脑各自维护本地 Agent，签名信封通过安全闸门完成跨机协作，不需要中心服务器。
+以下三条短片都由本文安装好的 FreeVideo 实例生成。ACP-lite 介绍片演示两台普通电脑各自维护本地
+Agent，签名信封通过安全闸门完成跨机协作，不需要中心服务器；山水片是 SOP 要求的 5 秒首测样片。
 
-[![ACP-lite 本地视频 Demo](demo/acp-lite-intro-zh-poster.jpg)](demo/acp-lite-intro-zh.mp4)
+| 中文介绍 | English intro | 山水首测 |
+|:---:|:---:|:---:|
+| [![ACP-lite 中文介绍](demo/acp-lite-intro-zh-poster.jpg)](demo/acp-lite-intro-zh.mp4) | [![ACP-lite English intro](demo/acp-lite-intro-en-poster.jpg)](demo/acp-lite-intro-en.mp4) | [![FreeVideo 山水首测](demo/freevideo-landscape-demo-poster.jpg)](demo/freevideo-landscape-demo.mp4) |
+| [▶ 播放中文版](demo/acp-lite-intro-zh.mp4) | [▶ Play English](demo/acp-lite-intro-en.mp4) | [▶ 播放山水片](demo/freevideo-landscape-demo.mp4) |
 
-[▶ 播放中文版 Demo](demo/acp-lite-intro-zh.mp4)
-
-- 成片：1920×1080、5.175 秒、24fps
-- 编码：H.264 视频 + AAC 双声道
-- 来源：FreeVideo 0.6.13 本地生成，再叠加清晰字幕
-- 生成耗时：742.33 秒（12 分 22 秒）
+- ACP-lite 中英文版：1920×1080、5.175 秒、24fps；中文版生成耗时 742.33 秒
+- 山水首测：1344×768、5.175 秒、24fps；生成耗时 704.74 秒
+- 三条视频均为 H.264 + AAC 双声道，完整解码和音频轨验证通过
 
 > 给笔记本上的 Agent：直接导入本文件即可执行，不需要 fu 再口述背景。
 >
