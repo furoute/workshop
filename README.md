@@ -43,7 +43,7 @@
 
 | 名称 | 是什么 | 关键词 | 目录 |
 |---|---|---|---|
-| **FreeVideo 本地部署实测** | 在 RTX 4060 8GB 笔记本上部署 MiniMax H3 / ComfyUI：从官方安装包与 SHA-256 校验、NVIDIA 580+ 驱动门槛、49.1GB 模型自动换源下载，到 5 秒视频首测、显存与内存实测、常见故障修复，并附 ACP-lite 中英文 Demo 与山水首测样片 | FreeVideo / MiniMax H3 / ComfyUI / RTX 4060 8GB / 本地视频生成 / ACP-lite Demo | [`freevideo-local-deployment/`](freevideo-local-deployment/) |
+| **FreeVideo 本地部署实测** | 在 RTX 4060 8GB 笔记本上部署 OpenVDN VDN-H3（MiniMax H3）/ ComfyUI：从官方安装包与 SHA-256 校验、NVIDIA 580+ 驱动门槛、49.1GiB 模型自动换源下载，到 5 秒视频首测、显存与内存实测、常见故障修复，并附 ACP-lite 中英文 Demo 与山水首测样片 | FreeVideo / OpenVDN VDN-H3 / MiniMax H3 / ComfyUI / RTX 4060 8GB / 本地视频生成 / ACP-lite Demo | [`freevideo-local-deployment/`](freevideo-local-deployment/) |
 | **本地部署小模型，供 Agent 使用** | 把 9B 模型搬到自己的机器上给 agent 当"脑子"：三条运行时路线（Ollama 死 / llama-cpp-python 死 / llama.cpp 活）、预编译包部署、`--jinja` 是工具调用的唯一开关、客户端 `agent-default-model` 该改哪里、**假 Key / 断网 / 日志对账三招验真**、TTFT 0.07–4.1 s 与 TPS 40 的实测、十二轮能力边界、**Codex 接不上本地端点的协议根因** | 本地 LLM / llama.cpp / Qwen3.5-9B / 单卡 4060 8GB / Agent 自托管 | [`local-llm-for-agents/`](local-llm-for-agents/) |
 
 ### Troubleshooting · 故障排查

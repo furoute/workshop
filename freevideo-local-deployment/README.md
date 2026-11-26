@@ -44,8 +44,9 @@ Agent，签名信封通过安全闸门完成跨机协作，不需要中心服务
 | FreeVideo | v0.6.13，构建号 `2026.11.26.15432` |
 | NVIDIA 驱动 | 由 566.07 升级到 621.40 WHQL |
 | 安装方式 | 官方 Windows 安装器；驱动门槛解除后用安装器同源的无界面流程继续 |
-| 模型下载 | 约 49.1GB；安装峰值空间约 90.1GB |
-| 模型格式 | `int8_convrot`，紧凑存储 |
+| 基础模型 | OpenVDN `vdn-minimax-h3`（MiniMax H3 / VDN-H3） |
+| 推理权重 | OpenVDN `vdn-minimax-h3-edge`，`int8_convrot` 优化权重 |
+| 模型下载 | 约 49.1GiB；安装峰值空间约 90.1GiB |
 | ComfyUI | 0.34.0，`127.0.0.1:8188`，Agent API `ready: true` |
 | 首测 | 672×384 预览 + 1344×768、5.175 秒、24fps 正式成片均成功 |
 | 音频 | AAC 双声道；完整解码无错误 |
@@ -130,12 +131,19 @@ Agent，签名信封通过安全闸门完成跨机协作，不需要中心服务
 - 另一种半自动方式：只导入下面的「运行环境」包，再在安装器的模型来源中选择**自动下载**（v0.3.12 及以上支持），其余模型由安装器拉齐。
 - 自动下载期间保持网络和电源，不要中途切换网络或合盖休眠。
 
-本次下载记录：
+本次下载的模型组成：
 
-- 模型计划下载量：49.1GiB
-- 主要环节：文本编码器约 14.6GiB、视频解码器约 10.3GiB、视频权重 289 个文件、采样缓存 400 个文件
-- Hugging Face Xet、HF 镜像和 ModelScope 均参与自动测速与换源
-- 安装完成后关键组件：PyTorch 2.13.0+cu130、ComfyUI 0.34.0、SageAttention 2
+| 组件 | 实际模型 / 文件 | 来源与说明 |
+|---|---|---|
+| 基础与生成链路 | MiniMax H3 / VDN-H3；`h3-base`、`stage-dmd-step-250` | `OpenVDN/vdn-minimax-h3`，revision `751739ee5b9e3ac802dca5d5111075fdaeb47885` |
+| 本地推理权重 | `OpenVDN/vdn-minimax-h3-edge`，`int8_convrot` | revision `da37681f5a1f7015fdb63482142b865111b687d3` |
+| 文本编码器 | `qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors` | `t8star/Vdn-Minimax-H3-Comfy`，约 14.6GiB |
+| 潜空间放大器 | `minimax_h3_latent_upscaler_3d_conv_v1_fp16.safetensors` | `LBH-123-AI/Minimax_h3_latent_Upscaler` |
+| 视频与音频解码器 | `h3-base/vae` 与 `h3-base/audio_vae` | `OpenVDN/vdn-minimax-h3`，视频、音频 VAE 合计约 10.3GiB |
+| 采样缓存 | `community-sigma3-v1-20261005`、`adaln-tables-v2-*` | `OpenVDN/vdn-minimax-h3-edge`，约 2.24GiB |
+
+合计模型下载约 49.1GiB；Hugging Face Xet、HF 镜像和 ModelScope 均参与自动测速与换源。
+安装完成后的关键运行组件为 PyTorch 2.13.0+cu130、ComfyUI 0.34.0 和 SageAttention 2。
 
 ### 3.2 离线方式：网络拉不动时才用
 
@@ -262,10 +270,16 @@ FreeVideo 首装回报
 
 ## 9. 部署记录、故障与修复
 
-### 9.1 版本与校验
+### 9.1 模型、版本与校验
 
 - FreeVideo v0.6.13 的 Windows 安装包 SHA-256 与官方 Release 一致。
 - NVIDIA 621.40 安装包来自 NVIDIA 官方 `us.download.nvidia.com`，数字签名有效。
+- 实际生成模型为 OpenVDN VDN-H3（MiniMax H3）；安装器选择并校验了
+  `OpenVDN/vdn-minimax-h3-edge` 的 `int8_convrot` 优化权重。
+- 文本编码器为 Qwen3-VL-32B MiniMax-H3 NVFP4 AWQ：
+  `qwen3vl_32b_minimax_h3_nvfp4_awq.safetensors`。
+- 二次采样所需的潜空间放大器为
+  `minimax_h3_latent_upscaler_3d_conv_v1_fp16.safetensors`。
 - FreeVideo 安装器读取并通过：
   - GPU：RTX 4060 Laptop GPU，compute capability 8.9
   - 驱动：621.40
