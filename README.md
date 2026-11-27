@@ -45,7 +45,7 @@
 |---|---|---|---|
 | **FreeVideo 本地部署实测** | 在 RTX 4060 8GB 笔记本上部署 OpenVDN VDN-H3（MiniMax H3）/ ComfyUI：从官方安装包与 SHA-256 校验、NVIDIA 580+ 驱动门槛、49.1GiB 模型自动换源下载，到 5 秒视频首测、显存与内存实测、常见故障修复，并附 ACP-lite 中英文 Demo 与山水首测样片 | FreeVideo / OpenVDN VDN-H3 / MiniMax H3 / ComfyUI / RTX 4060 8GB / 本地视频生成 / ACP-lite Demo | [`freevideo-local-deployment/`](freevideo-local-deployment/) |
 | **本地部署小模型，供 Agent 使用** | 把 9B 模型搬到自己的机器上给 agent 当"脑子"：三条运行时路线（Ollama 死 / llama-cpp-python 死 / llama.cpp 活）、预编译包部署、`--jinja` 是工具调用的唯一开关、客户端 `agent-default-model` 该改哪里、**假 Key / 断网 / 日志对账三招验真**、TTFT 0.07–4.1 s 与 TPS 40 的实测、十二轮能力边界、**Codex 接不上本地端点的协议根因** | 本地 LLM / llama.cpp / Qwen3.5-9B / 单卡 4060 8GB / Agent 自托管 | [`local-llm-for-agents/`](local-llm-for-agents/) |
-| **GitHub Actions 实测手记** | 在 furoute/acp-lite 上第一次试水 GitHub Actions：加一个 workflow 让 GitHub 云主机每次 push/PR 自动跑自测（81 项），run #1 红（路径错写成根目录）、run #2 25 秒变绿；含 workflow 全文、六条踩坑、免费额度与内网边界 | GitHub Actions / acp-lite / 自测上云 / 免费云主机 | [`github-actions/`](`github-actions/`) |
+| **GitHub Actions 实测手记** | 在 furoute/acp-lite 上第一次试水 GitHub Actions：加一个 workflow 让 GitHub 云主机每次 push/PR 自动跑自测（81 项），run #1 红（路径错写成根目录）、run #2 25 秒变绿；含 workflow 全文、六条踩坑、免费额度与内网边界 | GitHub Actions / acp-lite / 自测上云 / 免费云主机 | [`github-actions/`](github-actions/) |
 
 ### Troubleshooting · 故障排查
 
@@ -55,7 +55,7 @@
 |---|---|---|---|
 | **Codex 桌面端「模型加载中」卡死** | 升级到 `26.1013` 后 free 账号被强制 Work 模式、自定义 provider（DeepSeek）初始化失败；含代码级定位、修复步骤与官方 issue 对照 | Codex Desktop / BYOK / Work 模式 | [`troubleshooting/codex-desktop-model-loading/`](troubleshooting/codex-desktop-model-loading/) |
 | **Codex 桌面版升级后 CLI 版本落后** | 桌面版升了、`codex` 命令还是几个月前的老版（实测差 20 个小版本）；两条线怎么看清、怎么一条命令升上来，附「无终端调用会卡在等 stdin」与 `config.toml` 改坏的恢复方法 | Codex Desktop / Codex CLI | [`troubleshooting/codex-desktop-cli-version-drift/`](troubleshooting/codex-desktop-cli-version-drift/) |
-| **Muse GitHub 推送 403（写操作全断）** | Muse 的 GitHub 连接器写操作一律 403、读正常；安装页、App 重装、断开重连三条路全试过均无效，已报 Muse 团队反馈；推送恢复前改走 GitHub 网页手动建/改文件 | Muse / GitHub 连接器 / push 403 / MCP | [`troubleshooting/muse-github-push-403/`](`troubleshooting/muse-github-push-403/`) |
+| **Muse GitHub 推送 403（写操作全断）** | Muse 的 GitHub 连接器写操作一律 403、读正常；安装页、App 重装、断开重连三条路全试过均无效，已报 Muse 团队反馈；推送恢复前改走 GitHub 网页手动建/改文件 | Muse / GitHub 连接器 / push 403 / MCP | [`troubleshooting/muse-github-push-403/`](troubleshooting/muse-github-push-403/) |
 
 ---
 
