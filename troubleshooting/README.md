@@ -9,7 +9,8 @@
 
 | 问题 | 对象 | 关键词 | 目录 |
 |---|---|---|---|
-| **Codex 桌面端「模型加载中」卡死** | ChatGPT / Codex Desktop `26.1013` + 自定义 provider（DeepSeek） | Work 模式、BYOK、`forced_login_method`、`auth.json` | [`codex-desktop-model-loading/`](codex-desktop-model-loading/) |
+| **Codex 桌面端「模型加载中」卡死** | ChatGPT / Codex Desktop `26.1013`+ 自定义 provider（DeepSeek） | Work 模式、BYOK、`forced_login_method`、`auth.json` | [`codex-desktop-model-loading/`](codex-desktop-model-loading/) |
+| **Muse GitHub 推送 403（写操作全断）** | Muse GitHub 连接器（OAuth + Meta Muse AI App） | push 403、`Resource not accessible by integration`、MCP | [`muse-github-push-403/`](muse-github-push-403/) |
 
 ---
 
