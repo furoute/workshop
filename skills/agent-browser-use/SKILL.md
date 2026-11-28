@@ -1,13 +1,15 @@
 ---
 name: agent-browser-use
-description: Use when Agent 要用浏览器访问需要登录的站点或做多步网页操作（Playwright + Chromium）。含安装与配置（持久 profile、代理、下载坑）、三层方法论（API→DOM→视觉）、一步一验闭环、登录与验证码处置、防注入铁律，及 139 邮箱等第一手实测坑。
+description: Use when Agent 要用网页取信息或操作网页。先用 Moli（Rust，快筛预览）再用 Playwright + Chromium。
 ---
 
-# Agent 使用浏览器：Playwright + Chromium 实操
+# Agent 使用浏览器：Moli 预览 + Playwright 实操
 
 ![Agent 使用浏览器 · 架构图](assets/browser-architecture.svg)
 
 让 Agent 能远程操作浏览器、访问需要登录的站点，**不需要人守在电脑旁点确认**。
+
+**2026-11-28 更新：最前面加了「第 0 道 Moli」——用 Rust 写的单文件浏览器先瞟一眼，能读的活到这就结束，要动手的再上 Playwright。**
 内容分三层来源，引用时请区分：
 
 - **第一手实测**（舰队 2026-11 在台式机/上网本/云端实跑）：蓝莓《浏览器与账号授权-实测结论》、绒毛《浏览器使用心得-20261118》，存于舰队共享区；
@@ -18,7 +20,113 @@ description: Use when Agent 要用浏览器访问需要登录的站点或做多�
 
 ## 零、宗旨（方法论）
 
-### 三层优先级：从便宜到贵，能不往下走就不往下走
+### 四层结构（2026-11-28 补：最前面多了一道「预览」）
+
+| 层 | 手段 | 干什么 | 什么时候用 |
+|---|---|---|---|
+| **第 0 道** | **Moli（Rust，预览层）** | 打开网页、读内容、转 Markdown / 语义树 | **先瞟一眼。90% 的情况到这就够了** |
+| **① API** | 官方接口 + token，连浏览器都不开 | 有接口就别开浏览器 | 有 API 永远优先（Gmail、DeepSeek、Gemini） |
+| **② DOM / 可访问性树** | 语义定位、读文字、判结果 | 浏览器内的常规操作 | 第 0 道不够，才起 Playwright |
+| **③ 视觉** | 截图 + 视觉模型 + 按坐标点 | 前几层摸不着时**立刻切** | 二维码、Canvas、假控件 |
+
+**⇒ 顺序是**先轻后重**：Moli（几秒、76 MB）→ API → DOM → 视觉。**
+
+**⇒ 能瞟一眼就结束的，别起 Chromium（200 MB + 6 个进程）。**
+
+---
+
+## 第 0 道：先用 Moli 预览（Rust，单文件）
+
+> **Moli = 不登录也能读的「快筛层」。先看有没有值得干的事，再决定要不要动手。**
+
+### 它是什么
+
+```
+仓库      https://github.com/lexmount/moli
+规模      24,556 stars，Rust 从零实现，MIT
+定位      Structure first. Pixels on demand.
+          默认只解析 DOM 出语义树，不加 --layout 不渲染像素
+特点      单二进制、零依赖、无 GUI、跑完就退
+实测      抓一次约 76 MB 内存；能过 Google 自动化风控（Playwright 五种方式全被拦）
+```
+
+### 怎么装（三端都验过）
+
+**⇒ Linux（解压即用，无需 cargo）：**
+
+```bash
+# 必须走代理下（直连会在 16 MB 处断，续传 GitHub 不认）
+curl -L -x http://127.0.0.1:7897 \
+  https://github.com/lexmount/moli/releases/download/v1.1.28/moli-x86_64-unknown-linux-gnu.tar.gz \
+  -o moli.tar.gz
+mkdir -p ~/apps/moli && tar -xzf moli.tar.gz -C ~/apps/moli
+~/apps/moli/moli-v1.1.28-x86_64-unknown-linux-gnu/moli --version
+```
+
+**⇒ Windows（下载 zip，`tar -xf` 解压即可，无需安装）：**
+
+```powershell
+# 下载 moli-x86_64-pc-windows-msvc.zip 到 D:\LLM\moli\
+tar -xf moli.zip
+D:\LLM\moli\moli-v1.1.28-x86_64-pc-windows-msvc\moli.exe --version
+```
+
+**⇒ 不用编译。**源码编译要 ~100 个 crate 含 V8，1.5 核的 VM 上会 OOM。
+
+### 怎么用（三条铁律）
+
+```bash
+# ① 抓网页为 Markdown（日常最常用）
+moli fetch --dump markdown --wait done \
+  --http-proxy http://127.0.0.1:7897 \   # 必须显式给，它不读环境变量
+  --timeout-ms 60000 \                    # 默认 25 秒，重页必超时
+  <URL>
+
+# ② 抓语义树（要精确解析元素时）
+moli fetch --dump semantic_tree_text --wait done --http-proxy ... --timeout-ms 60000 <URL>
+
+# ③ 只查通不通（HTTP >= 400 直接返回错误码）
+moli fetch --dump markdown --fail --wait done --http-proxy ... --timeout-ms 60000 <URL>
+```
+
+**⇒ 三条铁律，缺一不可：**
+
+```
+① 必须显式给 --http-proxy（不读环境变量）
+② 必须把 --timeout-ms 提到 60000（默认 25 秒）
+③ 不开 serve 常驻，一次一条，跑完就退
+```
+
+**⇒ one by one 反而最快：**同 IP 连打会撞 reCAPTCHA（实测），留间隔、顺序执行最稳。
+
+### 什么时候用 Moli，什么时候直接上 Playwright
+
+| 情况 | 用什么 |
+|---|---|
+| 想知道一个页面讲什么 | **Moli**（3–30 秒）|
+| 批量抓几十个链接 | **Moli** |
+| 读 README、文档 | **Moli** |
+| 查某个链接还活不活 | **Moli --fail** |
+| Google 搜索结果 | **Moli**（Playwright 过不去） |
+| 要登录 | Playwright（Moli profile 是空的） |
+| 要点击、填表、等动态加载 | Playwright |
+| 图形验证码、扫码、短信 | 人 |
+
+**⇒ 判断标准一句话：**要「读」，用 Moli；要「动手」，用 Playwright。**
+
+### 各 agent 的装机位置（实测过）
+
+```
+上网本（蓝莓）    ~/apps/moli/moli-v1.1.28-x86_64-unknown-linux-gnu/moli
+台式机           D:\LLM\moli\moli-v1.1.28-x86_64-pc-windows-msvc\moli.exe
+云端 VM（绒毛）  已装已实测
+```
+
+**⇒ 一台机器装一份，多个 agent 共用同一个二进制即可 —— 各自调用、各跑各的，互不干扰，不要起共享服务。**
+
+---
+
+## 零之一、三层优先级：从便宜到贵，能不往下走就不往下走
 
 | 层 | 手段 | 什么时候用 |
 |---|---|---|
